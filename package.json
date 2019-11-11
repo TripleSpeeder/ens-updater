@@ -1,0 +1,25 @@
+{
+  "name": "@triplespeeder/ens-deploy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "ipfs-deploy": "bin/ipfs-deploy.js",
+    "ipd": "bin/ipfs-deploy.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ensdomains/resolver": "^0.1.13",
+    "@truffle/hdwallet-provider": "^1.0.24",
+    "content-hash": "^2.5.0",
+    "dotenv": "^8.2.0",
+    "ethereum-ens": "^0.7.8",
+    "web3": "^1.2.2",
+    "yargs": "^14.2.0"
+  }
+}

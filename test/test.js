@@ -10,13 +10,13 @@ contract("ipfs", accounts => {
     const owner = accounts[0] // account that registers and owns ENSName
     const resolveAddress = accounts[1] // address the name should resolve to
 
-    // ENS name being tested: "dummy.test"
     const tld = 'test'
     const label = 'dummy'
-    const labelHash = utils.sha3(label)
-    const nameHash = namehash.hash(label+'.'+tld)
+    const ensName = label+'.'+tld
+    const labelHash = utils.sha3(label) // for registering
+    const nameHash = namehash.hash(ensName) // for querying
 
-    it(`should register "${label}.${tld}"`, async () => {
+    it(`should register "${ensName}"`, async () => {
         let registrar = await FIFSRegistrar.deployed()
         let result = await registrar.register(labelHash, owner, { from: owner })
         assert.isTrue(result.receipt.status)

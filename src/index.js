@@ -1,6 +1,6 @@
+const getCodec = require('content-hash').getCodec
 const encode = require('content-hash').encode
-const Web3 = require('web3')
-const HDWalletProvider = require('@truffle/hdwallet-provider')
+const decode = require('content-hash').decode
 const ENS = require('ethereum-ens')
 const ResolverABI = require('@ensdomains/resolver/build/contracts/Resolver.json')
 
@@ -48,7 +48,7 @@ module.exports = function Updater() {
         console.log("Updating contenthash...")
         const currentContentHash = await resolver.contenthash()
         if (currentContentHash) {
-            console.log("\tExisting contenthash: " + contentHash.getCodec(currentContentHash) + ":" + contentHash.decode(currentContentHash))
+            console.log("\tExisting contenthash: " + getCodec(currentContentHash) + ":" + decode(currentContentHash))
         }
         try {
             if (!dryrun) {

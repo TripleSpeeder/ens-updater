@@ -14,19 +14,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ensdomains/buffer": "0.0.10",
-    "@ensdomains/dnssec-oracle": "^0.1.2",
-    "@ensdomains/ens": "^0.3.11",
     "@ensdomains/resolver": "^0.1.13",
     "@truffle/hdwallet-provider": "^1.0.24",
     "content-hash": "^2.5.0",
     "dotenv": "^8.2.0",
     "ethereum-ens": "^0.7.8",
-    "scrypt": "^6.0.3",
     "web3": "^1.2.2",
     "yargs": "^14.2.0"
   },
   "devDependencies": {
+    "@ensdomains/buffer": "0.0.10",
+    "@ensdomains/dnssec-oracle": "^0.1.2",
+    "@ensdomains/ens": "^0.3.11",
+    "scrypt": "^6.0.3",
     "chai": "^4.2.0",
     "mocha": "^6.2.2"
   }

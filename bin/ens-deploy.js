@@ -47,7 +47,7 @@ const main = async () => {
     })
     .help()
     .alias('help', 'h')
-    .argv
+        .argv
 
     // get commandline options
     const connectionString = argv['web3']

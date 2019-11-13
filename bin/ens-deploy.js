@@ -84,7 +84,7 @@ const main = async () => {
     }
 
     const updater = new Updater()
-    updater.update(options)
+    updater.setContenthash(options)
 }
 
 main()

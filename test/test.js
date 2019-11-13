@@ -16,8 +16,16 @@ contract("", accounts => {
     const firstCID = "QM12345678901234567890"
     const labelHash = utils.sha3(label) // for registering
     const node = namehash.hash(ensName) // for querying
+    const updaterOptions = {
+        web3: web3,
+        ensName: ensName,
+        registryAddress: ENSRegistry.address,
+        accountIndex: accountIndex,
+        verbose: false,
+    }
 
-    it(`should register "${ensName}"`, async () => {
+
+    it(`should register "${ensName}"`, async function() {
         let registrar = await FIFSRegistrar.deployed()
         let result = await registrar.register(labelHash, owner, { from: owner })
         assert.isTrue(result.receipt.status)
@@ -27,7 +35,7 @@ contract("", accounts => {
         assert.strictEqual(storedOwner, owner)
     })
 
-    it('should set public resolver', async () => {
+    it('should set public resolver', async function() {
         let registry = await ENSRegistry.deployed()
         let result = await registry.setResolver(node, PublicResolver.address)
         assert.isTrue(result.receipt.status)
@@ -36,51 +44,55 @@ contract("", accounts => {
         assert.strictEqual(resolver, PublicResolver.address)
     })
 
-    it("should set IPFS hash", async () =>{
-        const type='ipfs'
-        const options = {
-            web3: web3,
-            ensName: ensName,
-            contentType: type,
-            contentHash: firstCID,
-            registryAddress: ENSRegistry.address,
-            accountIndex: accountIndex,
-        }
+    it("should set IPFS hash", async function() {
         const updater = new Updater()
-        await updater.update(options)
+        await updater.setup(updaterOptions)
+        await updater.setContenthash({
+            dryrun: false,
+            contentType: 'ipfs',
+            contentHash: firstCID,
+        })
 
         // verify that resolver returns correct hash
         const resolver = await PublicResolver.deployed()
         const currentContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(currentContentHash), type)
+        assert.strictEqual(contenthash.getCodec(currentContentHash), 'ipfs')
         assert.strictEqual(contenthash.decode(currentContentHash), firstCID)
     })
 
-    it("should replace existing IPFS hash", async () =>{
-        const type='ipfs'
+    it("should replace existing IPFS hash", async function() {
         const resolver = await PublicResolver.deployed()
 
         // get old contentHash
         const oldContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(oldContentHash), type)
+        assert.strictEqual(contenthash.getCodec(oldContentHash), 'ipfs')
         assert.strictEqual(contenthash.decode(oldContentHash), firstCID)
 
         // update contentHash
         const otherCID = "QM098765432109876543210987654321"
-        const options = {
-            web3: web3,
-            ensName: ensName,
-            contentType: type,
-            contentHash: otherCID,
-            registryAddress: ENSRegistry.address,
-            accountIndex: accountIndex,
-        }
         const updater = new Updater()
-        await updater.update(options)
+        await updater.setup(updaterOptions)
+        await updater.setContenthash({
+            dryrun: false,
+            contentType: 'ipfs',
+            contentHash: otherCID,
+        })
 
         // verify that resolver returns new hash
         const currentContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(currentContentHash), type)
+        assert.strictEqual(contenthash.getCodec(currentContentHash), 'ipfs')
         assert.strictEqual(contenthash.decode(currentContentHash), otherCID)
+    })
+
+    it("should not update anything when 'dryrun' option is set")
+
+    it("should fail with unsupported content codec", async function() {
+        const updater = new Updater()
+        await updater.setup(updaterOptions)
+        assert.throws(updater.setContenthash({
+            dryrun: false,
+            contentType: 'YXZ',
+            contentHash: 'someHashValue',
+        }))
     })
 })

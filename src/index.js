@@ -1,29 +1,21 @@
-const getCodec = require('content-hash').getCodec
 const encode = require('content-hash').encode
-const decode = require('content-hash').decode
 const ENS = require('ethereum-ens')
 const ResolverABI = require('@ensdomains/resolver/build/contracts/Resolver.json')
 
 
 module.exports = function Updater() {
 
-    // Local variables
-    let encodedHash, account, owner, resolver, ens
+    // module variables
+    let encodedHash, account, owner, resolver, ens, verbose
 
     // Preparation: verify input, setup ENS etc.
-    async function setup({web3, ensName, contentType, contentHash, registryAddress, accountIndex}) {
-        console.log("Verifying content hash...")
-        try {
-            encodedHash = "0x" + encode(contentType, contentHash)
-        } catch(error) {
-            console.log("\tCould not encode contenthash: " + error)
-            throw error
-        }
-
+    async function doSetup(options) {
+        const {web3, ensName, registryAddress, accountIndex} = options
+        verbose = options.verbose
         ens = new ENS(web3.currentProvider, registryAddress ? registryAddress : undefined)
         const accounts = await web3.eth.getAccounts()
         account = accounts[accountIndex]
-        console.log("Verifying ensName owner")
+        verbose && console.log("Verifying ensName owner")
         owner = await ens.owner(ensName);
         if (owner !== account) {
             const msg = `\tAccount ${account} is not controller of ${ensName}. Current controller is ${owner}`
@@ -37,41 +29,50 @@ module.exports = function Updater() {
         try {
             // TODO: check if resolver supports required contentHash interface (https://eips.ethereum.org/EIPS/eip-165)
         } catch(error) {
-            const msg = `\tENS name ${ensName} can not be resolved.`
-            console.log(msg)
+            const msg = `\tResolver does not support setContentHash interface. You need to upgrade the Resolver.`
+            console.error(msg)
             throw Error(msg)
         }
     }
 
-    async function runUpdate({dryrun}) {
-        // do the actual work
-        console.log("Updating contenthash...")
-        const currentContentHash = await resolver.contenthash()
-        if (currentContentHash) {
-            console.log("\tExisting contenthash: " + getCodec(currentContentHash) + ":" + decode(currentContentHash))
+
+    async function runUpdate({contentType, contentHash, dryrun}) {
+        verbose && console.log("Verifying content hash...")
+        try {
+            encodedHash = "0x" + encode(contentType, contentHash)
+        } catch(error) {
+            console.error("\tCould not encode contenthash: " + error)
+            throw error
         }
+
+        verbose && console.log("Updating contenthash...")
         try {
             if (!dryrun) {
                 let receipt = await resolver.setContenthash(encodedHash)
-                console.log(`\tSuccessfully stored new contentHash. Transaction hash: ${receipt.transactionHash}.`)
+                verbose && console.log(`\tSuccessfully stored new contentHash. Transaction hash: ${receipt.transactionHash}.`)
             } else {
-                console.log(`\tSkipped transaction due to dry-run option being set.`)
+                verbose && console.log(`\tSkipped transaction due to dry-run option being set.`)
             }
         } catch(error) {
-            console.log("Error creating transaction: " + error)
+            console.error("Error creating transaction: " + error)
             throw error
         }
-        // shutdown provider
-        console.log("All done, shutting down.")
     }
 
     return {
-        update: async function(options) {
+        setup: async function(options) {
             try{
-                await setup(options)
+                await doSetup(options)
+            } catch (error) {
+                console.error(`Error occured during setup: ${error}. Aborting.`)
+                process.exit(1)
+            }
+        },
+        setContenthash: async function(options) {
+            try{
                 await runUpdate(options)
             } catch (error) {
-                console.error("Error occured. Aborting.")
+                console.error("Error occured during update. Aborting.")
                 process.exit(1)
             }
         }

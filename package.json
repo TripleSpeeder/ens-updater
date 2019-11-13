@@ -2,7 +2,7 @@
   "name": "@triplespeeder/ens-deploy",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "bin": {
     "ipfs-deploy": "bin/ipfs-deploy.js",
     "ipd": "bin/ipfs-deploy.js"
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "michael@m-bauer.org",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@ensdomains/resolver": "^0.1.13",
     "@truffle/hdwallet-provider": "^1.0.24",

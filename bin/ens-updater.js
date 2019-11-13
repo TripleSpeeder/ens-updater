@@ -3,13 +3,13 @@ require('dotenv').config()
 const yargs = require('yargs')
 const Web3 = require('web3')
 const HDWalletProvider = require('@truffle/hdwallet-provider')
-const Updater = require('../src/index')
+const Updater = require('../lib/index')
 
 
 const main = async () => {
     try {
         const argv = yargs
-        .scriptName('ens-deploy')
+        .scriptName('ens-updater')
         .usage('Usage: $0 <command> [options]')
         .command('setContenthash', 'Set the contenthash for an ENS name')
         .demandCommand(1)

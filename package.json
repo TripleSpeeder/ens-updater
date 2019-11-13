@@ -1,11 +1,10 @@
 {
-  "name": "@triplespeeder/ens-deploy",
+  "name": "@triplespeeder/ens-updater",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "bin": {
-    "ipfs-deploy": "bin/ipfs-deploy.js",
-    "ipd": "bin/ipfs-deploy.js"
+    "ens-updater": "bin/ens-updater.js"
   },
   "scripts": {
     "test": "truffle test"

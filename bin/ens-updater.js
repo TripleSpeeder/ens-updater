@@ -93,21 +93,23 @@ const main = async () => {
             throw Error(`\tFailed to initialize web3 at ${connectionString}` )
         }
 
-        const options = {
+        const setupOptions = {
             web3: web3,
             ensName: ensName,
             accountIndex: accountIndex,
-            dryrun: dryrun,
             verbose: verbose,
             registryAddress: registryAddress
         }
 
         const updater = new Updater()
-        await updater.setup(options)
+        await updater.setup(setupOptions)
         await updater.setContenthash({
+            dryrun: dryrun,
             contentType: contentType,
             contentHash: contentHash,
         })
+        verbose && console.log("Exiting...")
+        provider.engine.stop()
     } catch(error) {
         console.error(`Error occured: ${error}. Aborting`)
         process.exit(1)

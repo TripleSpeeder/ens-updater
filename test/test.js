@@ -4,7 +4,7 @@ const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 const namehash = require('eth-ens-namehash');
 const utils = require('web3-utils');
 const Updater = require('../lib/index')
-const contenthash = require('content-hash')
+const {decode, getCodec} = require('content-hash')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
@@ -16,7 +16,9 @@ contract("", accounts => {
     const tld = 'test'
     const label = 'dummy'
     const ensName = label+'.'+tld
-    const firstCID = "QM12345678901234567890"
+    const firstCID = "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU"
+    const otherCID = "QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D"
+    const codec = 'ipfs-ns'
     const labelHash = utils.sha3(label) // for registering
     const node = namehash.hash(ensName) // for querying
     const updaterOptions = {
@@ -51,15 +53,15 @@ contract("", accounts => {
         await updater.setup(updaterOptions)
         await updater.setContenthash({
             dryrun: false,
-            contentType: 'ipfs',
+            contentType: codec,
             contentHash: firstCID,
         })
 
         // verify that resolver returns correct hash
         const resolver = await PublicResolver.deployed()
         const currentContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(currentContentHash), 'ipfs')
-        assert.strictEqual(contenthash.decode(currentContentHash), firstCID)
+        assert.strictEqual(getCodec(currentContentHash), codec)
+        assert.strictEqual(decode(currentContentHash), firstCID)
     })
 
     it("should replace existing IPFS hash", async function() {
@@ -67,23 +69,22 @@ contract("", accounts => {
 
         // get old contentHash
         const oldContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(oldContentHash), 'ipfs')
-        assert.strictEqual(contenthash.decode(oldContentHash), firstCID)
+        assert.strictEqual(getCodec(oldContentHash), codec)
+        assert.strictEqual(decode(oldContentHash), firstCID)
 
         // update contentHash
-        const otherCID = "QM098765432109876543210987654321"
         const updater = new Updater()
         await updater.setup(updaterOptions)
         await updater.setContenthash({
             dryrun: false,
-            contentType: 'ipfs',
+            contentType: codec,
             contentHash: otherCID,
         })
 
         // verify that resolver returns new hash
         const currentContentHash = await resolver.contenthash(node)
-        assert.strictEqual(contenthash.getCodec(currentContentHash), 'ipfs')
-        assert.strictEqual(contenthash.decode(currentContentHash), otherCID)
+        assert.strictEqual(getCodec(currentContentHash), codec)
+        assert.strictEqual(decode(currentContentHash), otherCID)
     })
 
     it("should not update anything when 'dryrun' option is set", async function() {
@@ -93,13 +94,12 @@ contract("", accounts => {
         const oldContentHash = await resolver.contenthash(node)
 
         // update contentHash with dry-run option set
-        const otherCID = "QM098765432109876543210987654321"
         const updater = new Updater()
         await updater.setup(updaterOptions)
         await updater.setContenthash({
             dryrun: true,
-            contentType: 'ipfs',
-            contentHash: otherCID,
+            contentType: codec,
+            contentHash: firstCID,
         })
 
         // verify that resolver still returns old hash
@@ -116,4 +116,6 @@ contract("", accounts => {
                 contentHash: 'someHashValue',
             }))
     })
+
+    it("should work with CIDv1 CIDs")
 })

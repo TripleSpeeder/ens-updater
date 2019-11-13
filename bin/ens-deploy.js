@@ -10,6 +10,9 @@ const main = async () => {
     try {
         const argv = yargs
         .scriptName('ens-deploy')
+        .usage('Usage: $0 <command> [options]')
+        .command('setContenthash', 'Set the contenthash for an ENS name')
+        .demandCommand(1)
         .options({
             'web3': {
                 description: 'Web3 connection string',
@@ -36,7 +39,7 @@ const main = async () => {
             },
             'contenthash': {
                 alias: 'hash',
-                description: 'Content has to set',
+                description: 'Content hash to set',
                 type: 'string',
                 demandOption: true,
             },
@@ -46,8 +49,9 @@ const main = async () => {
                 default: false,
                 demandOption: false,
             },
-            'verbose': {
-                alias: 'v',
+            'quiet': {
+                description: 'Suppress console output. Set this when running from a script/CI environment',
+                alias: 'q',
                 type: 'boolean',
                 default: false,
                 demandOption: false,
@@ -60,16 +64,18 @@ const main = async () => {
         })
         .help()
         .alias('help', 'h')
-            .argv
+        .epilog('copyright 2019 michael@m-bauer.org')
+        .argv
 
         // get commandline options
+        const command = argv['command']
         const connectionString = argv['web3']
         const accountIndex = argv['accountindex']
         const dryrun = argv['dry-run']
         const ensName = argv['ensname']
         const contentType = argv['contenttype']
         const contentHash = argv['contenthash']
-        const verbose = argv['verbose']
+        const verbose = !argv['quiet']
         const registryAddress = argv['registryaddress']
         const mnemonic = process.env.MNEMONIC
 

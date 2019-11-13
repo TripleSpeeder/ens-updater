@@ -33,8 +33,7 @@ module.exports = function Updater() {
         }
     }
 
-
-    async function runUpdate({contentType, contentHash, dryrun}) {
+    async function doSetContenthash({contentType, contentHash, dryrun}) {
         verbose && console.log("Verifying content hash...")
         try {
             encodedHash = "0x" + encode(contentType, contentHash)
@@ -60,7 +59,7 @@ module.exports = function Updater() {
             return doSetup(options)
         },
         setContenthash: async function(options) {
-            return runUpdate(options)
+            return doSetContenthash(options)
         }
     };
 };

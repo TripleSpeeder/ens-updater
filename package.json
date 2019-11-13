@@ -11,7 +11,7 @@
     "test": "truffle test"
   },
   "keywords": [],
-  "author": "",
+  "author": "michael@m-bauer.org",
   "license": "ISC",
   "dependencies": {
     "@ensdomains/resolver": "^0.1.13",

@@ -12,15 +12,15 @@ module.exports = function Updater() {
     async function doSetup(options) {
         const {web3, ensName, registryAddress, accountIndex} = options
         verbose = options.verbose
+
         ens = new ENS(web3.currentProvider, registryAddress ? registryAddress : undefined)
         const accounts = await web3.eth.getAccounts()
         account = accounts[accountIndex]
+
         verbose && console.log("Verifying ensName owner")
         owner = await ens.owner(ensName);
         if (owner !== account) {
-            const msg = `\tAccount ${account} is not controller of ${ensName}. Current controller is ${owner}`
-            console.error(msg)
-            throw Error(msg)
+            throw Error(`\tAccount ${account} is not controller of ${ensName}. Current controller is ${owner}`)
         }
 
         // Don'use default ABI of ethereum-ens package, as it does not yet support contentHash.
@@ -29,9 +29,7 @@ module.exports = function Updater() {
         try {
             // TODO: check if resolver supports required contentHash interface (https://eips.ethereum.org/EIPS/eip-165)
         } catch(error) {
-            const msg = `\tResolver does not support setContentHash interface. You need to upgrade the Resolver.`
-            console.error(msg)
-            throw Error(msg)
+            throw Error(`\tResolver does not support setContentHash interface. You need to upgrade the Resolver.`)
         }
     }
 
@@ -41,8 +39,7 @@ module.exports = function Updater() {
         try {
             encodedHash = "0x" + encode(contentType, contentHash)
         } catch(error) {
-            console.error("\tCould not encode contenthash: " + error)
-            throw error
+            throw Error(`\tCould not encode contenthash: ${error}`)
         }
 
         verbose && console.log("Updating contenthash...")
@@ -54,8 +51,7 @@ module.exports = function Updater() {
                 verbose && console.log(`\tSkipped transaction due to dry-run option being set.`)
             }
         } catch(error) {
-            console.error("Error creating transaction: " + error)
-            throw error
+            throw Error(`Error performing setContenthash(): ${error}`)
         }
     }
 

@@ -27,7 +27,6 @@ contract("", accounts => {
         verbose: false,
     }
 
-
     it(`should register "${ensName}"`, async function() {
         let registrar = await FIFSRegistrar.deployed()
         let result = await registrar.register(labelHash, owner, { from: owner })

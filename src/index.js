@@ -61,20 +61,10 @@ module.exports = function Updater() {
 
     return {
         setup: async function(options) {
-            try{
-                await doSetup(options)
-            } catch (error) {
-                console.error(`Error occured during setup: ${error}. Aborting.`)
-                process.exit(1)
-            }
+            return doSetup(options)
         },
         setContenthash: async function(options) {
-            try{
-                await runUpdate(options)
-            } catch (error) {
-                console.error("Error occured during update. Aborting.")
-                process.exit(1)
-            }
+            return runUpdate(options)
         }
     };
 };

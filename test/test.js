@@ -1,4 +1,3 @@
-var assert = require('chai').assert
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
 const FIFSRegistrar = artifacts.require("@ensdomains/ens/FIFSRegistrar");
 const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
@@ -6,6 +5,10 @@ const namehash = require('eth-ens-namehash');
 const utils = require('web3-utils');
 const Updater = require('../src/index')
 const contenthash = require('content-hash')
+const chai = require("chai");
+const chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
+const assert = chai.assert;
 
 contract("", accounts => {
     const accountIndex = 0;
@@ -84,15 +87,34 @@ contract("", accounts => {
         assert.strictEqual(contenthash.decode(currentContentHash), otherCID)
     })
 
-    it("should not update anything when 'dryrun' option is set")
+    it("should not update anything when 'dryrun' option is set", async function() {
+        const resolver = await PublicResolver.deployed()
+
+        // get old contentHash
+        const oldContentHash = await resolver.contenthash(node)
+
+        // update contentHash with dry-run option set
+        const otherCID = "QM098765432109876543210987654321"
+        const updater = new Updater()
+        await updater.setup(updaterOptions)
+        await updater.setContenthash({
+            dryrun: true,
+            contentType: 'ipfs',
+            contentHash: otherCID,
+        })
+
+        // verify that resolver still returns old hash
+        const currentContentHash = await resolver.contenthash(node)
+        assert.strictEqual(currentContentHash, oldContentHash)
+    })
 
     it("should fail with unsupported content codec", async function() {
         const updater = new Updater()
         await updater.setup(updaterOptions)
-        assert.throws(updater.setContenthash({
-            dryrun: false,
-            contentType: 'YXZ',
-            contentHash: 'someHashValue',
-        }))
+        assert.isRejected(updater.setContenthash({
+                dryrun: false,
+                contentType: 'YXZ',
+                contentHash: 'someHashValue',
+            }))
     })
 })

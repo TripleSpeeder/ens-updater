@@ -33,7 +33,7 @@ const main = async () => {
             },
             'contenttype': {
                 alias: 'type',
-                description: 'Type of content hash to set (e.g ipfs, swarm, ...)',
+                description: 'Type of content hash to set (e.g ipfs-ns, swarm-ns, ...)',
                 type: 'string',
                 demandOption: true,
             },
@@ -64,7 +64,8 @@ const main = async () => {
         })
         .help()
         .alias('help', 'h')
-        .epilog('copyright 2019 michael@m-bauer.org')
+        .epilog('contact: michael@m-bauer.org')
+        .epilog('github: https://github.com/TripleSpeeder/ens-updater')
         .argv
 
         // get commandline options

@@ -2,10 +2,10 @@
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-> Set the contenthash for ENS names from the commandline
+> Set records of ENS names from the commandline
 
-This tool enables automated update of contentHash records in the Ethereum Name System. 
-It is designed to integrate well in deployment scripts or CI environments. 
+This tool enables automated update of e.g. contentHash records in the Ethereum Name System. 
+Goal is to integrate well in deployment scripts or CI environments. 
 
 
 ## Table of Contents
@@ -55,7 +55,7 @@ Options:
   --web3                 Web3 connection string              [string] [required]
   --accountindex, -i     Account index. Defaults to 0      [number] [default: 0]
   --ensname, --ens       ENS Name to update                  [string] [required]
-  --contenttype, --type  Type of content hash to set (e.g ipfs, swarm, ...)
+  --contenttype, --type  Type of content hash to set (ipfs-ns, swarm-ns, ...)
                                                              [string] [required]
   --contenthash, --hash  Content hash to set                 [string] [required]
   --dry-run              Do not perform any real transactions
@@ -69,7 +69,7 @@ Options:
 Real example:
 On Ropsten network, set the contentHash of the name `ens-updater.eth` to the IPFS CID `QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU`:
 ```shell script
-> ens-updater setContenthash --ensname ens-updater.eth --contenttype ipfs --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545
+> ens-updater setContenthash --ensname ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545
 Setting up web3 & HDWallet provider...
         Running on chain ID 3
 Verifying ensName owner
@@ -86,7 +86,8 @@ Exiting...
 
 ## Contributing
 
-PRs accepted!
+PRs are welcome! Have a look at the [open issues](https://github.com/TripleSpeeder/ens-updater/issues) or create a new 
+issue if you are missing functionality.
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 

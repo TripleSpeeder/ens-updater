@@ -104,7 +104,8 @@ const main = async () => {
         try {
             web3 = new Web3(provider)
             chainId = await web3.eth.getChainId()
-            verbose && console.log('\tRunning on chain ID ' + chainId)
+            netId = await web3.eth.net.getId()
+            verbose && console.log(`\tRunning chain ID ${chainId} on network ${netId}`)
         } catch (error) {
             throw Error(`\tFailed to initialize web3 at ${connectionString}` )
         }

@@ -97,7 +97,7 @@ const main = async () => {
 
         verbose && console.log('Setting up web3 & HDWallet provider...')
         try {
-            provider = new HDWalletProvider(mnemonic, connectionString, accountIndex)
+            provider = new HDWalletProvider(mnemonic, connectionString, accountIndex, accountIndex+1)
         } catch (error) {
             throw Error(`\tCould not initialize HDWalletProvider ${error}`)
         }

@@ -1,7 +1,7 @@
 {
   "name": "@triplespeeder/ens-updater",
   "version": "1.0.0",
-  "description": "",
+  "description": "Set ENS name records from the commandline",
   "main": "lib/index.js",
   "bin": {
     "ens-updater": "bin/ens-updater.js"
@@ -9,7 +9,11 @@
   "scripts": {
     "test": "truffle test"
   },
-  "keywords": [],
+  "keywords": [
+    "ENS",
+    "ipfs",
+    "ethereum",
+  ],
   "author": "michael@m-bauer.org",
   "license": "MIT",
   "dependencies": {

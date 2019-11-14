@@ -66,7 +66,7 @@ Options:
   --help, -h             Show help                                     [boolean]
 ```
 
-Real example:
+#### Example
 On Ropsten network, set the contentHash of the name `ens-updater.eth` to the IPFS CID `QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU`:
 ```shell script
 > ens-updater setContenthash --ensname ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545
@@ -78,6 +78,19 @@ Updating contenthash...
         Successfully stored new contentHash. Transaction hash: 0x0b8cdb75ff3b514c974ccd0bdef7cc3557bfab934b39caba30c38b88d375d705.
 Exiting...
 > 
+```
+
+#### Reading values from stdin
+Setting the value "stdin" for option `contenthash` reads the contenthash from stdin. This is useful
+to build a chain of commands in a deploy script. E.g. you can use ipfs-deploy to upload data to IPFS
+and directly pipe the CID returned by ipfs-deploy into ens-updater:
+
+```shell script
+> echo -n "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU" | ens-updater setContenthash --contenttype ipfs-ns --contenthash stdin --ensname ens-updater.eth --web3 http://ropsten.dappnode:8545
+Getting contenthash from stdin...
+         Got contenthash: QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU.
+Setting up web3 & HDWallet provider...
+...
 ```
 
 ## Maintainers

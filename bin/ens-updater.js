@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config()
+const fs = require('fs');
 const yargs = require('yargs')
 const Web3 = require('web3')
 const HDWalletProvider = require('@truffle/hdwallet-provider')
@@ -11,7 +12,24 @@ const main = async () => {
         const argv = yargs
         .scriptName('ens-updater')
         .usage('Usage: $0 <command> [options]')
-        .command('setContenthash', 'Set the contenthash for an ENS name')
+        .command('setContenthash', 'Set the contenthash for an ENS name',
+            (yargs) => {
+                return yargs.options({
+                    'contenttype': {
+                        alias: 'type',
+                        description: 'Type of content hash to set (e.g ipfs-ns, swarm-ns, ...)',
+                        type: 'string',
+                        demandOption: true,
+                    },
+                    'contenthash': {
+                        alias: 'hash',
+                        description: 'Content hash to set or \'stdin\' to read from stdin',
+                        type: 'string',
+                        demandOption: true,
+                    }
+                })
+            }
+        )
         .demandCommand(1)
         .options({
             'web3': {
@@ -28,18 +46,6 @@ const main = async () => {
             'ensname': {
                 alias: 'ens',
                 description: 'ENS Name to update',
-                type: 'string',
-                demandOption: true,
-            },
-            'contenttype': {
-                alias: 'type',
-                description: 'Type of content hash to set (e.g ipfs-ns, swarm-ns, ...)',
-                type: 'string',
-                demandOption: true,
-            },
-            'contenthash': {
-                alias: 'hash',
-                description: 'Content hash to set',
                 type: 'string',
                 demandOption: true,
             },
@@ -64,21 +70,30 @@ const main = async () => {
         })
         .help()
         .alias('help', 'h')
+        .strict()
         .epilog('contact: michael@m-bauer.org')
         .epilog('github: https://github.com/TripleSpeeder/ens-updater')
         .argv
 
         // get commandline options
-        const command = argv['command']
-        const connectionString = argv['web3']
-        const accountIndex = argv['accountindex']
-        const dryrun = argv['dry-run']
-        const ensName = argv['ensname']
-        const contentType = argv['contenttype']
-        const contentHash = argv['contenthash']
-        const verbose = !argv['quiet']
-        const registryAddress = argv['registryaddress']
+        const command = argv._[0]
+        const connectionString = argv.web3
+        const accountIndex = argv.accountindex
+        const dryrun = argv.dryRun //yes, yargs magic converts dry-run to dryRun
+        const ensName = argv.ensname
+        const contentType = argv.contenttype
+        const verbose = !argv.quiet
+        const registryAddress = argv.registryaddress
+        let contentHash = argv.contenthash
+
+        // get env options
         const mnemonic = process.env.MNEMONIC
+
+        if (contentHash === 'stdin') {
+            verbose && console.log('Getting contenthash from stdin...')
+            contentHash = fs.readFileSync(0).toString();
+            verbose && console.log(`\t Got contenthash: ${contentHash}.`)
+        }
 
         verbose && console.log('Setting up web3 & HDWallet provider...')
         try {

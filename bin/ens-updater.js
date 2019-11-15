@@ -116,7 +116,7 @@ const main = async () => {
             netId = await web3.eth.net.getId()
             verbose && console.log(`\tRunning chain ID ${chainId} on network ${netId}`)
         } catch (error) {
-            throw Error(`\tFailed to initialize web3 at ${connectionString}` )
+            throw Error(`Failed to initialize web3 at ${connectionString}` )
         }
 
         verbose && console.log('Setting up account')
@@ -130,8 +130,10 @@ const main = async () => {
                 web3.eth.accounts.wallet.add(account);
                 controllerAddress = account.address;
             } catch (error) {
-                throw Error(`\tFailed to import account from private key: ${error}`)
+                throw Error(`Failed to import account from private key: ${error}`)
             }
+        } else {
+            throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
         }
         verbose && console.log(`Using account ${controllerAddress}`)
 
@@ -150,8 +152,9 @@ const main = async () => {
             contentType: contentType,
             contentHash: contentHash,
         })
+
         verbose && console.log("Exiting...")
-        // HDWalletprovider should be shut down through engine.stop()
+        // HDWalletprovider should be shut down through engine.stop().
         provider.engine && provider.engine.stop()
     } catch(error) {
         console.error(`Error occured: ${error}. Aborting`)

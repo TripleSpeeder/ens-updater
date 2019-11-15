@@ -133,6 +133,7 @@ const main = async () => {
                 throw Error(`\tFailed to import account from private key: ${error}`)
             }
         }
+        verbose && console.log(`Using account ${controllerAddress}`)
 
         const setupOptions = {
             web3: web3,
@@ -150,7 +151,8 @@ const main = async () => {
             contentHash: contentHash,
         })
         verbose && console.log("Exiting...")
-        provider.engine.stop()
+        // HDWalletprovider should be shut down through engine.stop()
+        provider.engine && provider.engine.stop()
     } catch(error) {
         console.error(`Error occured: ${error}. Aborting`)
         process.exit(1)

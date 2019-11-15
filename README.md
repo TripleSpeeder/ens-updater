@@ -19,19 +19,29 @@ Goal is to integrate well in deployment scripts or CI environments.
 - [License](#license)
 
 ## Security
-In order to perform an update of an ENS record, `ens-update` needs the private keys of the
-Ethereum account controlling the ENS name. The private keys are derived from the the mnemonic
-provided through a `.env` file in the working directory. 
+In order to perform an update of an ENS record, `ens-update` needs the private key of the
+Ethereum account controlling the ENS name. The private key needs to be provided through the file
+`.env` in the working directory.
 
+- **NEVER share .env file with anybody**
+- **NEVER check .env into version control**
+- **NEVER publish .env in any other way**
+
+
+The private key can be provided either directly or through a mnemonic
+#### Provide the mnemonic
 Example contents of `.env`:
 ```bash
-MNEMONIC=fit repeat flame beauty knife cereal urge amateur steak thought denial negative
+MNEMONIC=<mnemonic phrase here>
 ```
-Remember - The mnemonic gives full control to all accounts of the according wallet!
+By default the first account will be used. If you need to use another account provide the option --accountindex.
 
-- **NEVER share this file with anybody**
-- **NEVER check it into version control**
-- **NEVER publish in any other way**
+Remember - The mnemonic gives full control to all accounts of the according wallet!
+#### Provide the private key
+Example contents of `.env`:
+```bash
+PRIVATE_KEY=<private key here>
+```
 
 ## Background
 For information on the Ethereum Name System see the [ENS documentation](https://docs.ens.domains/).
@@ -82,11 +92,13 @@ Exiting...
 
 #### Reading values from stdin
 Setting the value "stdin" for option `contenthash` reads the contenthash from stdin. This is useful
-to build a chain of commands in a deploy script. E.g. you can use ipfs-deploy to upload data to IPFS
+to build a chain of commands in a deploy script. 
+
+For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy) to publish a website to IPFS
 and directly pipe the CID returned by ipfs-deploy into ens-updater:
 
 ```shell script
-> echo -n "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU" | ens-updater setContenthash --contenttype ipfs-ns --contenthash stdin --ensname ens-updater.eth --web3 http://ropsten.dappnode:8545
+> ipfs-deploy -d dappnode | ens-updater setContenthash --contenttype ipfs-ns --contenthash stdin --ensname ens-updater.eth --web3 http://ropsten.dappnode:8545
 Getting contenthash from stdin...
          Got contenthash: QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU.
 Setting up web3 & HDWallet provider...
@@ -101,8 +113,6 @@ Setting up web3 & HDWallet provider...
 
 PRs are welcome! Have a look at the [open issues](https://github.com/TripleSpeeder/ens-updater/issues) or create a new 
 issue if you are missing functionality.
-
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 

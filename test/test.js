@@ -12,7 +12,7 @@ const assert = chai.assert;
 
 contract("", accounts => {
     const accountIndex = 0;
-    const owner = accounts[accountIndex] // account that registers and owns ENSName
+    const controller = accounts[accountIndex] // account that registers and owns ENSName
     const tld = 'test'
     const label = 'dummy'
     const ensName = label+'.'+tld
@@ -25,18 +25,18 @@ contract("", accounts => {
         web3: web3,
         ensName: ensName,
         registryAddress: ENSRegistry.address,
-        accountIndex: accountIndex,
+        controllerAddress: controller,
         verbose: false,
     }
 
     it(`should register "${ensName}"`, async function() {
         let registrar = await FIFSRegistrar.deployed()
-        let result = await registrar.register(labelHash, owner, { from: owner })
+        let result = await registrar.register(labelHash, controller, { from: controller })
         assert.isTrue(result.receipt.status)
-        // verify owner
+        // verify controller
         let registry = await ENSRegistry.deployed()
         let storedOwner = await registry.owner(node)
-        assert.strictEqual(storedOwner, owner)
+        assert.strictEqual(storedOwner, controller)
     })
 
     it('should set public resolver', async function() {

@@ -88,6 +88,7 @@ const main = async () => {
 
         // get env options
         const mnemonic = process.env.MNEMONIC
+        const private_key = process.env.PRIVATE_KEY
 
         if (contentHash === 'stdin') {
             verbose && console.log('Getting contenthash from stdin...')
@@ -95,12 +96,20 @@ const main = async () => {
             verbose && console.log(`\t Got contenthash: ${contentHash}.`)
         }
 
-        verbose && console.log('Setting up web3 & HDWallet provider...')
-        try {
-            provider = new HDWalletProvider(mnemonic, connectionString, accountIndex, accountIndex+1)
-        } catch (error) {
-            throw Error(`\tCould not initialize HDWalletProvider ${error}`)
+        verbose && console.log('Setting up provider...')
+        if (mnemonic) {
+            // Need HDWalletProvider to use mnemonic
+            try {
+                provider = new HDWalletProvider(mnemonic, connectionString, accountIndex, accountIndex+1)
+            } catch (error) {
+                throw Error(`\tCould not initialize HDWalletProvider ${error}`)
+            }
+        } else {
+            // just use plain connection string
+            provider = connectionString
         }
+
+        verbose && console.log('Setting up web3')
         try {
             web3 = new Web3(provider)
             chainId = await web3.eth.getChainId()
@@ -110,10 +119,25 @@ const main = async () => {
             throw Error(`\tFailed to initialize web3 at ${connectionString}` )
         }
 
+        verbose && console.log('Setting up account')
+        let controllerAddress
+        if (mnemonic) {
+            const accounts = await web3.eth.getAccounts()
+            controllerAddress = accounts[accountIndex]
+        } else if (private_key) {
+            try {
+                const account = web3.eth.accounts.privateKeyToAccount('0x' + private_key);
+                web3.eth.accounts.wallet.add(account);
+                controllerAddress = account.address;
+            } catch (error) {
+                throw Error(`\tFailed to import account from private key: ${error}`)
+            }
+        }
+
         const setupOptions = {
             web3: web3,
             ensName: ensName,
-            accountIndex: accountIndex,
+            controllerAddress: controllerAddress,
             verbose: verbose,
             registryAddress: registryAddress
         }

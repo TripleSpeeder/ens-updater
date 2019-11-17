@@ -9,10 +9,12 @@ const Updater = require('../lib/index')
 
 const main = async () => {
     try {
+        let requiresAccount = false
         const argv = yargs
         .scriptName('ens-updater')
         .usage('Usage: $0 <command> [options]')
         .command('setContenthash', 'Set the contenthash for an ENS name',
+            // builder
             (yargs) => {
                 return yargs.options({
                     'contenttype': {
@@ -28,8 +30,13 @@ const main = async () => {
                         demandOption: true,
                     }
                 })
+            },
+            // handler
+            () => {
+                requiresAccount = true
             }
         )
+        .command('getContenthash', 'Get the contenthash for an ENS name')
         .demandCommand(1)
         .options({
             'web3': {
@@ -119,23 +126,25 @@ const main = async () => {
             throw Error(`Failed to initialize web3 at ${connectionString}` )
         }
 
-        verbose && console.log('Setting up account')
         let controllerAddress
-        if (mnemonic) {
-            const accounts = await web3.eth.getAccounts()
-            controllerAddress = accounts[accountIndex]
-        } else if (private_key) {
-            try {
-                const account = web3.eth.accounts.privateKeyToAccount('0x' + private_key);
-                web3.eth.accounts.wallet.add(account);
-                controllerAddress = account.address;
-            } catch (error) {
-                throw Error(`Failed to import account from private key: ${error}`)
+        if (requiresAccount) {
+            verbose && console.log('Setting up account')
+            if (mnemonic) {
+                const accounts = await web3.eth.getAccounts()
+                controllerAddress = accounts[accountIndex]
+            } else if (private_key) {
+                try {
+                    const account = web3.eth.accounts.privateKeyToAccount('0x' + private_key);
+                    web3.eth.accounts.wallet.add(account);
+                    controllerAddress = account.address;
+                } catch (error) {
+                    throw Error(`Failed to import account from private key: ${error}`)
+                }
+            } else {
+                throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
             }
-        } else {
-            throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
+            verbose && console.log(`Using account ${controllerAddress}`)
         }
-        verbose && console.log(`Using account ${controllerAddress}`)
 
         const setupOptions = {
             web3: web3,
@@ -144,14 +153,24 @@ const main = async () => {
             verbose: verbose,
             registryAddress: registryAddress
         }
-
         const updater = new Updater()
         await updater.setup(setupOptions)
-        await updater.setContenthash({
-            dryrun: dryrun,
-            contentType: contentType,
-            contentHash: contentHash,
-        })
+
+        switch(command) {
+            case 'setContenthash':
+                await updater.setContenthash({
+                    dryrun: dryrun,
+                    contentType: contentType,
+                    contentHash: contentHash,
+                })
+                break
+            case 'getContenthash':
+                let {codec, hash} = await updater.getContenthash()
+                console.log(`${codec}: ${hash}`)
+                break
+            default:
+                break
+        }
 
         verbose && console.log("Exiting...")
         // HDWalletprovider should be shut down through engine.stop().

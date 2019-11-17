@@ -64,6 +64,21 @@ contract("", accounts => {
         assert.strictEqual(decode(currentContentHash), firstCID)
     })
 
+    it("should get correct IPFS hash", async function() {
+        const updater = new Updater()
+        await updater.setup(updaterOptions)
+
+        // Get content hash directly from resolver
+        const resolver = await PublicResolver.deployed()
+        const currentContentHash = await resolver.contenthash(node)
+
+        // Get decoded contenthash via updater
+        const result = await updater.getContenthash(node)
+        assert.strictEqual(result.codec, getCodec(currentContentHash))
+        assert.strictEqual(result.hash, decode(currentContentHash))
+    })
+
+
     it("should replace existing IPFS hash", async function() {
         const resolver = await PublicResolver.deployed()
 
@@ -117,5 +132,6 @@ contract("", accounts => {
             }))
     })
 
-    it("should work with CIDv1 CIDs")
+    it("should set contenthash format CIDv1 CIDs")
+
 })

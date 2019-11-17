@@ -53,7 +53,7 @@ npm install -g @triplespeeder/ens-updater
 ```
 
 ## Usage
-At the moment only the command setContenthash is implemented. PRs to extend functionality are welcome :)
+At the moment only setting/getting of contenthash is implemented. PRs to extend functionality are welcome :)
 ```
  > ens-updater setContenthash
 ens-updater setContenthash

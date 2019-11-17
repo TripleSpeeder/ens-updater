@@ -99,7 +99,7 @@ const main = async () => {
 
         if (contentHash === 'stdin') {
             verbose && console.log('Getting contenthash from stdin...')
-            contentHash = fs.readFileSync(0).toString();
+            contentHash = fs.readFileSync(0).toString().trim();
             verbose && console.log(`\t Got contenthash: ${contentHash}.`)
         }
 

@@ -12,7 +12,7 @@ const assert = chai.assert;
 
 contract("", accounts => {
     const accountIndex = 0;
-    const controller = accounts[accountIndex] // account that registers and owns ENSName
+    const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
     const tld = 'test'
     const label = 'dummy'
     const ensName = label+'.'+tld
@@ -36,7 +36,7 @@ contract("", accounts => {
         // verify controller
         let registry = await ENSRegistry.deployed()
         let storedOwner = await registry.owner(node)
-        assert.strictEqual(storedOwner, controller)
+        assert.strictEqual(storedOwner.toLowerCase(), controller)
     })
 
     it('should set public resolver', async function() {

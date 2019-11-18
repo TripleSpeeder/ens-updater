@@ -92,10 +92,7 @@ const main = async () => {
         const verbose = !argv.quiet
         const registryAddress = argv.registryaddress
         let contentHash = argv.contenthash
-
-        // get env options
-        const mnemonic = process.env.MNEMONIC
-        const private_key = process.env.PRIVATE_KEY
+        let controllerAddress
 
         if (contentHash === 'stdin') {
             verbose && console.log('Getting contenthash from stdin...')
@@ -103,16 +100,30 @@ const main = async () => {
             verbose && console.log(`\t Got contenthash: ${contentHash}.`)
         }
 
-        verbose && console.log('Setting up provider...')
-        if (mnemonic) {
-            // Need HDWalletProvider to use mnemonic
-            try {
-                provider = new HDWalletProvider(mnemonic, connectionString, accountIndex, accountIndex+1)
-            } catch (error) {
-                throw Error(`\tCould not initialize HDWalletProvider ${error}`)
+        verbose && console.log('Setting up web3 provider...')
+        if (requiresAccount) {
+            // use HDWalletProvider with mnemonic or private string
+            const mnemonic = process.env.MNEMONIC
+            const private_key = process.env.PRIVATE_KEY
+
+            if (mnemonic) {
+                try {
+                    provider = new HDWalletProvider(mnemonic, connectionString, accountIndex, accountIndex+1)
+                } catch (error) {
+                    throw Error(`\tCould not initialize HDWalletProvider with mnemonic: ${error}`)
+                }
+            } else if (private_key) {
+                try {
+                    provider = new HDWalletProvider(private_key, connectionString)
+                } catch (error) {
+                    throw Error(`\tCould not initialize HDWalletProvider with privatekey: ${error}`)
+                }
+            } else {
+                throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
             }
+            controllerAddress = provider.getAddress(accountIndex).toLowerCase()
         } else {
-            // just use plain connection string
+            // just use plain connection string as provider
             provider = connectionString
         }
 
@@ -124,26 +135,6 @@ const main = async () => {
             verbose && console.log(`\tRunning chain ID ${chainId} on network ${netId}`)
         } catch (error) {
             throw Error(`Failed to initialize web3 at ${connectionString}` )
-        }
-
-        let controllerAddress
-        if (requiresAccount) {
-            verbose && console.log('Setting up account')
-            if (mnemonic) {
-                const accounts = await web3.eth.getAccounts()
-                controllerAddress = accounts[accountIndex]
-            } else if (private_key) {
-                try {
-                    const account = web3.eth.accounts.privateKeyToAccount('0x' + private_key);
-                    web3.eth.accounts.wallet.add(account);
-                    controllerAddress = account.address;
-                } catch (error) {
-                    throw Error(`Failed to import account from private key: ${error}`)
-                }
-            } else {
-                throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
-            }
-            verbose && console.log(`Using account ${controllerAddress}`)
         }
 
         const setupOptions = {
@@ -173,8 +164,7 @@ const main = async () => {
         }
 
         verbose && console.log("Exiting...")
-        // HDWalletprovider should be shut down through engine.stop().
-        provider.engine && provider.engine.stop()
+        process.exit(0)
     } catch(error) {
         console.error(`Error occured: ${error}. Aborting`)
         process.exit(1)

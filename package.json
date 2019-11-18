@@ -19,8 +19,8 @@
   "repository": "https://github.com/TripleSpeeder/ens-updater",
   "license": "MIT",
   "dependencies": {
-    "@ensdomains/resolver": "^0.1.13",
     "@ensdomains/ens": "^0.3.11",
+    "@ensdomains/resolver": "^0.1.13",
     "@truffle/contract": "^4.1.0",
     "@truffle/hdwallet-provider": "^1.0.25",
     "content-hash": "^2.5.0",

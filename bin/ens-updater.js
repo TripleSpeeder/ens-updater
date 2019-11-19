@@ -37,6 +37,21 @@ const main = async () => {
             }
         )
         .command('getContenthash', 'Get the contenthash for an ENS name')
+        .command('setAddress', 'Set the address for an ENS name',
+            (yargs) => {
+                return yargs.options({
+                    'address': {
+                        description: 'Ethereum address to set',
+                        type: 'string',
+                        demandOption: true,
+                    }
+                })
+            },
+            () => {
+                requiresAccount = true
+            }
+        )
+        .command('getAddress', 'Get the address for an ENS name')
         .demandCommand(1)
         .options({
             'web3': {
@@ -158,6 +173,16 @@ const main = async () => {
             case 'getContenthash':
                 let {codec, hash} = await updater.getContenthash()
                 console.log(`${codec}: ${hash}`)
+                break
+            case 'setAddress':
+                await updater.setAddress({
+                    address,
+                    dryrun
+                })
+                break
+            case 'getAddress':
+                let address = await updater.getAddress()
+                console.log(address)
                 break
             default:
                 break

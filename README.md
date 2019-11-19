@@ -53,27 +53,32 @@ npm install -g @triplespeeder/ens-updater
 ```
 
 ## Usage
-At the moment only setting/getting of contenthash is implemented. PRs to extend functionality are welcome :)
-```
- > ens-updater setContenthash
-ens-updater setContenthash
+The following commands are implemented:
+ - getting/setting of contenthash
+ - getting/setting of address 
 
-Set the contenthash for an ENS name
+PRs to extend functionality are welcome :)
+
+```
+Usage: ens-updater <command> [options]
+
+Commands:
+  ens-updater setContenthash  Set the contenthash for an ENS name
+  ens-updater getContenthash  Get the contenthash for an ENS name
+  ens-updater setAddress      Set the address for an ENS name
+  ens-updater getAddress      Get the address for an ENS name
 
 Options:
-  --version              Show version number                           [boolean]
-  --web3                 Web3 connection string              [string] [required]
-  --accountindex, -i     Account index. Defaults to 0      [number] [default: 0]
-  --ensname, --ens       ENS Name to update                  [string] [required]
-  --contenttype, --type  Type of content hash to set (ipfs-ns, swarm-ns, ...)
-                                                             [string] [required]
-  --contenthash, --hash  Content hash to set                 [string] [required]
-  --dry-run              Do not perform any real transactions
+  --version           Show version number                              [boolean]
+  --web3              Web3 connection string                 [string] [required]
+  --accountindex, -i  Account index. Defaults to 0         [number] [default: 0]
+  --ensname, --ens    ENS Name to update                     [string] [required]
+  --dry-run           Do not perform any real transactions
                                                       [boolean] [default: false]
-  --quiet, -q            Suppress console output. Set this when running from a
-                         script/CI environment        [boolean] [default: false]
-  --registryaddress      Optional contract address of the ENS Registry. [string]
-  --help, -h             Show help                                     [boolean]
+  --quiet, -q         Suppress console output. Set this when running from a
+                      script/CI environment           [boolean] [default: false]
+  --registryaddress   Optional contract address of the ENS Registry.    [string]
+  --help, -h          Show help                                        [boolean]
 ```
 
 #### Example

@@ -33,7 +33,7 @@ const main = () => {
         },
         'ensname': {
             alias: 'ens',
-            description: 'ENS Name to update',
+            description: 'ENS Name to query or update',
             type: 'string',
             demandOption: true,
         },
@@ -44,7 +44,7 @@ const main = () => {
             demandOption: false,
         },
         'verbose': {
-            description: "Verbose output. Don't set this when running from a script/CI environment",
+            description: "Verbose output",
             alias: 'v',
             type: 'boolean',
             default: false,
@@ -60,14 +60,9 @@ const main = () => {
     .alias('help', 'h')
     .strict()
     .wrap(yargs.terminalWidth())
+    .completion()
     .epilog('contact: michael@m-bauer.org')
     .epilog('github: https://github.com/TripleSpeeder/ens-updater')
-    /*.fail((msg,error,yargs) => {
-        console.error(`Error occured`)
-        msg && console.error(msg)
-        error && console.error(error)
-        process.exit(1)
-    })*/
     .argv
 }
 

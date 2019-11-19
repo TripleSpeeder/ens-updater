@@ -17,19 +17,16 @@ exports.builder  = (yargs) => {
     })
 }
 
-exports.handler = async (argv) => {
-    const verbose = !argv.quiet
-    let contentHash = argv.contenthash
-
-    if (contentHash === 'stdin') {
+exports.handler = async ({verbose, contenttype, contenthash, updater, dryRun, }) => {
+    if (contenthash === 'stdin') {
         verbose && console.log('Getting contenthash from stdin...')
-        contentHash = fs.readFileSync(0).toString().trim();
-        verbose && console.log(`\t Got contenthash: ${contentHash}.`)
+        contenthash = fs.readFileSync(0).toString().trim();
+        verbose && console.log(`\t Got contenthash: ${contenthash}.`)
     }
-    let result = await argv.updater.setContenthash({
-        dryrun: argv.dryRun,
-        contentType: argv.contenttype,
-        contentHash: argv.contentHash,
+    let result = await updater.setContenthash({
+        dryrun: dryRun,
+        contentType: contenttype,
+        contentHash: contenthash,
     })
     console.log(result)
 }

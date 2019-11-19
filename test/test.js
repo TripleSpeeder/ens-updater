@@ -5,6 +5,7 @@ const namehash = require('eth-ens-namehash');
 const utils = require('web3-utils');
 const Updater = require('../lib/index')
 const {decode, getCodec} = require('content-hash')
+const ResolverInterfaces = require('../lib/ResolverInterfaces')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
@@ -44,6 +45,12 @@ contract("", function(accounts) {
     beforeEach('provide fresh updater instance', async function() {
         updater = new Updater()
         await updater.setup(updaterOptions)
+    })
+
+    it("should list supported interfaces", async function() {
+        let requiredInterfaceNames = Object.keys(ResolverInterfaces)
+        let supportedInterfaceNames = await updater.listInterfaces()
+        assert.sameMembers(requiredInterfaceNames, supportedInterfaceNames)
     })
 
     it ("should set ETH address record", async function() {

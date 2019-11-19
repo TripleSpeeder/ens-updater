@@ -41,7 +41,7 @@ const main = async () => {
             (yargs) => {
                 return yargs.options({
                     'address': {
-                        description: 'Ethereum address to set',
+                        description: 'Ethereum address to set or \'stdin\' to read from stdin',
                         type: 'string',
                         demandOption: true,
                     }
@@ -108,13 +108,8 @@ const main = async () => {
         const verbose = !argv.quiet
         const registryAddress = argv.registryaddress
         let contentHash = argv.contenthash
+        let address = argv.address
         let controllerAddress
-
-        if (contentHash === 'stdin') {
-            verbose && console.log('Getting contenthash from stdin...')
-            contentHash = fs.readFileSync(0).toString().trim();
-            verbose && console.log(`\t Got contenthash: ${contentHash}.`)
-        }
 
         verbose && console.log('Setting up web3 provider...')
         if (requiresAccount) {
@@ -165,6 +160,11 @@ const main = async () => {
 
         switch(command) {
             case 'setContenthash':
+                if (contentHash === 'stdin') {
+                    verbose && console.log('Getting contenthash from stdin...')
+                    contentHash = fs.readFileSync(0).toString().trim();
+                    verbose && console.log(`\t Got contenthash: ${contentHash}.`)
+                }
                 await updater.setContenthash({
                     dryrun: dryrun,
                     contentType: contentType,
@@ -176,14 +176,19 @@ const main = async () => {
                 console.log(`${codec}: ${hash}`)
                 break
             case 'setAddress':
+                if (address === 'stdin') {
+                    verbose && console.log('Reading address from stdin...')
+                    address = fs.readFileSync(0).toString().trim();
+                    verbose && console.log(`\t Got address: ${address}.`)
+                }
                 await updater.setAddress({
                     address,
                     dryrun
                 })
                 break
             case 'getAddress':
-                let address = await updater.getAddress()
-                console.log(address)
+                let currentAddress = await updater.getAddress()
+                console.log(currentAddress)
                 break
             case 'listInterfaces':
                 let interfaces = await updater.listInterfaces()

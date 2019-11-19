@@ -52,6 +52,7 @@ const main = async () => {
             }
         )
         .command('getAddress', 'Get the address for an ENS name')
+        .command('listInterfaces', 'Get all supported interfaces of Resolver')
         .demandCommand(1)
         .options({
             'web3': {
@@ -184,14 +185,24 @@ const main = async () => {
                 let address = await updater.getAddress()
                 console.log(address)
                 break
+            case 'listInterfaces':
+                let interfaces = await updater.listInterfaces()
+                if (interfaces.length) {
+                    console.log(`Resolver supports ${interfaces.length} interfaces:`)
+                    for (const i of interfaces) {
+                        console.log(` - ${i}`)
+                    }
+                } else {
+                    console.log(`Resolver does not support any interface`)
+                }
+                break
             default:
+                console.error(`unhandled command ${command}`)
                 break
         }
-
-        verbose && console.log("Exiting...")
         process.exit(0)
     } catch(error) {
-        console.error(`Error occured: ${error}. Aborting`)
+        console.error(`Error occured: ${error.message}`)
         process.exit(1)
     }
 }

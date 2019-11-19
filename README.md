@@ -55,7 +55,8 @@ npm install -g @triplespeeder/ens-updater
 ## Usage
 The following commands are implemented:
  - getting/setting of contenthash
- - getting/setting of address 
+ - getting/setting of address
+ - get list of interfaces resolver supports
 
 PRs to extend functionality are welcome :)
 
@@ -67,6 +68,7 @@ Commands:
   ens-updater getContenthash  Get the contenthash for an ENS name
   ens-updater setAddress      Set the address for an ENS name
   ens-updater getAddress      Get the address for an ENS name
+  ens-updater listInterfaces  Get list of interfaces resolver supports
 
 Options:
   --version           Show version number                              [boolean]

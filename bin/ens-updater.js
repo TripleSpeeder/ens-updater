@@ -52,7 +52,7 @@ const main = async () => {
             }
         )
         .command('getAddress', 'Get the address for an ENS name')
-        .command('listInterfaces', 'Get all supported interfaces of Resolver')
+        .command('listInterfaces', 'Get list of interfaces resolver supports')
         .demandCommand(1)
         .options({
             'web3': {

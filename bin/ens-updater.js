@@ -14,7 +14,6 @@ const main = async () => {
         .scriptName('ens-updater')
         .usage('Usage: $0 <command> [options]')
         .command('setContenthash', 'Set the contenthash for an ENS name',
-            // builder
             (yargs) => {
                 return yargs.options({
                     'contenttype': {
@@ -31,7 +30,6 @@ const main = async () => {
                     }
                 })
             },
-            // handler
             () => {
                 requiresAccount = true
             }
@@ -148,6 +146,7 @@ const main = async () => {
             throw Error(`Failed to initialize web3 at ${connectionString}` )
         }
 
+        const updater = new Updater()
         const setupOptions = {
             web3: web3,
             ensName: ensName,
@@ -155,9 +154,9 @@ const main = async () => {
             verbose: verbose,
             registryAddress: registryAddress
         }
-        const updater = new Updater()
         await updater.setup(setupOptions)
 
+        let transactionHash
         switch(command) {
             case 'setContenthash':
                 if (contentHash === 'stdin') {
@@ -165,11 +164,12 @@ const main = async () => {
                     contentHash = fs.readFileSync(0).toString().trim();
                     verbose && console.log(`\t Got contenthash: ${contentHash}.`)
                 }
-                await updater.setContenthash({
+                transactionHash = await updater.setContenthash({
                     dryrun: dryrun,
                     contentType: contentType,
                     contentHash: contentHash,
                 })
+                console.log(transactionHash)
                 break
             case 'getContenthash':
                 let {codec, hash} = await updater.getContenthash()
@@ -181,10 +181,11 @@ const main = async () => {
                     address = fs.readFileSync(0).toString().trim();
                     verbose && console.log(`\t Got address: ${address}.`)
                 }
-                await updater.setAddress({
+                transactionHash = await updater.setAddress({
                     address,
                     dryrun
                 })
+                console.log(transactionHash)
                 break
             case 'getAddress':
                 let currentAddress = await updater.getAddress()

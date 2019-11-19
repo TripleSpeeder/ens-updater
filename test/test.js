@@ -10,7 +10,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
-contract("", accounts => {
+contract("", function(accounts) {
     const accountIndex = 0;
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
     const tld = 'test'
@@ -29,20 +29,16 @@ contract("", accounts => {
         verbose: false,
     }
 
-    it(`should register "${ensName}"`, async function() {
+    before('Preparing', async function() {
         let registrar = await FIFSRegistrar.deployed()
-        let result = await registrar.register(labelHash, controller, { from: controller })
-        assert.isTrue(result.receipt.status)
+        let registerResult = await registrar.register(labelHash, controller, { from: controller })
+        assert.isTrue(registerResult.receipt.status)
         // verify controller
         let registry = await ENSRegistry.deployed()
         let storedOwner = await registry.owner(node)
         assert.strictEqual(storedOwner.toLowerCase(), controller)
-    })
-
-    it('should set public resolver', async function() {
-        let registry = await ENSRegistry.deployed()
-        let result = await registry.setResolver(node, PublicResolver.address)
-        assert.isTrue(result.receipt.status)
+        let resolverResult = await registry.setResolver(node, PublicResolver.address)
+        assert.isTrue(resolverResult.receipt.status)
         // verify resolver
         let resolver = await registry.resolver(node)
         assert.strictEqual(resolver, PublicResolver.address)

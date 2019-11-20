@@ -1,4 +1,5 @@
 exports.command = 'listInterfaces'
+
 exports.describe = 'Get list of interfaces resolver supports'
 
 exports.handler = async ({updater}) => {

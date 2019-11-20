@@ -1,5 +1,7 @@
 exports.command = 'setContenthash'
+
 exports.describe = 'Set the contenthash for an ENS name'
+
 exports.builder  = (yargs) => {
     return yargs.options({
         'contenttype': {

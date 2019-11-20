@@ -20,20 +20,15 @@ const main = () => {
     .command(require('../src/commands/listInterfaces'))
     .demandCommand(1)
     .options({
+        'verbose': {
+            description: "Verbose output",
+            alias: 'v',
+            type: 'boolean',
+            default: false,
+            demandOption: false,
+        },
         'web3': {
             description: 'Web3 connection string',
-            type: 'string',
-            demandOption: true,
-        },
-        'accountindex': {
-            alias: 'i',
-            description: 'Account index. Defaults to 0',
-            default: 0,
-            type: 'number',
-        },
-        'ensname': {
-            alias: 'ens',
-            description: 'ENS Name to query or update',
             type: 'string',
             demandOption: true,
         },
@@ -43,12 +38,11 @@ const main = () => {
             default: false,
             demandOption: false,
         },
-        'verbose': {
-            description: "Verbose output",
-            alias: 'v',
-            type: 'boolean',
-            default: false,
-            demandOption: false,
+        'accountindex': {
+            alias: 'i',
+            description: 'Account index. Defaults to 0',
+            default: 0,
+            type: 'number',
         },
         'registryaddress': {
             description: 'Optional contract address of the ENS Registry.',

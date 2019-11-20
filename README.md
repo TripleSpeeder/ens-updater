@@ -1,15 +1,12 @@
 # ens-updater
 
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+> Manage ENS names from the commandline
 
-> Set records of ENS names from the commandline
-
-This tool enables automated update of e.g. contentHash records in the Ethereum Name System. 
-Goal is to integrate well in deployment scripts or CI environments. 
-
+ens-updater enables automated update of e.g. contentHash records in the Ethereum Name System. 
 
 ## Table of Contents
 
+- [Overview](#overview)
 - [Security](#security)
 - [Background](#background)
 - [Install](#install)
@@ -17,6 +14,21 @@ Goal is to integrate well in deployment scripts or CI environments.
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Overview
+### Design goals:
+ - provide an all-purpose cli for managing ENS names
+ - integrate well in deployment scripts and CI environments
+
+### Notable features:
+- Get/set ENS name records
+- For each operation verifies that the resolver contract of an ENS-name implements the required interface 
+via EIP165 "supportsInterface"
+- Show interfaces a resolver implements (command "listInterfaces")
+- Bash completion support (try command "completion" to set it up)  
+- Can read input from stdin to support piping with other tools
+
+
 
 ## Security
 In order to perform an update of an ENS record, `ens-update` needs the private key of the
@@ -54,39 +66,43 @@ npm install -g @triplespeeder/ens-updater
 
 ## Usage
 The following commands are implemented:
- - getting/setting of contenthash
- - getting/setting of address
+ - get/set contenthash
+ - get/set Ethereum address
  - get list of interfaces resolver supports
+ - setup bash completion
 
 PRs to extend functionality are welcome :)
 
 ```
+> ens-updater --help
 Usage: ens-updater <command> [options]
 
 Commands:
-  ens-updater setContenthash  Set the contenthash for an ENS name
-  ens-updater getContenthash  Get the contenthash for an ENS name
-  ens-updater setAddress      Set the address for an ENS name
-  ens-updater getAddress      Get the address for an ENS name
-  ens-updater listInterfaces  Get list of interfaces resolver supports
+  ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
+  <contenthash>
+  ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name
+  ens-updater setAddress <ensname> <address>                Set the address for an ENS name
+  ens-updater getAddress <ensname>                          Get the address for an ENS name
+  ens-updater listInterfaces <ensname>                      Get list of interfaces resolver supports
+  ens-updater completion                                    generate completion script
 
 Options:
-  --version           Show version number                              [boolean]
-  --web3              Web3 connection string                 [string] [required]
-  --accountindex, -i  Account index. Defaults to 0         [number] [default: 0]
-  --ensname, --ens    ENS Name to update                     [string] [required]
-  --dry-run           Do not perform any real transactions
-                                                      [boolean] [default: false]
-  --quiet, -q         Suppress console output. Set this when running from a
-                      script/CI environment           [boolean] [default: false]
-  --registryaddress   Optional contract address of the ENS Registry.    [string]
-  --help, -h          Show help                                        [boolean]
+  --version           Show version number                                                              [boolean]
+  --verbose, -v       Verbose output                                                  [boolean] [default: false]
+  --web3              Web3 connection string                                                 [string] [required]
+  --dry-run           Do not perform any real transactions                            [boolean] [default: false]
+  --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
+  --registryaddress   Optional contract address of the ENS Registry.                                    [string]
+  --help, -h          Show help                                                                        [boolean]
+
+contact: michael@m-bauer.org
+github: https://github.com/TripleSpeeder/ens-updater
 ```
 
 #### Example
 On Ropsten network, set the contentHash of the name `ens-updater.eth` to the IPFS CID `QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU`:
 ```shell script
-> ens-updater setContenthash --ensname ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545
+> ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545 --verbose
 Setting up web3 & HDWallet provider...
         Running on chain ID 3
 Verifying ensName owner
@@ -98,14 +114,14 @@ Exiting...
 ```
 
 #### Reading values from stdin
-Setting the value "stdin" for option `contenthash` reads the contenthash from stdin. This is useful
+Setting the value "stdin" for option `contenthash` or `address` reads the contenthash from stdin. This is useful
 to build a chain of commands in a deploy script. 
 
 For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy) to publish a website to IPFS
 and directly pipe the CID returned by ipfs-deploy into ens-updater:
 
 ```shell script
-> ipfs-deploy -d dappnode | ens-updater setContenthash --contenttype ipfs-ns --contenthash stdin --ensname ens-updater.eth --web3 http://ropsten.dappnode:8545
+> ipfs-deploy -d dappnode | ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash stdin --web3 http://ropsten.dappnode:8545 --verbose
 Getting contenthash from stdin...
          Got contenthash: QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU.
 Setting up web3 & HDWallet provider...

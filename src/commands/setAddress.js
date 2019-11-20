@@ -1,14 +1,17 @@
-exports.command = 'setAddress'
+exports.command = 'setAddress <ensname> <address>'
 
 exports.describe = 'Set the address for an ENS name'
 
 exports.builder = (yargs) => {
-    return yargs.options({
-        'address': {
-            description: 'Ethereum address to set or \'stdin\' to read from stdin',
-            type: 'string',
-            demandOption: true,
-        },
+    return yargs
+    .positional('ensname', {
+        description: 'ENS Name to query or update',
+        type: 'string',
+    })
+    .positional('address', {
+        description: 'Ethereum address. Use \'stdin\' to read from stdin',
+        type: 'string',
+        demandOption: true,
     })
 }
 

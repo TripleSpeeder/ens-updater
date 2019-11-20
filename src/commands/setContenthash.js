@@ -1,21 +1,23 @@
-exports.command = 'setContenthash'
+exports.command = 'setContenthash <ensname> <contenttype> <contenthash>'
 
 exports.describe = 'Set the contenthash for an ENS name'
 
 exports.builder  = (yargs) => {
-    return yargs.options({
-        'contenttype': {
-            alias: 'type',
-            description: 'Type of content hash to set (e.g ipfs-ns, swarm-ns, ...)',
-            type: 'string',
-            demandOption: true,
-        },
-        'contenthash': {
-            alias: 'hash',
-            description: 'Content hash to set or \'stdin\' to read from stdin',
-            type: 'string',
-            demandOption: true,
-        }
+    return yargs
+    .positional('ensname', {
+        description: 'ENS Name to query or update',
+        type: 'string',
+    })
+    .positional('contenttype', {
+        alias: 'type',
+        description: 'Type of content hash to set (e.g ipfs-ns, swarm-ns, ...)',
+        type: 'string',
+        demandOption: true,
+    }).positional('contenthash', {
+        alias: 'hash',
+        description: 'Content hash. Use \'stdin\' to read from stdin',
+        type: 'string',
+        demandOption: true,
     })
 }
 

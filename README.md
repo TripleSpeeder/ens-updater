@@ -27,8 +27,7 @@ via EIP165 "supportsInterface"
 - Show interfaces a resolver implements (command "listInterfaces")
 - Bash completion support (try command "completion" to set it up)  
 - Can read input from stdin to support piping with other tools
-
-
+- Options can be set via json configfile (see [config file support](#config-file-support))
 
 ## Security
 In order to perform an update of an ENS record, `ens-update` needs the private key of the
@@ -52,7 +51,7 @@ Remember - The mnemonic gives full control to all accounts of the according wall
 #### Provide the private key
 Example contents of `.env`:
 ```bash
-PRIVATE_KEY=<private key here>
+PRIVATE_KEY=<private key here, without leading 0x>
 ```
 
 ## Background
@@ -101,7 +100,7 @@ github: https://github.com/TripleSpeeder/ens-updater
 
 #### Example
 On Ropsten network, set the contentHash of the name `ens-updater.eth` to the IPFS CID `QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU`:
-```shell script
+```
 > ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545 --verbose
 Setting up web3 & HDWallet provider...
         Running on chain ID 3
@@ -120,7 +119,7 @@ to build a chain of commands in a deploy script.
 For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy) to publish a website to IPFS
 and directly pipe the CID returned by ipfs-deploy into ens-updater:
 
-```shell script
+```
 > ipfs-deploy -d dappnode | ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash stdin --web3 http://ropsten.dappnode:8545 --verbose
 Getting contenthash from stdin...
          Got contenthash: QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU.
@@ -128,6 +127,22 @@ Setting up web3 & HDWallet provider...
 ...
 ```
 
+#### Config file support
+All options can be provided through a json config file. The config file can be set with
+`--config <configfile.json>` option.
+
+Example config file that sets web3 connection string and custom registry address:
+```json
+{
+  "web3": "http://127.0.0.1:9545"
+  "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010",
+}
+```
+Usage:
+```
+> ens-updater listInterfaces example.domain.eth --config myconfig.json
+```
+ 
 ## Maintainers
 
 [@TripleSpeeder](https://github.com/TripleSpeeder)

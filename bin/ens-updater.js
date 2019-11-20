@@ -50,10 +50,10 @@ const main = () => {
             demandOption: false,
         },
     })
+    .config()
     .help()
     .alias('help', 'h')
     .strict()
-    .wrap(yargs.terminalWidth())
     .completion()
     .epilog('contact: michael@m-bauer.org')
     .epilog('github: https://github.com/TripleSpeeder/ens-updater')

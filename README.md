@@ -101,7 +101,7 @@ github: https://github.com/TripleSpeeder/ens-updater
 #### Example
 On Ropsten network, set the contentHash of the name `ens-updater.eth` to the IPFS CID `QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU`:
 ```
-> ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545 --verbose
+> ens-updater setContenthash ens-updater.eth ipfs-ns QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU --web3 http://ropsten.dappnode:8545 --verbose
 Setting up web3 & HDWallet provider...
         Running on chain ID 3
 Verifying ensName owner
@@ -120,7 +120,7 @@ For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy)
 and directly pipe the CID returned by ipfs-deploy into ens-updater:
 
 ```
-> ipfs-deploy -d dappnode | ens-updater setContenthash ens-updater.eth --contenttype ipfs-ns --contenthash stdin --web3 http://ropsten.dappnode:8545 --verbose
+> ipfs-deploy -d dappnode | ens-updater setContenthash ens-updater.eth ipfs-ns stdin --web3 http://ropsten.dappnode:8545 --verbose
 Getting contenthash from stdin...
          Got contenthash: QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU.
 Setting up web3 & HDWallet provider...
@@ -138,7 +138,7 @@ Example config file that sets web3 connection string and custom registry address
   "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010",
 }
 ```
-Usage:
+Usage example:
 ```
 > ens-updater listInterfaces example.domain.eth --config myconfig.json
 ```

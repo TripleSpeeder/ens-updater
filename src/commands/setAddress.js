@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 exports.command = 'setAddress <ensname> <address>'
 
 exports.describe = 'Set the address for an ENS name'

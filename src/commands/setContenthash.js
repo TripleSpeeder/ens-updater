@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 exports.command = 'setContenthash <ensname> <contenttype> <contenthash>'
 
 exports.describe = 'Set the contenthash for an ENS name'

@@ -1,4 +1,4 @@
-Master [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=master)](https://travis-ci.com/TripleSpeeder/ens-updater) Develop [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
+master [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=master)](https://travis-ci.com/TripleSpeeder/ens-updater) - develop [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
 
 
 # ens-updater

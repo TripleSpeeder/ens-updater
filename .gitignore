@@ -1,9 +1,3 @@
 /.idea/
 /node_modules/
 /.env
-
-/build/contracts/ENSRegistry.json
-/build/contracts/FIFSRegistrar.json
-/build/contracts/Migrations.json
-/build/contracts/PublicResolver.json
-/build/contracts/ReverseRegistrar.json

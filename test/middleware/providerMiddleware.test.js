@@ -12,7 +12,6 @@ describe('providerMiddleware', function() {
         }
         const expected = {
             provider: options.web3,
-            controllerAddress: undefined,
         }
         assert.deepEqual(providerMiddlerware(options), expected)
     })

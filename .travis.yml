@@ -1,0 +1,14 @@
+os: linux
+language: node_js
+node_js: 10
+jobs:
+  include:
+    - name: "Test"
+      install:
+        - npm ci
+        - npm install -g truffle@5.0.*
+        - npm install -g ganache-cli
+      before_script:
+        - ganache-cli >ganache.log 2>&1 &
+        - sleep 5
+      script: npm run test

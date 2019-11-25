@@ -1,3 +1,6 @@
+Master [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=master)](https://travis-ci.com/TripleSpeeder/ens-updater) Develop [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
+
+
 # ens-updater
 
 > Manage ENS names from the commandline

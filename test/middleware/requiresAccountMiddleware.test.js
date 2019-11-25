@@ -3,7 +3,7 @@ const requiresAccount = require('../../src/middleware/requiresAccountMiddleware'
 
 describe('requiresAccountMiddleware', function() {
     const cmdsNeedAccount = ['setContenthash', 'setAddress']
-    const cmdsDontNeedAccount = ['getAddress', 'getContentHash', 'getInfo', 'listInterfaces']
+    const cmdsDontNeedAccount = ['getAddress', 'getContenthash', 'getInfo', 'listInterfaces']
 
     it("should throw on unknown commands", function() {
         const testargv = {

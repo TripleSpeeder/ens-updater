@@ -6,9 +6,9 @@ jobs:
     - name: "Test"
       install:
         - npm ci
-        - npm install -g truffle
+        - npm install -g truffle@5.0.*
         - npm install -g ganache-cli
       before_script:
         - ganache-cli >ganache.log 2>&1 &
         - sleep 5
-      script: truffle test
+      script: npm run test

@@ -1,6 +1,12 @@
 const requiresAccount = (argv) => {
+    const cmdsNeedAccount = ['setContenthash', 'setAddress']
+    const cmdsDontNeedAccount = ['getAddress', 'getContentHash', 'getInfo', 'listInterfaces']
     const command = argv._[0]
-    const requiresAccount = ['setContenthash', 'setAddress'].includes(command);
+    const requiresAccount = cmdsNeedAccount.includes(command);
+    const doesNotRequireAccount = cmdsDontNeedAccount.includes(command)
+    if  ((!requiresAccount) && (!doesNotRequireAccount)) {
+        throw Error('Unknown command')
+    }
     return {requiresAccount}
 }
 

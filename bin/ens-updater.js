@@ -4,6 +4,7 @@ const yargs = require('yargs')
 const requiresAccount = require('../src/middleware/requiresAccountMiddleware')
 const createProvider = require('../src/middleware/providerMiddleware')
 const createWeb3 = require('../src/middleware/web3Middleware')
+const getControllerAddress = require('../src/middleware/controllerAddressMiddleware')
 const createUpdater = require('../src/middleware/updaterMiddleware')
 
 const main = () => {
@@ -12,6 +13,7 @@ const main = () => {
     .middleware(requiresAccount)
     .middleware(createProvider)
     .middleware(createWeb3)
+    .middleware(getControllerAddress)
     .middleware(createUpdater)
     // .command(require('../src/commands/getInfo'))
     .command(require('../src/commands/setContenthash'))

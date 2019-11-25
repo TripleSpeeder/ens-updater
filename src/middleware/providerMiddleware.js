@@ -2,7 +2,7 @@ const HDWalletProvider = require('@truffle/hdwallet-provider')
 
 const createProvider = ({verbose, requiresAccount, accountIndex, web3}) => {
     verbose && console.log('Setting up web3 provider...')
-    let provider, controllerAddress
+    let provider
     if (requiresAccount) {
         // use HDWalletProvider with mnemonic or private string
         const mnemonic = process.env.MNEMONIC
@@ -23,7 +23,6 @@ const createProvider = ({verbose, requiresAccount, accountIndex, web3}) => {
         } else {
             throw Error(`No account available. Make sure to provide either PRIVATE_KEY or MNEMONIC through .env`)
         }
-        controllerAddress = provider.getAddress(accountIndex).toLowerCase()
     } else {
         // just use plain connection string as provider
         provider = web3
@@ -31,7 +30,6 @@ const createProvider = ({verbose, requiresAccount, accountIndex, web3}) => {
 
     return {
         provider,
-        controllerAddress
     }
 }
 

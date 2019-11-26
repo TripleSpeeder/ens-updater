@@ -4,6 +4,7 @@ const yargs = require('yargs')
 const requiresAccount = require('../src/middleware/requiresAccountMiddleware')
 const createProvider = require('../src/middleware/providerMiddleware')
 const createWeb3 = require('../src/middleware/web3Middleware')
+const getControllerAddress = require('../src/middleware/controllerAddressMiddleware')
 const createUpdater = require('../src/middleware/updaterMiddleware')
 
 const main = () => {
@@ -12,6 +13,7 @@ const main = () => {
     .middleware(requiresAccount)
     .middleware(createProvider)
     .middleware(createWeb3)
+    .middleware(getControllerAddress)
     .middleware(createUpdater)
     // .command(require('../src/commands/getInfo'))
     .command(require('../src/commands/setContenthash'))
@@ -20,37 +22,7 @@ const main = () => {
     .command(require('../src/commands/getAddress'))
     .command(require('../src/commands/listInterfaces'))
     .demandCommand(1)
-    .options({
-        'verbose': {
-            description: "Verbose output",
-            alias: 'v',
-            type: 'boolean',
-            default: false,
-            demandOption: false,
-        },
-        'web3': {
-            description: 'Web3 connection string',
-            type: 'string',
-            demandOption: true,
-        },
-        'dry-run': {
-            description: 'Do not perform any real transactions',
-            type: 'boolean',
-            default: false,
-            demandOption: false,
-        },
-        'accountindex': {
-            alias: 'i',
-            description: 'Account index. Defaults to 0',
-            default: 0,
-            type: 'number',
-        },
-        'registryaddress': {
-            description: 'Optional contract address of the ENS Registry.',
-            type: 'string',
-            demandOption: false,
-        },
-    })
+    .options(require('../src/commands/sharedOptions.json'))
     .config()
     .help()
     .alias('help', 'h')

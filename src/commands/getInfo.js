@@ -11,9 +11,13 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = async ({updater}) => {
-    let info = await updater.getInfo()
-    console.log(`Registrant: \t${info.Registrant ? info.Registrant : 'n/a'}`)
-    console.log(`Controller: \t${info.Controller}`)
-    console.log(`Resolver: \t${info.Resolver}`)
-    console.log(`Expires: \t${new Date(info.Expires*1000)}`)
+    try {
+        let info = await updater.getInfo()
+        console.log(`Registrant: \t${info.Registrant ? info.Registrant : 'n/a'}`)
+        console.log(`Controller: \t${info.Controller}`)
+        console.log(`Resolver: \t${info.Resolver}`)
+        console.log(`Expires: \t${new Date(info.Expires*1000)}`)
+    } finally {
+        updater.stop()
+    }
 }

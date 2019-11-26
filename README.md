@@ -1,3 +1,6 @@
+master [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=master)](https://travis-ci.com/TripleSpeeder/ens-updater) - develop [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
+
+
 # ens-updater
 
 > Manage ENS names from the commandline
@@ -13,6 +16,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
+- [Testing](#testing)
 - [License](#license)
 
 ## Overview
@@ -134,8 +138,8 @@ All options can be provided through a json config file. The config file can be s
 Example config file that sets web3 connection string and custom registry address:
 ```json
 {
-  "web3": "http://127.0.0.1:9545"
-  "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010",
+  "web3": "http://127.0.0.1:9545",
+  "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
 }
 ```
 Usage example:
@@ -151,6 +155,21 @@ Usage example:
 
 PRs are welcome! Have a look at the [open issues](https://github.com/TripleSpeeder/ens-updater/issues) or create a new 
 issue if you are missing functionality.
+
+Pull requests should be against the "development" branch.
+
+## Testing
+
+### Unittests
+Unittests are plain mocha tests located in folder "unitTests". They do not require ganache or other 
+node to run.
+Execute tests with `npm run test:unit` 
+
+### Integration tests
+Integration tests are implemented with truffle and require a local ganache instance to run.
+To execute integration tests:
+ - Start ganache-cli in a dedicated terminal: `ganache-cli`
+ - Run truffle tests in another terminal: `npm run test:truffle`
 
 ## License
 

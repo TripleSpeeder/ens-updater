@@ -16,6 +16,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
+- [Testing](#testing)
 - [License](#license)
 
 ## Overview

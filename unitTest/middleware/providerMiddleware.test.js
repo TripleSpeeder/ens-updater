@@ -33,6 +33,7 @@ describe('providerMiddleware', function() {
         const result = providerMiddlerware(options)
         assert.instanceOf(result.provider, HDWalletProvider)
         assert.equal(result.provider.getAddresses().length, 1)
+        result.provider.engine.stop()
     })
 
     it("should fail when account is required but mnemonic is invalid", function() {
@@ -56,6 +57,7 @@ describe('providerMiddleware', function() {
         }
         const result = providerMiddlerware(options)
         assert.instanceOf(result.provider, HDWalletProvider)
+        result.provider.engine.stop()
     })
 
     it("should fail when account is required and neither mnemonic nor private key are provided", function() {
@@ -92,6 +94,7 @@ describe('providerMiddleware', function() {
         const result = providerMiddlerware(options)
         assert.instanceOf(result.provider, HDWalletProvider)
         assert.equal(result.provider.getAddresses().length, accountIndex+1)
+        result.provider.engine.stop()
     })
 
 })

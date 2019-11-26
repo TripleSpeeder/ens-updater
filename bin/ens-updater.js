@@ -2,6 +2,7 @@
 require('dotenv').config()
 const yargs = require('yargs')
 const requiresAccount = require('../src/middleware/requiresAccountMiddleware')
+const getCredentials = require('../src/middleware/credentialsMiddleware')
 const createProvider = require('../src/middleware/providerMiddleware')
 const createWeb3 = require('../src/middleware/web3Middleware')
 const getControllerAddress = require('../src/middleware/controllerAddressMiddleware')
@@ -11,6 +12,7 @@ const main = () => {
     const argv = yargs
     .usage('Usage: $0 <command> [options]')
     .middleware(requiresAccount)
+    .middleware(getCredentials)
     .middleware(createProvider)
     .middleware(createWeb3)
     .middleware(getControllerAddress)

@@ -11,13 +11,17 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = async ({updater}) => {
-    let interfaces = await updater.listInterfaces()
-    if (interfaces.length) {
-        console.log(`Resolver supports ${interfaces.length} interfaces:`)
-        for (const i of interfaces) {
-            console.log(` - ${i}`)
+    try {
+        let interfaces = await updater.listInterfaces()
+        if (interfaces.length) {
+            console.log(`Resolver supports ${interfaces.length} interfaces:`)
+            for (const i of interfaces) {
+                console.log(` - ${i}`)
+            }
+        } else {
+            console.log(`Resolver does not support any interface`)
         }
-    } else {
-        console.log(`Resolver does not support any interface`)
+    } finally {
+        updater.stop()
     }
 }

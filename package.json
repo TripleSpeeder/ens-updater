@@ -8,7 +8,8 @@
     "ens-updater": "bin/ens-updater.js"
   },
   "scripts": {
-    "test": "truffle test"
+    "test:unit": "mocha unitTest/**/*.test.js --exit",
+    "test:truffle": "truffle test"
   },
   "keywords": [
     "ENS",

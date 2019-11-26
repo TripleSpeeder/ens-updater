@@ -12,5 +12,9 @@ exports.builder = (yargs) => {
 
 exports.handler = async ({updater}) => {
     let {codec, hash} = await updater.getContenthash()
-    console.log(`${codec}: ${hash}`)
+    if (hash === undefined) {
+        console.log("No contenthash record set")
+    } else {
+        console.log(`${codec}: ${hash}`)
+    }
 }

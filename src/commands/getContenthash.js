@@ -11,10 +11,14 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = async ({updater}) => {
-    let {codec, hash} = await updater.getContenthash()
-    if (hash === undefined) {
-        console.log("No contenthash record set")
-    } else {
-        console.log(`${codec}: ${hash}`)
+    try {
+        let {codec, hash} = await updater.getContenthash()
+        if (hash === undefined) {
+            console.log("No contenthash record set")
+        } else {
+            console.log(`${codec}: ${hash}`)
+        }
+    } finally {
+        updater.stop()
     }
 }

@@ -11,6 +11,10 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = async ({updater}) => {
-    let currentAddress = await updater.getAddress()
-    console.log(currentAddress)
+    try {
+        let currentAddress = await updater.getAddress()
+        console.log(currentAddress)
+    } finally {
+        updater.stop()
+    }
 }

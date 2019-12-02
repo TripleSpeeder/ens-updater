@@ -33,8 +33,10 @@
   "devDependencies": {
     "@ensdomains/buffer": "0.0.10",
     "@ensdomains/dnssec-oracle": "^0.1.2",
+    "@ensdomains/mock": "1.0.18",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "execa": "^3.4.0",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0",
     "web3-utils": "^1.2.2"

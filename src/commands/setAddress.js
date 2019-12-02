@@ -29,7 +29,8 @@ exports.handler = async ({address, verbose, updater, dryrun}) => {
             dryrun,
         })
         console.log(result)
+        process.exit(0)
     } finally {
-        updater.stop()
+        //updater.stop()
     }
 }

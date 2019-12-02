@@ -95,7 +95,7 @@ Options:
   --web3              Web3 connection string                                                 [string] [required]
   --dry-run           Do not perform any real transactions                            [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
-  --registryaddress   Optional contract address of the ENS Registry.                                    [string]
+  --registryAddress   Optional contract address of the ENS Registry.                                    [string]
   --help, -h          Show help                                                                        [boolean]
 
 contact: michael@m-bauer.org
@@ -139,7 +139,7 @@ Example config file that sets web3 connection string and custom registry address
 ```json
 {
   "web3": "http://127.0.0.1:9545",
-  "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+  "registryAddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
 }
 ```
 Usage example:

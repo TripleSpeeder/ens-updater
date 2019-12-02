@@ -3,9 +3,9 @@ const FIFSRegistrar = artifacts.require("@ensdomains/ens/FIFSRegistrar");
 const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 const namehash = require('eth-ens-namehash');
 const utils = require('web3-utils');
-const Updater = require('../lib/index')
+const Updater = require('../../lib')
 const {decode, getCodec} = require('content-hash')
-const ResolverInterfaces = require('../lib/ResolverInterfaces')
+const ResolverInterfaces = require('../../lib/ResolverInterfaces')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);

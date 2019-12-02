@@ -1431,10 +1431,34 @@
       "links": {},
       "address": "0xa8fEc29df95c7A16e9704cd142ed3e32dcCCF8d8",
       "transactionHash": "0x7eda0dc62b7d2736c33cad483551757b7bb8afeafb9a63f3c8005b3a8cc29008"
+    },
+    "1574857676674": {
+      "events": {},
+      "links": {},
+      "address": "0x2529C9bFB12eE5311dF883D1Fa2Ac2a8A3b9c7c1",
+      "transactionHash": "0xc0521cd8fa4424841ad06eb022552def81848755bb04cbf67af8edf704fd7d75"
+    },
+    "1574865906812": {
+      "events": {},
+      "links": {},
+      "address": "0x3B640c5B664d5c538cBF76E62C9a44aE5852Ad28",
+      "transactionHash": "0x3310dfbc0d6daf1bd31ec6350288b3b7a259e50e58dadf41735c51280bc83969"
+    },
+    "1574885201445": {
+      "events": {},
+      "links": {},
+      "address": "0x3B640c5B664d5c538cBF76E62C9a44aE5852Ad28",
+      "transactionHash": "0x3310dfbc0d6daf1bd31ec6350288b3b7a259e50e58dadf41735c51280bc83969"
+    },
+    "1575282823209": {
+      "events": {},
+      "links": {},
+      "address": "0x3B640c5B664d5c538cBF76E62C9a44aE5852Ad28",
+      "transactionHash": "0x3310dfbc0d6daf1bd31ec6350288b3b7a259e50e58dadf41735c51280bc83969"
     }
   },
-  "schemaVersion": "3.0.18",
-  "updatedAt": "2019-11-13T14:52:02.277Z",
+  "schemaVersion": "3.0.19",
+  "updatedAt": "2019-12-02T10:34:01.397Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

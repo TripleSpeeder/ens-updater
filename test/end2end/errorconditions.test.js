@@ -1,25 +1,22 @@
-const Web3 = require('web3')
-const contract = require("@truffle/contract");
+const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
 const execa = require("execa")
-const registryData = require("../../build/contracts/ENSRegistry");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const assert = chai.assert;
-const testData = require('./testdata.js')
 
-describe('ens-updater', function() {
+const controllerAccountIndex = 1
+const {private_keys, mnemonic} = require('./testdata')
+
+
+contract('errorConditions', function(accounts) {
 
     const scriptpath = 'bin/ens-updater.js'
-    const web3 = 'http://localhost:8545'
-    const ensName = 'wayne.test'
-    const controller = testData.accounts[testData.names[ensName].controller]
+    const providerstring = 'http://localhost:8545'
     let registryAddress
 
     before("Get registry address", async function() {
-        const registryContract = contract(registryData)
-        registryContract.setProvider(new Web3.providers.HttpProvider('http://localhost:8545'))
-        const registry = await registryContract.deployed()
+        const registry = await ENSRegistry.deployed()
         registryAddress = registry.address
     })
 
@@ -45,7 +42,7 @@ describe('ens-updater', function() {
                 scriptpath, ['setAddress', 'wayne.test', '0x123', '--web3', 'http://in.valid:12345'],
                 {
                     env: {
-                        PRIVATE_KEY: controller.private_key
+                        PRIVATE_KEY: private_keys[controllerAccountIndex]
                     }
                 }
             )
@@ -54,28 +51,27 @@ describe('ens-updater', function() {
         }
     })
 
-    it("Should set address record", async function() {
-        const targetAddress = testData.accounts[3].address
-        const childResult = await execa.node(
-            scriptpath,
-            ['setAddress', 'wayne.test', targetAddress, '--web3', web3, '--registryAddress', registryAddress],
-            {
-                env: {
-                    PRIVATE_KEY: controller.private_key
-                }
-            }
-        )
-        // Expected output is a transaction hash
-        assert.match(childResult.stdout, /^0x/)
-    })
-
     it("Should show error message when account is required but no credentials are provided", async function() {
-        const targetAddress = testData.accounts[3].address
+        const targetAddress = accounts[3]
         try {
-            await execa.node(scriptpath, ['setAddress', 'wayne.test', targetAddress, '--web3', web3])
+            await execa.node(scriptpath, ['setAddress', 'wayne.test', targetAddress, '--web3', providerstring])
         } catch (childResultError){
             assert.match(childResultError.stderr, /Got neither mnemonic nor private key/)
         }
     })
 
+    it("Should show error message when account is required and both mnemonic and private key are provided", async function() {
+        const targetAddress = accounts[3]
+        try {
+            await execa.node(scriptpath, ['setAddress', 'wayne.test', targetAddress, '--web3', providerstring],
+                {
+                    env: {
+                        MNEMONIC: mnemonic,
+                        PRIVATE_KEY: private_keys[controllerAccountIndex]
+                    }
+                })
+        } catch (childResultError){
+            assert.match(childResultError.stderr, /Got both mnemonic and private key/)
+        }
+    })
 })

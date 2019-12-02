@@ -5966,10 +5966,94 @@
       "links": {},
       "address": "0xAaFA5C759533CB918BbAa91791b75d423404CB02",
       "transactionHash": "0x65c6d2d4d3de6cc36c597c341521ecd68e25d21af292e1dd20e336a1d6a536dd"
+    },
+    "1575296989573": {
+      "events": {
+        "0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "label",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "name": "NewOwner",
+          "type": "event",
+          "signature": "0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82"
+        },
+        "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event",
+          "signature": "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266"
+        },
+        "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "resolver",
+              "type": "address"
+            }
+          ],
+          "name": "NewResolver",
+          "type": "event",
+          "signature": "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0"
+        },
+        "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "node",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "ttl",
+              "type": "uint64"
+            }
+          ],
+          "name": "NewTTL",
+          "type": "event",
+          "signature": "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68"
+        }
+      },
+      "links": {},
+      "address": "0xAaFA5C759533CB918BbAa91791b75d423404CB02",
+      "transactionHash": "0x65c6d2d4d3de6cc36c597c341521ecd68e25d21af292e1dd20e336a1d6a536dd"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2019-12-02T10:34:01.364Z",
+  "updatedAt": "2019-12-02T14:30:09.208Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

@@ -17,7 +17,7 @@ module.exports = async function(deployer, network, accounts) {
     const registrar = await FIFSRegistrar.deployed()
     const resolver = await PublicResolver.deployed()
 
-    setupNames(registry, registrar, resolver, accounts)
+    await setupNames(registry, registrar, resolver, accounts)
 }
 
 async function register(label, registrar, owner) {

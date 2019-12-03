@@ -1,6 +1,5 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
 const FIFSRegistrar = artifacts.require("@ensdomains/ens/FIFSRegistrar");
-const ReverseRegistrar = artifacts.require("@ensdomains/ens/ReverseRegistrar");
 const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 
 const utils = require('web3-utils');
@@ -30,10 +29,11 @@ async function register(label, registrar, owner) {
 async function setResolver(ensName, registry, resolverAddress, owner) {
     const node = namehash.hash(ensName)
     let resolverResult = await registry.setResolver(node, resolverAddress, {from: owner})
-    // console.log(`Set resolver for ${node} to ${resolverAddress}`)
+    // console.log(`Set resolver for node ${node} to ${resolverAddress}`)
 }
 
 async function setupNames(registry, registrar, resolver, accounts) {
+    console.log("Using registry at " + registry.address)
     await register('noresolver', registrar, accounts[controllerAccountIndex])
     await register('wayne', registrar, accounts[controllerAccountIndex])
     await setResolver('wayne.test', registry, resolver.address, accounts[1])

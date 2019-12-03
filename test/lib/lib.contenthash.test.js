@@ -25,10 +25,8 @@ contract("lib - contenthash functions", function(accounts) {
     let updater
     let registryAddress
 
-    before("Get registry address and set resolver", async function() {
+    before("Get registry address", async function() {
         const registry = await ENSRegistry.deployed()
-        const resolver = await PublicResolver.deployed()
-        await registry.setResolver(node, resolver.address, {from: controller})
         registryAddress = registry.address
     })
 

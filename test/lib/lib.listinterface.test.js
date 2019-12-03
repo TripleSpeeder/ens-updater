@@ -1,5 +1,4 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
-const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 const namehash = require('eth-ens-namehash');
 const Updater = require('../../lib')
 const ResolverInterfaces = require('../../lib/ResolverInterfaces')
@@ -18,10 +17,8 @@ contract("lib - listinterface functions", function(accounts) {
     let updater
     let registryAddress
 
-    before("Get registry address and set resolver", async function () {
+    before("Get registry address", async function () {
         const registry = await ENSRegistry.deployed()
-        const resolver = await PublicResolver.deployed()
-        await registry.setResolver(node, resolver.address, {from: controller})
         registryAddress = registry.address
     })
 

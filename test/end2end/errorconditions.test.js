@@ -32,7 +32,7 @@ contract('errorConditions', function(accounts) {
         try {
             await execa.node(scriptpath, ['getContenthash', 'wayne.test', '--web3', 'http://in.val.id:12345'])
         } catch(childResultError) {
-            assert.match(childResultError.stderr, /Failed to initialize web3/)
+            assert.match(childResultError.stderr, /Invalid JSON RPC response/)  // Error message when using plain connectionstring
         }
     })
 
@@ -47,7 +47,7 @@ contract('errorConditions', function(accounts) {
                 }
             )
         } catch (childResultError) {
-            assert.match(childResultError.stderr, /Failed to initialize web3/)
+            assert.match(childResultError.stderr, /Failed to initialize web3/)  // Error message when using HDWalletProvider
         }
     })
 

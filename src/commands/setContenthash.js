@@ -23,20 +23,19 @@ exports.builder  = (yargs) => {
     })
 }
 
-exports.handler = async ({verbose, contenttype, contenthash, updater, dryRun, }) => {
-    try {
-        if (contenthash === 'stdin') {
-            verbose && console.log('Getting contenthash from stdin...')
-            contenthash = fs.readFileSync(0).toString().trim();
-            verbose && console.log(`\t Got contenthash: ${contenthash}.`)
-        }
-        let result = await updater.setContenthash({
-            dryrun: dryRun,
-            contentType: contenttype,
-            contentHash: contenthash,
-        })
-        console.log(result)
-    } finally {
-        updater.stop()
+exports.handler = async ({verbose, contenttype, contenthash, updater, dryRun}) => {
+    if (contenthash === 'stdin') {
+        verbose && console.log('Getting contenthash from stdin...')
+        contenthash = fs.readFileSync(0).toString().trim();
+        verbose && console.log(`\t Got contenthash: ${contenthash}.`)
     }
+    let result = await updater.setContenthash({
+        dryrun: dryRun,
+        contentType: contenttype,
+        contentHash: contenthash,
+    })
+    console.log(result)
+    await updater.stop()
+    // hardwire process.exit(0) here to fix problems with dangling HDWalletProvider engine for good.
+    process.exit(0)
 }

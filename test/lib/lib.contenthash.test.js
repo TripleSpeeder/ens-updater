@@ -1,48 +1,45 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
-const FIFSRegistrar = artifacts.require("@ensdomains/ens/FIFSRegistrar");
 const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 const namehash = require('eth-ens-namehash');
 const utils = require('web3-utils');
-const Updater = require('../lib/index')
+const Updater = require('../../lib')
 const {decode, getCodec} = require('content-hash')
-const ResolverInterfaces = require('../lib/ResolverInterfaces')
+const ResolverInterfaces = require('../../lib/ResolverInterfaces')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
-contract("", function(accounts) {
-    const accountIndex = 0;
+
+contract("lib - contenthash functions", function(accounts) {
+    const accountIndex = 1;
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
     const tld = 'test'
-    const label = 'dummy'
+    const label = 'wayne'
     const ensName = label+'.'+tld
     const firstCID = "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU"
     const otherCID = "QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D"
     const codec = 'ipfs-ns'
     const labelHash = utils.sha3(label) // for registering
     const node = namehash.hash(ensName) // for querying
-    const updaterOptions = {
-        web3: web3,
-        ensName: ensName,
-        registryAddress: ENSRegistry.address,
-        controllerAddress: controller,
-        verbose: false,
-    }
     let updater
+    let registryAddress
 
-    before(`Register ${ensName} and set default resolver`, async function() {
-        // Register domain 'dummy.test'
-        let registrar = await FIFSRegistrar.deployed()
-        let registerResult = await registrar.register(labelHash, controller, { from: controller })
-        assert.isTrue(registerResult.receipt.status)
-        // set resolver to public resolver
-        let registry = await ENSRegistry.deployed()
-        let resolverResult = await registry.setResolver(node, PublicResolver.address)
-        assert.isTrue(resolverResult.receipt.status)
+    before("Get registry address and set resolver", async function() {
+        const registry = await ENSRegistry.deployed()
+        const resolver = await PublicResolver.deployed()
+        await registry.setResolver(node, resolver.address, {from: controller})
+        registryAddress = registry.address
     })
 
-    beforeEach('provide fresh updater instance', async function() {
+    beforeEach("provide fresh updater instance", async function() {
+        const updaterOptions = {
+            web3: web3,
+            ensName: ensName,
+            registryAddress: registryAddress,
+            controllerAddress: controller,
+            verbose: false,
+        }
         updater = new Updater()
         await updater.setup(updaterOptions)
     })
@@ -140,9 +137,9 @@ contract("", function(accounts) {
 
     it("should fail with unsupported content codec", async function() {
         assert.isRejected(updater.setContenthash({
-                contentType: 'YXZ',
-                contentHash: 'someHashValue',
-            }))
+            contentType: 'YXZ',
+            contentHash: 'someHashValue',
+        }))
     })
 
     it("should set contenthash format CIDv1 CIDs")

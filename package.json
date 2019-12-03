@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test:unit": "mocha unitTest/**/*.test.js --exit",
-    "test:truffle": "truffle test"
+    "test:truffle": "truffle test",
+    "test": "npm run test:unit && npm run test:truffle"
   },
   "keywords": [
     "ENS",
@@ -35,6 +36,7 @@
     "@ensdomains/dnssec-oracle": "^0.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "execa": "^3.4.0",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0",
     "web3-utils": "^1.2.2"

@@ -4,11 +4,8 @@ const createWeb3 = async ({verbose, provider}) => {
     verbose && console.log('Setting up web3...')
     try {
         let web3 = new Web3(provider)
-        // CHECK HERE - If provider is a HDWalletProvider initialized With an invalid connectionstring this will immediately exit ??? Possibly web3 bug?
         let chainId = await web3.eth.getChainId()
-        // let chainId
-        // let netId = await web3.eth.net.getId()
-        let netId
+        let netId = await web3.eth.net.getId()
         if (verbose) {
             console.log(`\tRunning chain ID ${chainId} on network ${netId}`)
         }

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test:unit": "mocha unitTest/**/*.test.js --exit",
-    "test:truffle": "truffle test test/**/*.test.js"
+    "test:truffle": "truffle test",
+    "test": "npm run test:unit && npm run test:truffle"
   },
   "keywords": [
     "ENS",

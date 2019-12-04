@@ -40,7 +40,7 @@ contract('errorConditions', function(accounts) {
         const command = `${scriptpath} getContenthash wayne.test --web3 http://in.val.id:12345`
         const childResult = runCommand(command)
         assert.isTrue(childResult.failed, "Command should have failed")
-        assert.match(childResult.stderr, /Invalid JSON RPC response/)  // Error message when using plain connectionstring
+        assert.match(childResult.stderr, /Node is not reachable at/)
     })
 
     it("Should show error message when web3 connectionstring is invalid and account is required", function() {
@@ -50,7 +50,7 @@ contract('errorConditions', function(accounts) {
         }
         const childResult = runCommand(command, options)
         assert.isTrue(childResult.failed, "Command should have failed")
-        assert.match(childResult.stderr, /Failed to initialize web3/)  // Error message when using HDWalletProvider
+        assert.match(childResult.stderr, /Node is not reachable at/)
     })
 
     it("Should show error message when account is required but no credentials are provided", async function() {

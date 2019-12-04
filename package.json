@@ -29,6 +29,7 @@
     "content-hash": "^2.5.0",
     "dotenv": "^8.2.0",
     "eth-ens-namehash": "^2.0.8",
+    "is-reachable": "^4.0.0",
     "web3": "^1.2.2",
     "yargs": "^14.2.0"
   },

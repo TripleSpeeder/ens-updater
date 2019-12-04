@@ -25,10 +25,8 @@ contract("lib - contenthash functions", function(accounts) {
     let updater
     let registryAddress
 
-    before("Get registry address and set resolver", async function() {
+    before("Get registry address", async function() {
         const registry = await ENSRegistry.deployed()
-        const resolver = await PublicResolver.deployed()
-        await registry.setResolver(node, resolver.address, {from: controller})
         registryAddress = registry.address
     })
 
@@ -57,22 +55,6 @@ contract("lib - contenthash functions", function(accounts) {
         assert.strictEqual(updatedAddress, newaddress)
     })
 
-    it ("should fail when setting invalid address record", async function() {
-        let newaddress = '0xsomeThing'
-        assert.isRejected(updater.setAddress({address: newaddress}))
-    })
-
-    it ("should not change ETH address when dry-run option is set", async function() {
-        let currentaddress = await updater.getAddress()
-        let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
-        await updater.setAddress({
-            address: newaddress,
-            dryrun: true
-        })
-        let updatedAddress = await updater.getAddress()
-        assert.strictEqual(updatedAddress, currentaddress)
-    })
-
     it("should set IPFS hash", async function() {
         await updater.setContenthash({
             dryrun: false,
@@ -97,7 +79,6 @@ contract("lib - contenthash functions", function(accounts) {
         assert.strictEqual(result.codec, getCodec(currentContentHash))
         assert.strictEqual(result.hash, decode(currentContentHash))
     })
-
 
     it("should replace existing IPFS hash", async function() {
         const resolver = await PublicResolver.deployed()

@@ -22,12 +22,13 @@
   "license": "MIT",
   "dependencies": {
     "@ensdomains/ens": "^0.3.11",
+    "@ensdomains/ethregistrar": "^1.2.9",
     "@ensdomains/resolver": "^0.1.13",
     "@truffle/contract": "^4.1.0",
     "@truffle/hdwallet-provider": "^1.0.25",
-    "eth-ens-namehash": "^2.0.8",
     "content-hash": "^2.5.0",
     "dotenv": "^8.2.0",
+    "eth-ens-namehash": "^2.0.8",
     "web3": "^1.2.2",
     "yargs": "^14.2.0"
   },

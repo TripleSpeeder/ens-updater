@@ -12,9 +12,9 @@ exports.builder = (yargs) => {
     })
 }
 
-exports.handler = async ({verbose, updater, dryrun}) => {
+exports.handler = async ({verbose, updater, dryRun}) => {
     let result = await updater.clearAddress({
-        dryrun,
+        dryrun: dryRun,
     })
     console.log(result)
     await updater.stop()

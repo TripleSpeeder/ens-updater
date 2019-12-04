@@ -1,21 +1,11 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
-const execa = require("execa")
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const assert = chai.assert;
-
 const {private_keys, mnemonic} = require('./testdata')
+const {runCommand} = require('./runCommand')
 
-function runCommand(command, options={}) {
-    let childResult
-    try {
-        childResult = execa.commandSync(command, options)
-    } catch(childResultError) {
-        childResult = childResultError
-    }
-    return childResult
-}
 
 contract('errorConditions', function(accounts) {
 

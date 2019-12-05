@@ -14,3 +14,8 @@ jobs:
         - truffle migrate --network development
       script:
         - npm run test
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release -d

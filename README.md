@@ -95,7 +95,7 @@ Options:
   --web3              Web3 connection string                                                 [string] [required]
   --dry-run           Do not perform any real transactions                            [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
-  --registryaddress   Optional contract address of the ENS Registry.                                    [string]
+  --registryAddress   Optional contract address of the ENS Registry.                                    [string]
   --help, -h          Show help                                                                        [boolean]
 
 contact: michael@m-bauer.org
@@ -139,7 +139,7 @@ Example config file that sets web3 connection string and custom registry address
 ```json
 {
   "web3": "http://127.0.0.1:9545",
-  "registryaddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+  "registryAddress": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
 }
 ```
 Usage example:
@@ -147,10 +147,6 @@ Usage example:
 > ens-updater listInterfaces example.domain.eth --config myconfig.json
 ```
  
-## Maintainers
-
-[@TripleSpeeder](https://github.com/TripleSpeeder)
-
 ## Contributing
 
 PRs are welcome! Have a look at the [open issues](https://github.com/TripleSpeeder/ens-updater/issues) or create a new 
@@ -163,16 +159,26 @@ Pull requests should be against the "development" branch.
 ### Unittests
 Unittests are plain mocha tests located in folder "unitTests". They do not require ganache or other 
 node to run.
+
 Execute tests with `npm run test:unit` 
 
-### Integration tests
-Integration tests are implemented with truffle and require a local ganache instance to run.
-To execute integration tests:
- - Start ganache-cli in a dedicated terminal: `ganache-cli`
- - Run truffle tests in another terminal: `npm run test:truffle`
+### Integration and end-to-end tests
+These tests are implemented with truffle and require a local ganache instance to run. Tests are organized in folders:
+- `test/lib/`: Tests of the core functionality from the `src/lib` folder
+- `test/middleware/`: Tests of yargs middleware that needs to interact with a live node
+- `test/end2end/`: Tests of the actual binary. Each test executes `ens-updater` as a childprocess and verifies the output
+ 
+To execute the tests:
+1. Start ganache-cli in a dedicated terminal with specific mnemonic: 
+ `ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe"`
+2. Run truffle tests in another terminal:
+ `npm run test:truffle`
+
+
+## Maintainers
+[@TripleSpeeder](https://github.com/TripleSpeeder)
 
 ## License
-
 MIT 
 
 © 2019 Michael Bauer

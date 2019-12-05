@@ -2,7 +2,7 @@ const assert = require('chai').assert
 const requiresAccount = require('../../src/middleware/requiresAccountMiddleware')
 
 describe('requiresAccountMiddleware', function() {
-    const cmdsNeedAccount = ['setContenthash', 'setAddress']
+    const cmdsNeedAccount = ['setContenthash', 'setAddress', 'clearAddress']
     const cmdsDontNeedAccount = ['getAddress', 'getContenthash', 'getInfo', 'listInterfaces']
 
     it("should throw on unknown commands", function() {

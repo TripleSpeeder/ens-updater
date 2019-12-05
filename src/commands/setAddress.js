@@ -17,19 +17,17 @@ exports.builder = (yargs) => {
     })
 }
 
-exports.handler = async ({address, verbose, updater, dryrun}) => {
-    try {
-        if (address === 'stdin') {
-            verbose && console.log('Reading address from stdin...')
-            address = fs.readFileSync(0).toString().trim()
-            verbose && console.log(`\t Got address: ${address}.`)
-        }
-        let result = await updater.setAddress({
-            address,
-            dryrun,
-        })
-        console.log(result)
-    } finally {
-        updater.stop()
+exports.handler = async ({address, verbose, updater}) => {
+    if (address === 'stdin') {
+        verbose && console.log('Reading address from stdin...')
+        address = fs.readFileSync(0).toString().trim()
+        verbose && console.log(`\t Got address: ${address}.`)
     }
+    let result = await updater.setAddress({
+        address,
+    })
+    console.log(result)
+    await updater.stop()
+    // hardwire process.exit(0) here to fix problems with dangling HDWalletProvider engine for good.
+    process.exit(0)
 }

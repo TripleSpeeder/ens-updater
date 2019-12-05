@@ -1,6 +1,6 @@
 {
   "name": "@triplespeeder/ens-updater",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Set ENS name records from the commandline",
   "homepage": "https://github.com/TripleSpeeder/ens-updater",
   "main": "lib/index.js",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test:unit": "mocha unitTest/**/*.test.js --exit",
-    "test:truffle": "truffle test"
+    "test:truffle": "truffle test",
+    "test": "npm run test:unit && npm run test:truffle"
   },
   "keywords": [
     "ENS",
@@ -21,12 +22,14 @@
   "license": "MIT",
   "dependencies": {
     "@ensdomains/ens": "^0.3.11",
+    "@ensdomains/ethregistrar": "^1.2.9",
     "@ensdomains/resolver": "^0.1.13",
     "@truffle/contract": "^4.1.0",
     "@truffle/hdwallet-provider": "^1.0.25",
-    "eth-ens-namehash": "^2.0.8",
     "content-hash": "^2.5.0",
     "dotenv": "^8.2.0",
+    "eth-ens-namehash": "^2.0.8",
+    "is-reachable": "^4.0.0",
     "web3": "^1.2.2",
     "yargs": "^14.2.0"
   },
@@ -35,6 +38,7 @@
     "@ensdomains/dnssec-oracle": "^0.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "execa": "^3.4.0",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0",
     "web3-utils": "^1.2.2"

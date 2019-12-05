@@ -1,5 +1,5 @@
 const requiresAccount = (argv) => {
-    const cmdsNeedAccount = ['setContenthash', 'setAddress']
+    const cmdsNeedAccount = ['setContenthash', 'setAddress', 'clearAddress']
     const cmdsDontNeedAccount = ['getAddress', 'getContenthash', 'getInfo', 'listInterfaces']
     const command = argv._[0]
     const requiresAccount = cmdsNeedAccount.includes(command);

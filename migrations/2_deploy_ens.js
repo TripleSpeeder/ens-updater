@@ -9,7 +9,11 @@ const namehash = require('eth-ens-namehash');
 const tld = "test";
 
 module.exports = function(deployer, network, accounts) {
-    // TODO: Only deploy on local development network!
+    // Only deploy on development network!
+    if (network !== 'development') {
+        return
+    }
+
     let ens;
     let resolver;
     let registrar;

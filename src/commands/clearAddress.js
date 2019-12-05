@@ -12,10 +12,8 @@ exports.builder = (yargs) => {
     })
 }
 
-exports.handler = async ({verbose, updater, dryRun}) => {
-    let result = await updater.clearAddress({
-        dryrun: dryRun,
-    })
+exports.handler = async ({updater}) => {
+    let result = await updater.clearAddress()
     console.log(result)
     await updater.stop()
     // hardwire process.exit(0) here to fix problems with dangling HDWalletProvider engine for good.

@@ -64,4 +64,16 @@ contract('errorConditions', function(accounts) {
         assert.isTrue(childResult.failed, "Command should have failed")
         assert.match(childResult.stderr, /Got both mnemonic and private key/)
     })
+
+    it("Should show error message when provided account is not controller of ensname", async function() {
+        const targetAddress = accounts[3]
+        const other_private_key = private_keys[3]
+        const command = `${scriptpath} setAddress wayne.test ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        const options = {
+            env: { PRIVATE_KEY: other_private_key }
+        }
+        const childResult = runCommand(command, options)
+        assert.isTrue(childResult.failed, "Command should have failed")
+        assert.match(childResult.stderr, /is not controller of wayne.test./)
+    })
 })

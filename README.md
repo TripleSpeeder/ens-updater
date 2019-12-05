@@ -154,6 +154,8 @@ issue if you are missing functionality.
 
 Pull requests should be against the "development" branch.
 
+TODO: Add info about commit hooks/Husky
+
 ## Testing
 
 ### Unittests

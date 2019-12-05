@@ -20,6 +20,11 @@
   "author": "michael@m-bauer.org",
   "repository": "https://github.com/TripleSpeeder/ens-updater",
   "license": "MIT",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
     "@ensdomains/ens": "^0.3.11",
     "@ensdomains/ethregistrar": "^1.2.9",
@@ -34,11 +39,14 @@
     "yargs": "^14.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@ensdomains/buffer": "0.0.10",
     "@ensdomains/dnssec-oracle": "^0.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "execa": "^3.4.0",
+    "husky": "^3.1.0",
     "mocha": "^6.2.2",
     "sinon": "^7.5.0",
     "web3-utils": "^1.2.2"

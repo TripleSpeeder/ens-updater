@@ -154,7 +154,29 @@ issue if you are missing functionality.
 
 Pull requests should be against the "development" branch.
 
-TODO: Add info about commit hooks/Husky
+### Commits
+Commit messages should follow [Conventional Commits](https://www.conventionalcommits.org/) guidelines. This is
+also enforced via git hooks/husky.
+
+Structure:
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Allowed types:
+- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+- docs: Documentation only changes
+- feat: A new feature
+- fix: A bug fix
+- perf: A code change that improves performance
+- refactor: A code change that neither fixes a bug nor adds a feature
+- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- test: Adding missing tests or correcting existing tests
 
 ## Testing
 

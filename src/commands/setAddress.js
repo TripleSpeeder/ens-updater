@@ -17,7 +17,7 @@ exports.builder = (yargs) => {
     })
 }
 
-exports.handler = async ({address, verbose, updater, dryRun}) => {
+exports.handler = async ({address, verbose, updater}) => {
     if (address === 'stdin') {
         verbose && console.log('Reading address from stdin...')
         address = fs.readFileSync(0).toString().trim()
@@ -25,7 +25,6 @@ exports.handler = async ({address, verbose, updater, dryRun}) => {
     }
     let result = await updater.setAddress({
         address,
-        dryrun: dryRun,
     })
     console.log(result)
     await updater.stop()

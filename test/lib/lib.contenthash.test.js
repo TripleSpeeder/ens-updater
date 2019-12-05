@@ -1,29 +1,26 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
 const PublicResolver = artifacts.require("@ensdomains/resolver/PublicResolver");
 const namehash = require('eth-ens-namehash');
-const utils = require('web3-utils');
 const Updater = require('../../lib')
 const {decode, getCodec} = require('content-hash')
-const ResolverInterfaces = require('../../lib/ResolverInterfaces')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
+const accountIndex = 1;
+const tld = 'test'
+const label = 'wayne'
+const ensName = label+'.'+tld
+const firstCID = "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU"
+const otherCID = "QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D"
+const codec = 'ipfs-ns'
+const node = namehash.hash(ensName) // for querying
+let updater
+let registryAddress
 
 contract("lib - contenthash functions", function(accounts) {
-    const accountIndex = 1;
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
-    const tld = 'test'
-    const label = 'wayne'
-    const ensName = label+'.'+tld
-    const firstCID = "QmY7Yh4UquoXHLPFo2XbhXkhBvFoPwmQUSa92pxnxjQuPU"
-    const otherCID = "QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D"
-    const codec = 'ipfs-ns'
-    const labelHash = utils.sha3(label) // for registering
-    const node = namehash.hash(ensName) // for querying
-    let updater
-    let registryAddress
 
     before("Get registry address", async function() {
         const registry = await ENSRegistry.deployed()
@@ -37,27 +34,14 @@ contract("lib - contenthash functions", function(accounts) {
             registryAddress: registryAddress,
             controllerAddress: controller,
             verbose: false,
+            dryrun: false
         }
         updater = new Updater()
         await updater.setup(updaterOptions)
     })
 
-    it("should list supported interfaces", async function() {
-        let requiredInterfaceNames = Object.keys(ResolverInterfaces)
-        let supportedInterfaceNames = await updater.listInterfaces()
-        assert.sameMembers(requiredInterfaceNames, supportedInterfaceNames)
-    })
-
-    it ("should set ETH address record", async function() {
-        let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
-        await updater.setAddress({address: newaddress})
-        let updatedAddress = await updater.getAddress()
-        assert.strictEqual(updatedAddress, newaddress)
-    })
-
     it("should set IPFS hash", async function() {
         await updater.setContenthash({
-            dryrun: false,
             contentType: codec,
             contentHash: firstCID,
         })
@@ -90,7 +74,6 @@ contract("lib - contenthash functions", function(accounts) {
 
         // update contentHash
         await updater.setContenthash({
-            dryrun: false,
             contentType: codec,
             contentHash: otherCID,
         })
@@ -101,21 +84,6 @@ contract("lib - contenthash functions", function(accounts) {
         assert.strictEqual(result.hash, otherCID)
     })
 
-    it("should not update anything when 'dryrun' option is set", async function() {
-        // get current contentHash
-        const {codec, hash} = await updater.getContenthash()
-        // update contentHash with dry-run option set
-        await updater.setContenthash({
-            dryrun: true,
-            contentType: codec,
-            contentHash: firstCID,
-        })
-        // verify that updater still returns old hash
-        const result = await updater.getContenthash()
-        assert.strictEqual(result.codec, codec)
-        assert.strictEqual(result.hash, hash)
-    })
-
     it("should fail with unsupported content codec", async function() {
         assert.isRejected(updater.setContenthash({
             contentType: 'YXZ',
@@ -124,5 +92,51 @@ contract("lib - contenthash functions", function(accounts) {
     })
 
     it("should set contenthash format CIDv1 CIDs")
+
+})
+
+contract("lib - contenthash functions dry-run", function(accounts) {
+    const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
+
+    before("Get registry address", async function() {
+        const registry = await ENSRegistry.deployed()
+        registryAddress = registry.address
+    })
+
+    beforeEach("provide fresh updater instance", async function() {
+        const updaterOptions = {
+            web3: web3,
+            ensName: ensName,
+            registryAddress: registryAddress,
+            controllerAddress: controller,
+            verbose: false,
+            dryrun: true
+        }
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+    })
+
+    it("should not update anything when 'dryrun' option is set", async function() {
+        // get current contentHash
+        const {codec: prevCodec, hash: prevHash} = await updater.getContenthash()
+
+        // update contentHash with dry-run option set
+        await updater.setContenthash({
+            contentType: codec,
+            contentHash: otherCID,
+        })
+
+        // verify that updater still returns old hash
+        const result = await updater.getContenthash()
+        assert.strictEqual(result.codec, prevCodec)
+        assert.strictEqual(result.hash, prevHash)
+    })
+
+    it("should fail with unsupported content codec", async function() {
+        assert.isRejected(updater.setContenthash({
+            contentType: 'YXZ',
+            contentHash: 'someHashValue',
+        }))
+    })
 
 })

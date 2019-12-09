@@ -30,6 +30,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - For each operation verifies that the resolver contract of an ENS-name implements the required interface 
 via EIP165 "supportsInterface"
 - Show interfaces a resolver implements (command "listInterfaces")
+- Includes "--estimateGas" option to check the required gas for a command
 - Bash completion support (try command "completion" to set it up)  
 - Can read input from stdin to support piping with other tools
 - Options can be set via json configfile (see [config file support](#config-file-support))
@@ -94,6 +95,7 @@ Options:
   --version           Show version number                                                              [boolean]
   --verbose, -v       Verbose output                                                  [boolean] [default: false]
   --web3              Web3 connection string                                                 [string] [required]
+  --estimateGas       Estimate required gas for transactions                          [boolean] [default: false]
   --dry-run           Do not perform any real transactions                            [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
   --registryAddress   Optional contract address of the ENS Registry.                                    [string]
@@ -118,7 +120,7 @@ Exiting...
 ```
 
 #### Reading values from stdin
-Setting the value "stdin" for option `contenthash` or `address` reads the contenthash from stdin. This is useful
+Setting the value "stdin" for option `contenthash` or `address` reads the contenthash/address to set from stdin. This is useful
 to build a chain of commands in a deploy script. 
 
 For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy) to publish a website to IPFS

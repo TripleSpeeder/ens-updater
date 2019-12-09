@@ -76,4 +76,15 @@ contract('errorConditions', function(accounts) {
         assert.isTrue(childResult.failed, "Command should have failed")
         assert.match(childResult.stderr, /is not controller of wayne.test./)
     })
+
+    it("Should show error message when resolver is required but not set", async function() {
+        const targetAddress = accounts[3]
+        const command = `${scriptpath} setAddress noresolver.test ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        const options = {
+            env: { PRIVATE_KEY: private_key }
+        }
+        const childResult = runCommand(command, options)
+        assert.isTrue(childResult.failed, "Command should have failed")
+        assert.match(childResult.stderr, /No resolver set for /)
+    })
 })

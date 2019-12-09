@@ -1,5 +1,4 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
-const namehash = require('eth-ens-namehash');
 const Updater = require('../../lib')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -90,5 +89,21 @@ contract("lib - address functions", function(accounts) {
         await updater.setAddress({address: newaddress})
         let updatedAddress = await updater.getAddress()
         assert.strictEqual(updatedAddress, newaddress)
+    })
+
+    it ("should fail when resolver is required but not set", async function() {
+        const updaterOptions = {
+            web3: web3,
+            ensName: 'noresolver.test',
+            registryAddress: registryAddress,
+            controllerAddress: controller,
+            verbose: false,
+            dryrun: false,
+        }
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+
+        let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
+        assert.isRejected(updater.setAddress({address: newaddress}), /No resolver set/, 'Should fail with No Resolver set error')
     })
 })

@@ -1,5 +1,6 @@
-master [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=master)](https://travis-ci.com/TripleSpeeder/ens-updater) - develop [![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
-
+[![Build Status](https://travis-ci.com/TripleSpeeder/ens-updater.svg?branch=develop)](https://travis-ci.com/TripleSpeeder/ens-updater)
+[![npm](https://img.shields.io/npm/v/@triplespeeder/ens-updater)](https://www.npmjs.com/package/@triplespeeder/ens-updater)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 # ens-updater
 
@@ -29,6 +30,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - For each operation verifies that the resolver contract of an ENS-name implements the required interface 
 via EIP165 "supportsInterface"
 - Show interfaces a resolver implements (command "listInterfaces")
+- Includes "--estimateGas" option to check the required gas for a command
 - Bash completion support (try command "completion" to set it up)  
 - Can read input from stdin to support piping with other tools
 - Options can be set via json configfile (see [config file support](#config-file-support))
@@ -69,6 +71,7 @@ npm install -g @triplespeeder/ens-updater
 
 ## Usage
 The following commands are implemented:
+ - getInfo for a quick summary
  - get/set contenthash
  - get/set Ethereum address
  - get list of interfaces resolver supports
@@ -81,6 +84,7 @@ PRs to extend functionality are welcome :)
 Usage: ens-updater <command> [options]
 
 Commands:
+  ens-updater getInfo <ensname>                             Get various info about ENS name
   ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
   <contenthash>
   ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name
@@ -93,6 +97,7 @@ Options:
   --version           Show version number                                                              [boolean]
   --verbose, -v       Verbose output                                                  [boolean] [default: false]
   --web3              Web3 connection string                                                 [string] [required]
+  --estimateGas       Estimate required gas for transactions                          [boolean] [default: false]
   --dry-run           Do not perform any real transactions                            [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
   --registryAddress   Optional contract address of the ENS Registry.                                    [string]
@@ -117,7 +122,7 @@ Exiting...
 ```
 
 #### Reading values from stdin
-Setting the value "stdin" for option `contenthash` or `address` reads the contenthash from stdin. This is useful
+Setting the value "stdin" for option `contenthash` or `address` reads the contenthash/address to set from stdin. This is useful
 to build a chain of commands in a deploy script. 
 
 For example you can use [ipfs-deploy](https://www.npmjs.com/package/ipfs-deploy) to publish a website to IPFS

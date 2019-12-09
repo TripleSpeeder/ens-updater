@@ -1,5 +1,4 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry");
-const namehash = require('eth-ens-namehash');
 const Updater = require('../../lib')
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -53,6 +52,58 @@ contract("lib - address functions dry-run", function(accounts) {
 
 })
 
+contract("lib - address functions estimategas", function(accounts) {
+    const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
+
+    let updaterOptions = {
+        web3: web3,
+        ensName: ensName,
+        registryAddress: undefined,
+        controllerAddress: controller,
+        verbose: false,
+        dryrun: false,
+        estimateGas: false,
+    }
+
+    before("Get registry address", async function() {
+        const registry = await ENSRegistry.deployed()
+        updaterOptions.registryAddress = registry.address
+    })
+
+    it ("should return gas estimate for read-only method", async function() {
+        updater = new Updater()
+        updaterOptions.estimateGas = true
+        await updater.setup(updaterOptions)
+        let gasEstimate = await updater.getAddress()
+        assert.isNumber(gasEstimate)
+        assert.isAbove(gasEstimate, 100)
+    })
+
+    it ("should return gas estimate and not change anything", async function() {
+        updater = new Updater()
+        updaterOptions.estimateGas = false
+        await updater.setup(updaterOptions)
+        let currentaddress = await updater.getAddress()
+
+        // update address with estimateGas option set
+        updaterOptions.estimateGas = true
+        await updater.setup(updaterOptions)
+        let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
+        let gasEstimate = await updater.setAddress({
+            address: newaddress,
+        })
+        assert.isNumber(gasEstimate)
+        assert.isAbove(gasEstimate, 100)
+
+        // double check nothing was changed
+        updaterOptions.estimateGas = false
+        await updater.setup(updaterOptions)
+        let updatedAddress = await updater.getAddress()
+        assert.strictEqual(updatedAddress, currentaddress)
+    })
+
+})
+
 contract("lib - address functions", function(accounts) {
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
 
@@ -90,5 +141,21 @@ contract("lib - address functions", function(accounts) {
         await updater.setAddress({address: newaddress})
         let updatedAddress = await updater.getAddress()
         assert.strictEqual(updatedAddress, newaddress)
+    })
+
+    it ("should fail when resolver is required but not set", async function() {
+        const updaterOptions = {
+            web3: web3,
+            ensName: 'noresolver.test',
+            registryAddress: registryAddress,
+            controllerAddress: controller,
+            verbose: false,
+            dryrun: false,
+        }
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+
+        let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
+        assert.isRejected(updater.setAddress({address: newaddress}), /No resolver set/, 'Should fail with No Resolver set error')
     })
 })

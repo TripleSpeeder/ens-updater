@@ -140,3 +140,56 @@ contract("lib - contenthash functions dry-run", function(accounts) {
     })
 
 })
+
+contract("lib - contenthash functions estimateGas", function(accounts) {
+    const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
+
+    let updaterOptions = {
+        web3: web3,
+        ensName: ensName,
+        registryAddress: undefined,
+        controllerAddress: controller,
+        verbose: false,
+        dryrun: false,
+        estimateGas: false,
+    }
+
+    before("Get registry address", async function() {
+        const registry = await ENSRegistry.deployed()
+        updaterOptions.registryAddress = registry.address
+    })
+
+    it ("should return gas estimate for read-only method", async function() {
+        updater = new Updater()
+        updaterOptions.estimateGas = true
+        await updater.setup(updaterOptions)
+        let gasEstimate = await updater.getContenthash()
+        assert.isNumber(gasEstimate)
+        assert.isAbove(gasEstimate, 100)
+    })
+
+    it("should provide gas estimate and not update anything", async function() {
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+        // get current contentHash
+        const {codec: prevCodec, has: prevHash} = await updater.getContenthash()
+
+        // update contentHash with estimateGas option set
+        updaterOptions.estimateGas = true
+        await updater.setup(updaterOptions)
+        const gasEstimate = await updater.setContenthash({
+            contentType: codec,
+            contentHash: otherCID,
+        })
+        assert.isNumber(gasEstimate)
+        assert.isAbove(gasEstimate, 100)
+
+        // verify that updater still returns old hash
+        updaterOptions.estimateGas = false
+        await updater.setup(updaterOptions)
+        const result = await updater.getContenthash()
+        assert.strictEqual(result.codec, prevCodec)
+        assert.strictEqual(result.hash, prevHash)
+    })
+
+})

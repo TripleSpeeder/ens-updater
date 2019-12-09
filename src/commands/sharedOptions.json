@@ -11,6 +11,12 @@
     "type": "string",
     "demandOption": true
   },
+  "estimateGas": {
+    "description": "Estimate required gas for transactions",
+    "type": "boolean",
+    "default": false,
+    "demandOption": false
+  },
   "dry-run": {
     "description": "Do not perform any real transactions",
     "type": "boolean",

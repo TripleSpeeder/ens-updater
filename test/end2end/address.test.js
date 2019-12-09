@@ -1,5 +1,4 @@
 const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry")
-const execa = require("execa")
 const chai = require("chai")
 const chaiAsPromised = require("chai-as-promised")
 chai.use(chaiAsPromised)
@@ -49,6 +48,22 @@ contract('get/set address', function(accounts) {
     it("Should not fail when no address is set", async function() {
         const command = `${scriptpath} getAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
         const childResult = await runCommand(command)
+        assert.isFalse(childResult.failed)
+        assert.equal(childResult.stdout, zeroAddress)
+    })
+
+    it("Should estimate gas for setting address record", async function() {
+        const targetAddress = accounts[3]
+        // set new address with estimategas option
+        const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress} --estimateGas`
+        const options = {env: { PRIVATE_KEY: private_key}}
+        let childResult = await runCommand(setAddressCmd, options)
+        assert.isFalse(childResult.failed)
+        assert.equal(childResult.stdout, '45645')
+
+        // Verify still zero-address is set
+        const getAddressCmd = `${scriptpath} getAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        childResult = await runCommand(getAddressCmd)
         assert.isFalse(childResult.failed)
         assert.equal(childResult.stdout, zeroAddress)
     })

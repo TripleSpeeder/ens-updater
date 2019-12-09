@@ -71,6 +71,7 @@ npm install -g @triplespeeder/ens-updater
 
 ## Usage
 The following commands are implemented:
+ - getInfo for a quick summary
  - get/set contenthash
  - get/set Ethereum address
  - get list of interfaces resolver supports
@@ -83,6 +84,7 @@ PRs to extend functionality are welcome :)
 Usage: ens-updater <command> [options]
 
 Commands:
+  ens-updater getInfo <ensname>                             Get various info about ENS name
   ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
   <contenthash>
   ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name

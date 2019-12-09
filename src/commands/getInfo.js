@@ -10,13 +10,16 @@ exports.builder = (yargs) => {
     })
 }
 
-exports.handler = async ({updater}) => {
+exports.handler = async ({updater, ensname}) => {
     try {
         let info = await updater.getInfo()
-        console.log(`Registrant: \t${info.Registrant ? info.Registrant : 'n/a'}`)
+        console.log(`ENS name '${ensname}:'`)
+        console.log("==========================================================")
         console.log(`Controller: \t${info.Controller}`)
         console.log(`Resolver: \t${info.Resolver}`)
-        console.log(`Expires: \t${new Date(info.Expires*1000)}`)
+        console.log(`Registrant: \t${info.Registrant ? info.Registrant : 'n/a'}`)
+        console.log(`Expires: \t${info.Expires}`)
+        console.log(`ETH address: \t${info.Address}`)
     } finally {
         updater.stop()
     }

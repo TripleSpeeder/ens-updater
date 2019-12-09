@@ -19,7 +19,7 @@ const main = () => {
     .middleware(createWeb3)
     .middleware(getControllerAddress)
     .middleware(createUpdater)
-    // .command(require('../src/commands/getInfo'))
+    .command(require('../src/commands/getInfo'))
     .command(require('../src/commands/setContenthash'))
     .command(require('../src/commands/getContenthash'))
     .command(require('../src/commands/setAddress'))

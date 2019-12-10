@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/TripleSpeeder/ens-updater/compare/v1.5.0...v1.5.1) (2019-12-10)
+
+
+### Bug Fixes
+
+* allow connecting to infura nodes ([68fa986](https://github.com/TripleSpeeder/ens-updater/commit/68fa986d9df75064da1f5dc1b7a12c6a4357bdff)), closes [#45](https://github.com/TripleSpeeder/ens-updater/issues/45)
+* process hangs when using websocket provider ([85a26ef](https://github.com/TripleSpeeder/ens-updater/commit/85a26ef7da36e0a86a20f47e228147d04d7aeff5)), closes [#46](https://github.com/TripleSpeeder/ens-updater/issues/46)
+
 # [1.5.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.4.0...v1.5.0) (2019-12-09)
 
 

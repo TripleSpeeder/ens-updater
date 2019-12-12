@@ -17,6 +17,12 @@
     "default": false,
     "demandOption": false
   },
+  "gasPrice": {
+    "description": "Gasprice to set for transaction (unit 'gwei'). Defaults to 10.",
+    "type": "number",
+    "default": 10,
+    "demandOption": false
+  },
   "dry-run": {
     "description": "Do not perform any real transactions",
     "type": "boolean",

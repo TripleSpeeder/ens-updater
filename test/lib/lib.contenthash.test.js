@@ -34,7 +34,8 @@ contract("lib - contenthash functions", function(accounts) {
             registryAddress: registryAddress,
             controllerAddress: controller,
             verbose: false,
-            dryrun: false
+            dryrun: false,
+            gasPrice: web3.utils.fromWei('10000000000', 'gwei')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)
@@ -110,7 +111,8 @@ contract("lib - contenthash functions dry-run", function(accounts) {
             registryAddress: registryAddress,
             controllerAddress: controller,
             verbose: false,
-            dryrun: true
+            dryrun: true,
+            gasPrice: web3.utils.fromWei('10000000000', 'gwei')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)
@@ -152,6 +154,7 @@ contract("lib - contenthash functions estimateGas", function(accounts) {
         verbose: false,
         dryrun: false,
         estimateGas: false,
+        gasPrice: web3.utils.fromWei('10000000000', 'gwei')
     }
 
     before("Get registry address", async function() {

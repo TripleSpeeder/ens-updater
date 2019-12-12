@@ -29,6 +29,7 @@ contract("lib - listinterface functions", function(accounts) {
             registryAddress: registryAddress,
             controllerAddress: controller,
             verbose: false,
+            gasPrice: web3.utils.fromWei('10000000000', 'gwei')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)

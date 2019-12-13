@@ -15,9 +15,9 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
 - [Testing](#testing)
+- [Contributing](#contributing)
+- [Maintainers](#maintainers)
 - [License](#license)
 
 ## Overview
@@ -37,8 +37,8 @@ via EIP165 "supportsInterface"
 
 ## Security
 In order to perform an update of an ENS record, `ens-update` needs the private key of the
-Ethereum account controlling the ENS name. The private key needs to be provided through the file
-`.env` in the working directory.
+Ethereum account controlling the ENS name. The private key needs to be provided via environment variable or
+through the file `.env` in the working directory.
 
 - **NEVER share .env file with anybody**
 - **NEVER check .env into version control**
@@ -46,6 +46,11 @@ Ethereum account controlling the ENS name. The private key needs to be provided 
 
 
 The private key can be provided either directly or through a mnemonic
+#### Provide the private key
+Example contents of `.env`:
+```bash
+PRIVATE_KEY=<private key here, without leading 0x>
+```
 #### Provide the mnemonic
 Example contents of `.env`:
 ```bash
@@ -53,18 +58,12 @@ MNEMONIC=<mnemonic phrase here>
 ```
 By default the first account will be used. If you need to use another account provide the option --accountindex.
 
-Remember - The mnemonic gives full control to all accounts of the according wallet!
-#### Provide the private key
-Example contents of `.env`:
-```bash
-PRIVATE_KEY=<private key here, without leading 0x>
-```
+Remember - The mnemonic gives full control to **all** accounts of the according wallet!
 
 ## Background
 For information on the Ethereum Name System see the [ENS documentation](https://docs.ens.domains/).
 
 ## Install
-
 ```
 npm install -g @triplespeeder/ens-updater
 ```
@@ -98,6 +97,7 @@ Options:
   --verbose, -v       Verbose output                                                  [boolean] [default: false]
   --web3              Web3 connection string                                                 [string] [required]
   --estimateGas       Estimate required gas for transactions                          [boolean] [default: false]
+  --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10.     [number] [default: 10]
   --dry-run           Do not perform any real transactions                            [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
   --registryAddress   Optional contract address of the ENS Registry.                                    [string]
@@ -152,6 +152,27 @@ Usage example:
 > ens-updater listInterfaces example.domain.eth --config myconfig.json
 ```
  
+## Testing
+
+### Unittests
+Unittests are plain mocha tests located in folder "unitTests". They do not require ganache or other 
+node to run.
+
+Execute tests with `npm run test:unit` 
+
+### Integration and end-to-end tests
+These tests are implemented with truffle and require a local ganache instance to run. Tests are organized in folders:
+- `test/lib/`: Tests of the core functionality from the `src/lib` folder
+- `test/middleware/`: Tests of yargs middleware that needs to interact with a live node
+- `test/end2end/`: Tests of the actual binary. Each test executes `ens-updater` as a childprocess and verifies the output
+ 
+To execute the tests:
+1. Start ganache-cli in a dedicated terminal with specific mnemonic: 
+ `ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe"`
+2. Run truffle tests in another terminal:
+ `npm run test:truffle`
+
+
 ## Contributing
 
 PRs are welcome! Have a look at the [open issues](https://github.com/TripleSpeeder/ens-updater/issues) or create a new 
@@ -182,27 +203,6 @@ Allowed types:
 - refactor: A code change that neither fixes a bug nor adds a feature
 - style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 - test: Adding missing tests or correcting existing tests
-
-## Testing
-
-### Unittests
-Unittests are plain mocha tests located in folder "unitTests". They do not require ganache or other 
-node to run.
-
-Execute tests with `npm run test:unit` 
-
-### Integration and end-to-end tests
-These tests are implemented with truffle and require a local ganache instance to run. Tests are organized in folders:
-- `test/lib/`: Tests of the core functionality from the `src/lib` folder
-- `test/middleware/`: Tests of yargs middleware that needs to interact with a live node
-- `test/end2end/`: Tests of the actual binary. Each test executes `ens-updater` as a childprocess and verifies the output
- 
-To execute the tests:
-1. Start ganache-cli in a dedicated terminal with specific mnemonic: 
- `ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe"`
-2. Run truffle tests in another terminal:
- `npm run test:truffle`
-
 
 ## Maintainers
 [@TripleSpeeder](https://github.com/TripleSpeeder)

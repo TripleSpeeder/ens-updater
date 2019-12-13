@@ -8,6 +8,7 @@ const createProvider = require('../src/middleware/providerMiddleware')
 const createWeb3 = require('../src/middleware/web3Middleware')
 const getControllerAddress = require('../src/middleware/controllerAddressMiddleware')
 const createUpdater = require('../src/middleware/updaterMiddleware')
+const gasPriceMiddleware = require('../src/middleware/gaspriceMiddleware')
 
 const main = () => {
     const argv = yargs
@@ -18,6 +19,7 @@ const main = () => {
     .middleware(createProvider)
     .middleware(createWeb3)
     .middleware(getControllerAddress)
+    .middleware(gasPriceMiddleware)
     .middleware(createUpdater)
     .command(require('../src/commands/getInfo'))
     .command(require('../src/commands/setContenthash'))

@@ -32,9 +32,8 @@ contract("lib - gasprice", function(accounts) {
 
     it ("should use provided gasprice", async function() {
         let gasPriceWei = web3.utils.toBN('52000000000')
-        let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
         updater = new Updater()
-        updaterOptions.gasPrice = gasPriceGWei
+        updaterOptions.gasPrice = gasPriceWei
         await updater.setup(updaterOptions)
         let newaddress = accounts[4]
         const txHash = await updater.setAddress({address: newaddress})

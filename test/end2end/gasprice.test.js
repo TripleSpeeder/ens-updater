@@ -8,14 +8,13 @@ const {runCommand} = require('./runCommand')
 const {private_keys} = require('./testdata')
 
 
-contract('gasprice option', function(accounts) {
+contract('gasPrice option', function(accounts) {
 
     const controllerAccountIndex = 1
     const private_key = private_keys[controllerAccountIndex]
     const scriptpath = 'bin/ens-updater.js'
     const providerstring = 'http://localhost:8545'
     const ensName = 'wayne.test'
-    const zeroAddress = '0x0000000000000000000000000000000000000000'
     let registryAddress
 
     before("Get registry address", async function() {
@@ -23,7 +22,7 @@ contract('gasprice option', function(accounts) {
         registryAddress = registry.address
     })
 
-    it("Should use default gasprice when no option set", async function() {
+    it("Should use default gasPrice when no option set", async function() {
         const defaultGaspriceGWei = web3.utils.toBN(gasPriceOptions.default)
         const defaultGaspriceWei = web3.utils.toWei(defaultGaspriceGWei, 'gwei')
         const targetAddress = accounts[3]
@@ -35,7 +34,7 @@ contract('gasprice option', function(accounts) {
         const txHash = childResult.stdout
         assert.match(txHash, /^0x/)
 
-        // Verify the default gasprice was used during transaction
+        // Verify the default gasPrice was used during transaction
         const transaction = await web3.eth.getTransaction(txHash)
         const actualGasprice = web3.utils.toBN(transaction.gasPrice)
         assert.isOk(
@@ -44,7 +43,7 @@ contract('gasprice option', function(accounts) {
         )
     })
 
-    it("Should use provided gasprice", async function() {
+    it("Should use provided gasPrice", async function() {
         const targetAddress = accounts[3]
         let gasPriceWei = web3.utils.toBN('5000000000')
         let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
@@ -55,7 +54,7 @@ contract('gasprice option', function(accounts) {
         const txHash = childResult.stdout
         assert.match(txHash, /^0x/)
 
-        // Verify the provided gasprice was used during transaction
+        // Verify the provided gasPrice was used during transaction
         const transaction = await web3.eth.getTransaction(txHash)
         const actualGasprice = web3.utils.toBN(transaction.gasPrice)
         assert.isOk(
@@ -63,4 +62,17 @@ contract('gasprice option', function(accounts) {
             `Actual ${actualGasprice.toString()} - expected ${gasPriceWei.toString()}`
         )
     })
+
+    it("Should show error message when gasPrice is too high", async function() {
+        // The internal limit is set to 500 gwei. Anything above this value will be considered user error and rejected.
+        const targetAddress = accounts[3]
+        let gasPriceWei = web3.utils.toBN('501000000000')
+        let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
+        const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --gasPrice ${gasPriceGWei} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        const options = {env: { PRIVATE_KEY: private_key}}
+        let childResult = await runCommand(setAddressCmd, options)
+        assert.isTrue(childResult.failed, "Command should have failed")
+        assert.match(childResult.stderr, /Gas price too high/)
+    })
+
 })

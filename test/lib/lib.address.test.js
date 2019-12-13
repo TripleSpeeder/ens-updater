@@ -28,6 +28,7 @@ contract("lib - address functions dry-run", function(accounts) {
             controllerAddress: controller,
             verbose: false,
             dryrun: true,
+            gasPrice: web3.utils.toBN('10000000000')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)
@@ -63,6 +64,7 @@ contract("lib - address functions estimategas", function(accounts) {
         verbose: false,
         dryrun: false,
         estimateGas: false,
+        gasPrice: web3.utils.toBN('10000000000')
     }
 
     before("Get registry address", async function() {
@@ -120,6 +122,7 @@ contract("lib - address functions", function(accounts) {
             controllerAddress: controller,
             verbose: false,
             dryrun: false,
+            gasPrice: web3.utils.toBN('10000000000')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)
@@ -151,6 +154,7 @@ contract("lib - address functions", function(accounts) {
             controllerAddress: controller,
             verbose: false,
             dryrun: false,
+            gasPrice: web3.utils.toBN('10000000000')
         }
         updater = new Updater()
         await updater.setup(updaterOptions)

@@ -37,7 +37,7 @@
     "dotenv": "^8.2.0",
     "eth-ens-namehash": "^2.0.8",
     "web3": "^1.2.2",
-    "yargs": "^14.2.0"
+    "yargs": "^15.0.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",

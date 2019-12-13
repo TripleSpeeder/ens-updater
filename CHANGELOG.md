@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.5.1...v1.6.0) (2019-12-13)
+
+
+### Features
+
+* add --gasPrice option ([7e5fe18](https://github.com/TripleSpeeder/ens-updater/commit/7e5fe18f4e66d244f829bfe5bd9b80c0e34e6b99)), closes [#39](https://github.com/TripleSpeeder/ens-updater/issues/39)
+
 ## [1.5.1](https://github.com/TripleSpeeder/ens-updater/compare/v1.5.0...v1.5.1) (2019-12-10)
 
 

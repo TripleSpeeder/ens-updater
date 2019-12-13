@@ -37,8 +37,8 @@ via EIP165 "supportsInterface"
 
 ## Security
 In order to perform an update of an ENS record, `ens-update` needs the private key of the
-Ethereum account controlling the ENS name. The private key needs to be provided through the file
-`.env` in the working directory.
+Ethereum account controlling the ENS name. The private key needs to be provided via environment variable or
+through the file `.env` in the working directory.
 
 - **NEVER share .env file with anybody**
 - **NEVER check .env into version control**
@@ -46,6 +46,11 @@ Ethereum account controlling the ENS name. The private key needs to be provided 
 
 
 The private key can be provided either directly or through a mnemonic
+#### Provide the private key
+Example contents of `.env`:
+```bash
+PRIVATE_KEY=<private key here, without leading 0x>
+```
 #### Provide the mnemonic
 Example contents of `.env`:
 ```bash
@@ -53,18 +58,12 @@ MNEMONIC=<mnemonic phrase here>
 ```
 By default the first account will be used. If you need to use another account provide the option --accountindex.
 
-Remember - The mnemonic gives full control to all accounts of the according wallet!
-#### Provide the private key
-Example contents of `.env`:
-```bash
-PRIVATE_KEY=<private key here, without leading 0x>
-```
+Remember - The mnemonic gives full control to **all** accounts of the according wallet!
 
 ## Background
 For information on the Ethereum Name System see the [ENS documentation](https://docs.ens.domains/).
 
 ## Install
-
 ```
 npm install -g @triplespeeder/ens-updater
 ```

@@ -167,8 +167,8 @@ These tests are implemented with truffle and require a local ganache instance to
 - `test/end2end/`: Tests of the actual binary. Each test executes `ens-updater` as a childprocess and verifies the output
  
 To execute the tests:
-1. Start ganache-cli in a dedicated terminal with specific mnemonic: 
- `ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe"`
+1. Start ganache-cli in a dedicated terminal in deterministic mode: 
+ `ganache-cli -d`
 2. Run truffle tests in another terminal:
  `npm run test:truffle`
 

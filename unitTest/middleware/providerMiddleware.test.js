@@ -9,7 +9,7 @@ describe('providerMiddleware', function() {
     const VALID_CONNECTIONSTRING = 'http://localhost:8545'
     const PRIVATE_KEY = '0xABCDEF1234567890'
 
-    it("should return plain connectionstring when no account required", function() {
+    it('should return plain connectionstring when no account required', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -22,7 +22,7 @@ describe('providerMiddleware', function() {
         assert.deepEqual(providerMiddlerware(options), expected)
     })
 
-    it("should return HDWalletProvider when account is required (with mnemonic)", function() {
+    it('should return HDWalletProvider when account is required (with mnemonic)', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -36,7 +36,7 @@ describe('providerMiddleware', function() {
         result.provider.engine.stop()
     })
 
-    it("should fail when account is required but mnemonic is invalid", function() {
+    it('should fail when account is required but mnemonic is invalid', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -47,7 +47,7 @@ describe('providerMiddleware', function() {
         assert.throws(()=>{providerMiddlerware(options)}, Error, /Mnemonic invalid or undefined/)
     })
 
-    it("should return HDWalletProvider with one address when account is required (with private key)", function() {
+    it('should return HDWalletProvider with one address when account is required (with private key)', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -60,7 +60,7 @@ describe('providerMiddleware', function() {
         result.provider.engine.stop()
     })
 
-    it("should fail when account is required and neither mnemonic nor private key are provided", function() {
+    it('should fail when account is required and neither mnemonic nor private key are provided', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -70,7 +70,7 @@ describe('providerMiddleware', function() {
         assert.throws(()=>{providerMiddlerware(options)}, Error, /No account available./)
     })
 
-    it("should fail when account is required and both mnemonic and private key are provided", function() {
+    it('should fail when account is required and both mnemonic and private key are provided', function() {
         const options = {
             verbose: false,
             accountIndex: 0,
@@ -82,7 +82,7 @@ describe('providerMiddleware', function() {
         assert.throws(()=>{providerMiddlerware(options)}, Error, /Both PRIVATE_KEY and MNEMONIC are set/)
     })
 
-    it("should return HDWalletProvider with requested number of accounts", function() {
+    it('should return HDWalletProvider with requested number of accounts', function() {
         const accountIndex = 5
         const options = {
             verbose: false,

@@ -11,7 +11,7 @@ const createUpdater = require('../src/middleware/updaterMiddleware')
 const gasPriceMiddleware = require('../src/middleware/gaspriceMiddleware')
 
 const main = () => {
-    const argv = yargs
+    yargs
     .usage('Usage: $0 <command> [options]')
     .middleware(requiresAccount)
     .middleware(getCredentials)

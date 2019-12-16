@@ -4,7 +4,7 @@ const Web3 = require('web3')
 
 describe('gaspriceMiddleware', function() {
 
-    it("should convert provided gasPrice from gwei number to wei BN", function() {
+    it('should convert provided gasPrice from gwei number to wei BN', function() {
         const options = {
             gasPrice: 10
         }
@@ -16,7 +16,7 @@ describe('gaspriceMiddleware', function() {
         assert.deepEqual(result, expected)
     })
 
-    it("should fail when provided gasprice is too high", function() {
+    it('should fail when provided gasprice is too high', function() {
         const options = {
             gasPrice: '501'
         }

@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 exports.command = 'clearAddress <ensname>'
 
 exports.describe = 'Clear address record for an ENS name'

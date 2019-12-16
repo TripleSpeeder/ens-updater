@@ -14,7 +14,7 @@ exports.handler = async ({updater, ensname}) => {
     try {
         let info = await updater.getInfo()
         console.log(`ENS name '${ensname}:'`)
-        console.log("==========================================================")
+        console.log('==========================================================')
         console.log(`Controller: \t${info.Controller}`)
         console.log(`Resolver: \t${info.Resolver}`)
         console.log(`Registrant: \t${info.Registrant ? info.Registrant : 'n/a'}`)

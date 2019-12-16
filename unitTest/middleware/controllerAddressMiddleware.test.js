@@ -1,6 +1,6 @@
-const sinon = require('sinon');
-const chai = require("chai");
-const assert = chai.assert;
+const sinon = require('sinon')
+const chai = require('chai')
+const assert = chai.assert
 const getControllerAddress = require('../../src/middleware/controllerAddressMiddleware')
 
 describe('controllerAddressMiddleware', function() {
@@ -10,7 +10,7 @@ describe('controllerAddressMiddleware', function() {
         getAddress: sinon.fake.returns(controllerAddress)
     }
 
-    it("should get controller when account is required", function() {
+    it('should get controller when account is required', function() {
         const options = {
             requiresAccount: true,
             provider: fakeProvider,
@@ -19,7 +19,7 @@ describe('controllerAddressMiddleware', function() {
         assert.deepEqual(result, {controllerAddress: controllerAddress})
     })
 
-    it("should not get controller when no account is required", function() {
+    it('should not get controller when no account is required', function() {
         const options = {
             requiresAccount: false,
             provider: fakeProvider

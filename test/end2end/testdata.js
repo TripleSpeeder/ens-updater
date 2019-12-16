@@ -1,6 +1,6 @@
 
 module.exports = {
-  mnemonic: "spot pact fashion alert item unveil current choice emerge merge orient tribe",
+  mnemonic: 'spot pact fashion alert item unveil current choice emerge merge orient tribe',
   private_keys: [
     '0x3842bdfc958c448c92ce21e2e3ff4bdb84ae956d7ad69046c8e6d860e9bd7be8',
     '0xca66f11f8ec6407c19ad24beaca23b2a3cc131eca36313dd8fd65325b22fbdb7',

@@ -48,6 +48,7 @@
     "@semantic-release/git": "^7.0.18",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^6.7.2",
     "execa": "^3.4.0",
     "husky": "^3.1.0",
     "mocha": "^6.2.2",

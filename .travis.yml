@@ -9,7 +9,7 @@ jobs:
         - npm install -g truffle@5.0.*
         - npm install -g ganache-cli
       before_script:
-        - ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe" >ganache.log 2>&1 &
+        - ganache-cli -d >ganache.log 2>&1 &
         - sleep 5
         - truffle migrate --network development
       script:

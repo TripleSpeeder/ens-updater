@@ -4,7 +4,7 @@ exports.command = 'setContenthash <ensname> <contenttype> <contenthash>'
 
 exports.describe = 'Set the contenthash for an ENS name'
 
-exports.builder  = (yargs) => {
+exports.builder = (yargs) => {
     return yargs
     .positional('ensname', {
         description: 'ENS Name to query or update',
@@ -26,7 +26,7 @@ exports.builder  = (yargs) => {
 exports.handler = async ({verbose, contenttype, contenthash, updater}) => {
     if (contenthash === 'stdin') {
         verbose && console.log('Getting contenthash from stdin...')
-        contenthash = fs.readFileSync(0).toString().trim();
+        contenthash = fs.readFileSync(0).toString().trim()
         verbose && console.log(`\t Got contenthash: ${contenthash}.`)
     }
     let result = await updater.setContenthash({

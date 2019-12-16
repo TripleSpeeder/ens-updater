@@ -14,7 +14,7 @@ exports.handler = async ({updater}) => {
     try {
         let {codec, hash} = await updater.getContenthash()
         if (hash === undefined) {
-            console.log("No contenthash record set")
+            console.log('No contenthash record set')
         } else {
             console.log(`${codec}: ${hash}`)
         }

@@ -11,6 +11,7 @@ const createUpdater = require('../src/middleware/updaterMiddleware')
 const gasPriceMiddleware = require('../src/middleware/gaspriceMiddleware')
 
 const main = () => {
+    // noinspection BadExpressionStatementJS
     yargs
     .usage('Usage: $0 <command> [options]')
     .middleware(requiresAccount)
@@ -24,6 +25,7 @@ const main = () => {
     .command(require('../src/commands/getInfo'))
     .command(require('../src/commands/setContenthash'))
     .command(require('../src/commands/getContenthash'))
+    .command(require('../src/commands/clearContenthash'))
     .command(require('../src/commands/setAddress'))
     .command(require('../src/commands/getAddress'))
     .command(require('../src/commands/clearAddress'))

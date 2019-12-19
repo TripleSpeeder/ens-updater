@@ -87,6 +87,27 @@ contract('lib - contenthash functions', function(accounts) {
         assert.strictEqual(result.hash, otherCID)
     })
 
+    it('should clear IPFS hash', async function() {
+        // set contentHash
+        await updater.setContenthash({
+            contentType: codec,
+            contentHash: firstCID,
+        })
+
+        // verify that updater returns hash
+        const result = await updater.getContenthash()
+        assert.strictEqual(result.codec, codec)
+        assert.strictEqual(result.hash, firstCID)
+
+        // clear contentHash
+        await updater.clearContenthash()
+
+        // verify that contenthash is cleared
+        const clearResult = await updater.getContenthash()
+        assert.isUndefined(clearResult.codec)
+        assert.isUndefined(clearResult.hash)
+    })
+
     it('should fail with unsupported content codec', async function() {
         assert.isRejected(updater.setContenthash({
             contentType: 'YXZ',
@@ -136,6 +157,18 @@ contract('lib - contenthash functions dry-run', function(accounts) {
         assert.strictEqual(result.hash, prevHash)
     })
 
+    it('should not clear contenthash when \'dryrun\' option is set', async function() {
+        // get current contentHash
+        const {codec: prevCodec, hash: prevHash} = await updater.getContenthash()
+
+        await updater.clearContenthash()
+
+        // verify that updater still returns old hash
+        const result = await updater.getContenthash()
+        assert.strictEqual(result.codec, prevCodec)
+        assert.strictEqual(result.hash, prevHash)
+    })
+
     it('should fail with unsupported content codec', async function() {
         assert.isRejected(updater.setContenthash({
             contentType: 'YXZ',
@@ -170,10 +203,10 @@ contract('lib - contenthash functions estimateGas', function(accounts) {
         await updater.setup(updaterOptions)
         let gasEstimate = await updater.getContenthash()
         assert.isNumber(gasEstimate)
-        assert.isAbove(gasEstimate, 100)
+        assert.isAbove(gasEstimate, 1000)
     })
 
-    it('should provide gas estimate and not update anything', async function() {
+    it('should return gas estimate for setContenthash and not update anything', async function() {
         updater = new Updater()
         await updater.setup(updaterOptions)
         // get current contentHash
@@ -188,7 +221,7 @@ contract('lib - contenthash functions estimateGas', function(accounts) {
             contentHash: otherCID,
         })
         assert.isNumber(gasEstimate)
-        assert.isAbove(gasEstimate, 100)
+        assert.isAbove(gasEstimate, 1000)
 
         // verify that updater still returns old hash
         // eslint-disable-next-line require-atomic-updates
@@ -199,4 +232,26 @@ contract('lib - contenthash functions estimateGas', function(accounts) {
         assert.strictEqual(result.hash, prevHash)
     })
 
+    it('should return gas estimate for clearContenthash and not update anything', async function() {
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+        // get current contentHash
+        const {codec: prevCodec, has: prevHash} = await updater.getContenthash()
+
+        // clear contentHash with estimateGas option set
+        // eslint-disable-next-line require-atomic-updates
+        updaterOptions.estimateGas = true
+        await updater.setup(updaterOptions)
+        const gasEstimate = await updater.clearContenthash()
+        assert.isNumber(gasEstimate)
+        assert.isAbove(gasEstimate, 1000)
+
+        // verify that updater still returns old hash
+        // eslint-disable-next-line require-atomic-updates
+        updaterOptions.estimateGas = false
+        await updater.setup(updaterOptions)
+        const result = await updater.getContenthash()
+        assert.strictEqual(result.codec, prevCodec)
+        assert.strictEqual(result.hash, prevHash)
+    })
 })

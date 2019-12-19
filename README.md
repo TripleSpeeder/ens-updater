@@ -87,21 +87,22 @@ Commands:
   ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
   <contenthash>
   ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name
+  ens-updater clearContenthash <ensname>                    Clear contenthash record for an ENS name
   ens-updater setAddress <ensname> <address>                Set the address for an ENS name
   ens-updater getAddress <ensname>                          Get the address for an ENS name
   ens-updater listInterfaces <ensname>                      Get list of interfaces resolver supports
   ens-updater completion                                    generate completion script
 
 Options:
-  --version           Show version number                                                              [boolean]
-  --verbose, -v       Verbose output                                                  [boolean] [default: false]
-  --web3              Web3 connection string                                                 [string] [required]
-  --estimateGas       Estimate required gas for transactions                          [boolean] [default: false]
-  --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10.     [number] [default: 10]
-  --dry-run           Do not perform any real transactions                            [boolean] [default: false]
-  --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
-  --registryAddress   Optional contract address of the ENS Registry.                                    [string]
-  --help, -h          Show help                                                                        [boolean]
+  --version           Show version number                                                          [boolean]
+  --verbose, -v       Verbose output                                              [boolean] [default: false]
+  --web3              Web3 connection string                                             [string] [required]
+  --estimateGas       Estimate required gas for transactions                      [boolean] [default: false]
+  --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10. [number] [default: 10]
+  --dry-run           Do not perform any real transactions                        [boolean] [default: false]
+  --accountindex, -i  Account index. Defaults to 0                                     [number] [default: 0]
+  --registryAddress   Optional contract address of the ENS Registry.                                [string]
+  --help, -h          Show help                                                                    [boolean]
 
 contact: michael@m-bauer.org
 github: https://github.com/TripleSpeeder/ens-updater

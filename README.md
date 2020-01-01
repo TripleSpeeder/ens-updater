@@ -19,6 +19,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - [Contributing](#contributing)
 - [Maintainers](#maintainers)
 - [License](#license)
+- [Development support](#development-support)
 
 ## Overview
 ### Design goals:
@@ -183,32 +184,37 @@ Pull requests should be against the "development" branch.
 
 ### Commits
 Commit messages should follow [Conventional Commits](https://www.conventionalcommits.org/) guidelines. This is
-also enforced via git hooks/husky.
+also checked via git hooks and husky.
 
 Structure:
 ```
-<type>[optional scope]: <description>
+<type> <description>
 
 [optional body]
 
 [optional footer(s)]
 ```
 
-Allowed types:
-- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-- docs: Documentation only changes
-- feat: A new feature
-- fix: A bug fix
-- perf: A code change that improves performance
-- refactor: A code change that neither fixes a bug nor adds a feature
-- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- test: Adding missing tests or correcting existing tests
+Supported types:
+- **build**: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- **ci**: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+- **docs**: Documentation only changes
+- **feat**: A new feature
+- **fix**: A bug fix
+- **perf**: A code change that improves performance
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- **test**: Adding missing tests or correcting existing tests
 
 ## Maintainers
 [@TripleSpeeder](https://github.com/TripleSpeeder)
 
-## License
-MIT 
+## Development support
+If you like this project consider contributing to the gitcoin grant: **https://gitcoin.co/grants/218/ens-updater**.
 
-© 2019 Michael Bauer
+If you prefer direct donations please use: **ens-updater.eth** (0x8651Cf790fc894512a726A402C9CAAA3687628f0)
+
+## License
+MIT
+
+© 2019 - 2020 Michael Bauer

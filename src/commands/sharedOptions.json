@@ -23,6 +23,11 @@
     "default": 10,
     "demandOption": false
   },
+  "gas": {
+    "description": "Gas to provide for transaction (omit to use automatic calculation)",
+    "type": "number",
+    "demandOption": false
+  },
   "dry-run": {
     "description": "Do not perform any real transactions",
     "type": "boolean",

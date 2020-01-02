@@ -1,6 +1,6 @@
 const Updater = require('../../lib/index')
 
-const createUpdater = async ({web3, ensname, controllerAddress, verbose, registryAddress, dryRun, requiresAccount, estimateGas, gasPrice}) => {
+const createUpdater = async ({web3, ensname, controllerAddress, verbose, registryAddress, dryRun, requiresAccount, estimateGas, gasPrice, gas}) => {
     const updater = new Updater()
 
     // Ignore 'dryRun' option for read-only commands
@@ -17,7 +17,8 @@ const createUpdater = async ({web3, ensname, controllerAddress, verbose, registr
         registryAddress: registryAddress,
         dryrun: dryRun,
         estimateGas: estimateGas,
-        gasPrice: web3.utils.toBN(gasPrice)
+        gasPrice: web3.utils.toBN(gasPrice),
+        gas: gas
     }
     await updater.setup(setupOptions)
     return {updater}

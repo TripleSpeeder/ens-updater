@@ -1,6 +1,6 @@
 exports.command = 'listInterfaces <ensname>'
 
-exports.describe = 'Get list of interfaces resolver supports'
+exports.describe = 'List interfaces resolver supports'
 
 exports.builder = (yargs) => {
     return yargs

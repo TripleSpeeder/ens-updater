@@ -1,6 +1,6 @@
 exports.command = 'getContenthash <ensname>'
 
-exports.describe = 'Get the contenthash for an ENS name'
+exports.describe = 'Get contenthash record'
 
 exports.builder = (yargs) => {
     return yargs

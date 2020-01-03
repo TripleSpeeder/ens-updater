@@ -73,7 +73,7 @@ npm install -g @triplespeeder/ens-updater
 The following commands are implemented:
  - getInfo for a quick summary
  - get/set contenthash
- - get/set Ethereum address
+ - get/set address record (including eip-2304 Multichain support)
  - get list of interfaces resolver supports
  - setup bash completion
 
@@ -84,15 +84,15 @@ PRs to extend functionality are welcome :)
 Usage: ens-updater <command> [options]
 
 Commands:
-  ens-updater.js getInfo <ensname>                                    Get various info about ENS name
-  ens-updater.js setContenthash <ensname> <contenttype> <contenthash> Set the contenthash for an ENS name
-  ens-updater.js getContenthash <ensname>                             Get the contenthash for an ENS name
-  ens-updater.js clearContenthash <ensname>                           Clear contenthash record for an ENS name
-  ens-updater.js setAddress <ensname> <address> [coinname]            Set address record
-  ens-updater.js getAddress <ensname> [coinname]                      Get address record
-  ens-updater.js clearAddress <ensname> [coinname]                    Clear address record
-  ens-updater.js listInterfaces <ensname>                             Get list of interfaces resolver supports
-  ens-updater.js completion                                           generate completion script
+  ens-updater.js getInfo <ensname>                                         Get various info about ENS name
+  ens-updater.js setContenthash <ensname> <contenttype> <contenthash>      Set contenthash record
+  ens-updater.js getContenthash <ensname>                                  Get contenthash record
+  ens-updater.js clearContenthash <ensname>                                Clear contenthash record
+  ens-updater.js setAddress <ensname> <address> [coinname]                 Set address record
+  ens-updater.js getAddress <ensname> [coinname]                           Get address record
+  ens-updater.js clearAddress <ensname> [coinname]                         Clear address record
+  ens-updater.js listInterfaces <ensname>                                  List interfaces resolver supports
+  ens-updater.js completion                                                generate completion script
 
 Options:
   --version           Show version number                                                          [boolean]

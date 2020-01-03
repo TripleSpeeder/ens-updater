@@ -100,6 +100,7 @@ Options:
   --web3              Web3 connection string                                             [string] [required]
   --estimateGas       Estimate required gas for transactions                      [boolean] [default: false]
   --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10. [number] [default: 10]
+  --gas               Gas to provide for transaction (omit to use automatic calculation)            [number]
   --dry-run           Do not perform any real transactions                        [boolean] [default: false]
   --accountindex, -i  Account index. Defaults to 0                                     [number] [default: 0]
   --registryAddress   Optional contract address of the ENS Registry.                                [string]

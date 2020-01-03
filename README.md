@@ -84,15 +84,15 @@ PRs to extend functionality are welcome :)
 Usage: ens-updater <command> [options]
 
 Commands:
-  ens-updater getInfo <ensname>                             Get various info about ENS name
-  ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
-  <contenthash>
-  ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name
-  ens-updater clearContenthash <ensname>                    Clear contenthash record for an ENS name
-  ens-updater setAddress <ensname> <address>                Set the address for an ENS name
-  ens-updater getAddress <ensname>                          Get the address for an ENS name
-  ens-updater listInterfaces <ensname>                      Get list of interfaces resolver supports
-  ens-updater completion                                    generate completion script
+  ens-updater.js getInfo <ensname>                                    Get various info about ENS name
+  ens-updater.js setContenthash <ensname> <contenttype> <contenthash> Set the contenthash for an ENS name
+  ens-updater.js getContenthash <ensname>                             Get the contenthash for an ENS name
+  ens-updater.js clearContenthash <ensname>                           Clear contenthash record for an ENS name
+  ens-updater.js setAddress <ensname> <address> [coinname]            Set address record
+  ens-updater.js getAddress <ensname> [coinname]                      Get address record
+  ens-updater.js clearAddress <ensname> [coinname]                    Clear address record
+  ens-updater.js listInterfaces <ensname>                             Get list of interfaces resolver supports
+  ens-updater.js completion                                           generate completion script
 
 Options:
   --version           Show version number                                                          [boolean]

@@ -13,6 +13,7 @@ const label = 'wayne'
 const ensName = label+'.'+tld
 let updater
 let registryAddress
+const coinTypeETH = 60
 
 contract('lib - address functions dry-run', function(accounts) {
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
@@ -39,17 +40,19 @@ contract('lib - address functions dry-run', function(accounts) {
     it ('should fail when setting invalid address record', async function() {
         let newaddress = '0xsomeThing'
         assert.isRejected(updater.setAddress({
-            address: newaddress
+            address: newaddress,
+            coinType: coinTypeETH
         }))
     })
 
     it ('should not change ETH address when dry-run option is set', async function() {
-        let currentaddress = await updater.getAddress()
+        let currentaddress = await updater.getAddress(coinTypeETH)
         let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
         await updater.setAddress({
             address: newaddress,
+            coinType: coinTypeETH
         })
-        let updatedAddress = await updater.getAddress()
+        let updatedAddress = await updater.getAddress(coinTypeETH)
         assert.strictEqual(updatedAddress, currentaddress)
     })
 
@@ -78,7 +81,7 @@ contract('lib - address functions estimategas', function(accounts) {
         updater = new Updater()
         updaterOptions.estimateGas = true
         await updater.setup(updaterOptions)
-        let gasEstimate = await updater.getAddress()
+        let gasEstimate = await updater.getAddress(coinTypeETH)
         assert.isNumber(gasEstimate)
         assert.isAbove(gasEstimate, 100)
     })
@@ -87,7 +90,7 @@ contract('lib - address functions estimategas', function(accounts) {
         updater = new Updater()
         updaterOptions.estimateGas = false
         await updater.setup(updaterOptions)
-        let currentaddress = await updater.getAddress()
+        let currentaddress = await updater.getAddress(coinTypeETH)
 
         // update address with estimateGas option set
         // eslint-disable-next-line require-atomic-updates
@@ -96,6 +99,7 @@ contract('lib - address functions estimategas', function(accounts) {
         let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
         let gasEstimate = await updater.setAddress({
             address: newaddress,
+            coinType: coinTypeETH
         })
         assert.isNumber(gasEstimate)
         assert.isAbove(gasEstimate, 100)
@@ -104,7 +108,7 @@ contract('lib - address functions estimategas', function(accounts) {
         // eslint-disable-next-line require-atomic-updates
         updaterOptions.estimateGas = false
         await updater.setup(updaterOptions)
-        let updatedAddress = await updater.getAddress()
+        let updatedAddress = await updater.getAddress(coinTypeETH)
         assert.strictEqual(updatedAddress, currentaddress)
     })
 
@@ -134,19 +138,25 @@ contract('lib - address functions', function(accounts) {
 
     it ('should return zero address when no address is set', async function() {
         const zeroAddress = '0x0000000000000000000000000000000000000000'
-        let address = await updater.getAddress()
+        let address = await updater.getAddress(coinTypeETH)
         assert.strictEqual(address, zeroAddress)
     })
 
     it ('should fail when setting invalid address record', async function() {
         let newaddress = '0xsomeThing'
-        assert.isRejected(updater.setAddress({address: newaddress}))
+        assert.isRejected(updater.setAddress({
+            address: newaddress,
+            coinType: coinTypeETH
+        }))
     })
 
     it ('should set ETH address record with valid address', async function() {
         let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
-        await updater.setAddress({address: newaddress})
-        let updatedAddress = await updater.getAddress()
+        await updater.setAddress({
+            address: newaddress,
+            coinType: coinTypeETH
+        })
+        let updatedAddress = await updater.getAddress(coinTypeETH)
         assert.strictEqual(updatedAddress, newaddress)
     })
 
@@ -164,6 +174,12 @@ contract('lib - address functions', function(accounts) {
         await updater.setup(updaterOptions)
 
         let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
-        assert.isRejected(updater.setAddress({address: newaddress}), /No resolver set/, 'Should fail with No Resolver set error')
+        assert.isRejected(updater.setAddress(
+            {
+                address: newaddress,
+                coinType: coinTypeETH
+            }),
+            /No resolver set/,
+            'Should fail with No Resolver set error')
     })
 })

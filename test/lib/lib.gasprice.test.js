@@ -11,6 +11,7 @@ const accountIndex = 1
 const tld = 'test'
 const label = 'wayne'
 const ensName = label+'.'+tld
+const coinTypeETH = 60
 let updater
 
 contract('lib - gasprice', function(accounts) {
@@ -37,7 +38,10 @@ contract('lib - gasprice', function(accounts) {
         updaterOptions.gasPrice = gasPriceWei
         await updater.setup(updaterOptions)
         let newaddress = accounts[4]
-        const txHash = await updater.setAddress({address: newaddress})
+        const txHash = await updater.setAddress({
+            address: newaddress,
+            coinType: coinTypeETH
+        })
         // Verify the default gasprice was used during transaction
         const txReceipt = await web3.eth.getTransaction(txHash)
         const actualGasprice = web3.utils.toBN(txReceipt.gasPrice)

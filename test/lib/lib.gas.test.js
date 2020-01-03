@@ -11,6 +11,7 @@ const accountIndex = 1
 const tld = 'test'
 const label = 'wayne'
 const ensName = label+'.'+tld
+const coinTypeETH = 60
 let updater
 
 contract('lib - gas', function(accounts) {
@@ -36,7 +37,10 @@ contract('lib - gas', function(accounts) {
         updater = new Updater()
         await updater.setup(updaterOptions)
         let newaddress = accounts[4]
-        const txHash = await updater.setAddress({address: newaddress})
+        const txHash = await updater.setAddress({
+            address: newaddress,
+            coinType: coinTypeETH
+        })
         const txReceipt = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(txReceipt.gas)
         // Allow threshhold for slightly changing gas costs
@@ -53,7 +57,10 @@ contract('lib - gas', function(accounts) {
         updaterOptions.gas = gas
         await updater.setup(updaterOptions)
         let newaddress = accounts[4]
-        const txHash = await updater.setAddress({address: newaddress})
+        const txHash = await updater.setAddress({
+            address: newaddress,
+            coinType: coinTypeETH
+        })
         const txReceipt = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(txReceipt.gas)
         assert.isOk(

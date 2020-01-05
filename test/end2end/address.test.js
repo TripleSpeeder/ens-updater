@@ -1,6 +1,6 @@
-const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry")
-const chai = require("chai")
-const chaiAsPromised = require("chai-as-promised")
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const assert = chai.assert
 const {runCommand} = require('./runCommand')
@@ -17,20 +17,20 @@ contract('get/set address', function(accounts) {
     const zeroAddress = '0x0000000000000000000000000000000000000000'
     let registryAddress
 
-    before("Get registry address", async function() {
+    before('Get registry address', async function() {
         const registry = await ENSRegistry.deployed()
         registryAddress = registry.address
     })
 
-    beforeEach("Clear address", async function() {
+    beforeEach('Clear address', async function() {
         const clearAddressCmd = `${scriptpath} clearAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
         const options = {env: { PRIVATE_KEY: private_key}}
-        childResult = await runCommand(clearAddressCmd, options)
+        const childResult = await runCommand(clearAddressCmd, options)
         assert.isFalse(childResult.failed)
         assert.match(childResult.stdout, /^0x/) // Expected output is a transaction hash so just check for anything starting with '0x'
     })
 
-    after("Clear address", async function() {
+    after('Clear address', async function() {
         const command = `${scriptpath} clearAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
         const options = {env: { PRIVATE_KEY: private_key}}
         const childResult = await runCommand(command, options)
@@ -38,21 +38,21 @@ contract('get/set address', function(accounts) {
         assert.match(childResult.stdout, /^0x/) // Expected output is a transaction hash so just check for anything starting with '0x'
     })
 
-    it("Should fail when no resolver is set", async function() {
+    it('Should fail when no resolver is set', async function() {
         const command = `${scriptpath} getAddress noresolver.test --web3 ${providerstring} --registryAddress ${registryAddress}`
         const childResult = await runCommand(command)
         assert.isTrue(childResult.failed)
         assert.match(childResult.stderr, /No resolver set/)
     })
 
-    it("Should not fail when no address is set", async function() {
+    it('Should not fail when no address is set', async function() {
         const command = `${scriptpath} getAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
         const childResult = await runCommand(command)
         assert.isFalse(childResult.failed)
         assert.equal(childResult.stdout, zeroAddress)
     })
 
-    it("Should estimate gas for setting address record", async function() {
+    it('Should estimate gas for setting address record', async function() {
         const targetAddress = accounts[3]
         // set new address with estimategas option
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress} --estimateGas`
@@ -68,7 +68,7 @@ contract('get/set address', function(accounts) {
         assert.equal(childResult.stdout, zeroAddress)
     })
 
-    it("Should set address record", async function() {
+    it('Should set address record', async function() {
         const targetAddress = accounts[3]
         // set new address
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`
@@ -84,7 +84,7 @@ contract('get/set address', function(accounts) {
         assert.equal(childResult.stdout, targetAddress)
     })
 
-    it("Should not set address record when dry-run option is set", async function() {
+    it('Should not set address record when dry-run option is set', async function() {
         const targetAddress = accounts[3]
         // set new address with dry-run option
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress} --dry-run`
@@ -99,7 +99,7 @@ contract('get/set address', function(accounts) {
         assert.equal(childResult.stdout, zeroAddress)
     })
 
-    it("Should not clear address record when dry-run option is set", async function() {
+    it('Should not clear address record when dry-run option is set', async function() {
         const targetAddress = accounts[4]
         // First set address
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`
@@ -120,7 +120,7 @@ contract('get/set address', function(accounts) {
         assert.equal(clearedResult.stdout, targetAddress)
     })
 
-    it("Should clear address record", async function() {
+    it('Should clear address record', async function() {
         const targetAddress = accounts[4]
         // First set address
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`

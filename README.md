@@ -19,6 +19,7 @@ ens-updater enables automated update of e.g. contentHash records in the Ethereum
 - [Contributing](#contributing)
 - [Maintainers](#maintainers)
 - [License](#license)
+- [Development support](#development-support)
 
 ## Overview
 ### Design goals:
@@ -87,21 +88,23 @@ Commands:
   ens-updater setContenthash <ensname> <contenttype>        Set the contenthash for an ENS name
   <contenthash>
   ens-updater getContenthash <ensname>                      Get the contenthash for an ENS name
+  ens-updater clearContenthash <ensname>                    Clear contenthash record for an ENS name
   ens-updater setAddress <ensname> <address>                Set the address for an ENS name
   ens-updater getAddress <ensname>                          Get the address for an ENS name
   ens-updater listInterfaces <ensname>                      Get list of interfaces resolver supports
   ens-updater completion                                    generate completion script
 
 Options:
-  --version           Show version number                                                              [boolean]
-  --verbose, -v       Verbose output                                                  [boolean] [default: false]
-  --web3              Web3 connection string                                                 [string] [required]
-  --estimateGas       Estimate required gas for transactions                          [boolean] [default: false]
-  --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10.     [number] [default: 10]
-  --dry-run           Do not perform any real transactions                            [boolean] [default: false]
-  --accountindex, -i  Account index. Defaults to 0                                         [number] [default: 0]
-  --registryAddress   Optional contract address of the ENS Registry.                                    [string]
-  --help, -h          Show help                                                                        [boolean]
+  --version           Show version number                                                          [boolean]
+  --verbose, -v       Verbose output                                              [boolean] [default: false]
+  --web3              Web3 connection string                                             [string] [required]
+  --estimateGas       Estimate required gas for transactions                      [boolean] [default: false]
+  --gasPrice          Gas price to set for transaction (unit 'gwei'). Defaults to 10. [number] [default: 10]
+  --gas               Gas to provide for transaction (omit to use automatic calculation)            [number]
+  --dry-run           Do not perform any real transactions                        [boolean] [default: false]
+  --accountindex, -i  Account index. Defaults to 0                                     [number] [default: 0]
+  --registryAddress   Optional contract address of the ENS Registry.                                [string]
+  --help, -h          Show help                                                                    [boolean]
 
 contact: michael@m-bauer.org
 github: https://github.com/TripleSpeeder/ens-updater
@@ -167,8 +170,8 @@ These tests are implemented with truffle and require a local ganache instance to
 - `test/end2end/`: Tests of the actual binary. Each test executes `ens-updater` as a childprocess and verifies the output
  
 To execute the tests:
-1. Start ganache-cli in a dedicated terminal with specific mnemonic: 
- `ganache-cli -m "spot pact fashion alert item unveil current choice emerge merge orient tribe"`
+1. Start ganache-cli in a dedicated terminal in deterministic mode: 
+ `ganache-cli -d`
 2. Run truffle tests in another terminal:
  `npm run test:truffle`
 
@@ -182,32 +185,37 @@ Pull requests should be against the "development" branch.
 
 ### Commits
 Commit messages should follow [Conventional Commits](https://www.conventionalcommits.org/) guidelines. This is
-also enforced via git hooks/husky.
+also checked via git hooks and husky.
 
 Structure:
 ```
-<type>[optional scope]: <description>
+<type> <description>
 
 [optional body]
 
 [optional footer(s)]
 ```
 
-Allowed types:
-- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-- docs: Documentation only changes
-- feat: A new feature
-- fix: A bug fix
-- perf: A code change that improves performance
-- refactor: A code change that neither fixes a bug nor adds a feature
-- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- test: Adding missing tests or correcting existing tests
+Supported types:
+- **build**: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- **ci**: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+- **docs**: Documentation only changes
+- **feat**: A new feature
+- **fix**: A bug fix
+- **perf**: A code change that improves performance
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- **test**: Adding missing tests or correcting existing tests
 
 ## Maintainers
 [@TripleSpeeder](https://github.com/TripleSpeeder)
 
-## License
-MIT 
+## Development support
+If you like this project consider contributing to the gitcoin grant: **https://gitcoin.co/grants/218/ens-updater**.
 
-© 2019 Michael Bauer
+If you prefer direct donations please use: **ens-updater.eth** (0x8651Cf790fc894512a726A402C9CAAA3687628f0)
+
+## License
+MIT
+
+© 2019 - 2020 Michael Bauer

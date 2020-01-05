@@ -1,6 +1,6 @@
-exports.command = 'clearAddress <ensname>'
+exports.command = 'clearContenthash <ensname>'
 
-exports.describe = 'Clear address record for an ENS name'
+exports.describe = 'Clear contenthash record for an ENS name'
 
 exports.builder = (yargs) => {
     return yargs
@@ -11,7 +11,7 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = async ({updater}) => {
-    let result = await updater.clearAddress()
+    let result = await updater.clearContenthash()
     console.log(result)
     await updater.stop()
     // hardwire process.exit(0) here to fix problems with dangling HDWalletProvider engine for good.

@@ -1,12 +1,13 @@
-const ENSRegistry = artifacts.require("@ensdomains/ens/ENSRegistry")
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
 const gasPriceOptions = require('../../src/commands/sharedOptions.json').gasPrice
-const chai = require("chai")
-const chaiAsPromised = require("chai-as-promised")
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const assert = chai.assert
 const {runCommand} = require('./runCommand')
 const {private_keys} = require('./testdata')
 
+/* global web3 */
 
 contract('gasPrice option', function(accounts) {
 
@@ -17,12 +18,12 @@ contract('gasPrice option', function(accounts) {
     const ensName = 'wayne.test'
     let registryAddress
 
-    before("Get registry address", async function() {
+    before('Get registry address', async function() {
         const registry = await ENSRegistry.deployed()
         registryAddress = registry.address
     })
 
-    it("Should use default gasPrice when no option set", async function() {
+    it('Should use default gasPrice when no option set', async function() {
         const defaultGaspriceGWei = web3.utils.toBN(gasPriceOptions.default)
         const defaultGaspriceWei = web3.utils.toWei(defaultGaspriceGWei, 'gwei')
         const targetAddress = accounts[3]
@@ -43,7 +44,7 @@ contract('gasPrice option', function(accounts) {
         )
     })
 
-    it("Should use provided gasPrice", async function() {
+    it('Should use provided gasPrice', async function() {
         const targetAddress = accounts[3]
         let gasPriceWei = web3.utils.toBN('5000000000')
         let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
@@ -63,7 +64,7 @@ contract('gasPrice option', function(accounts) {
         )
     })
 
-    it("Should show error message when gasPrice is too high", async function() {
+    it('Should show error message when gasPrice is too high', async function() {
         // The internal limit is set to 500 gwei. Anything above this value will be considered user error and rejected.
         const targetAddress = accounts[3]
         let gasPriceWei = web3.utils.toBN('501000000000')
@@ -71,7 +72,7 @@ contract('gasPrice option', function(accounts) {
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --gasPrice ${gasPriceGWei} --web3 ${providerstring} --registryAddress ${registryAddress}`
         const options = {env: { PRIVATE_KEY: private_key}}
         let childResult = await runCommand(setAddressCmd, options)
-        assert.isTrue(childResult.failed, "Command should have failed")
+        assert.isTrue(childResult.failed, 'Command should have failed')
         assert.match(childResult.stderr, /Gas price too high/)
     })
 

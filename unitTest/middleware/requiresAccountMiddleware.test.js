@@ -5,7 +5,7 @@ describe('requiresAccountMiddleware', function() {
     const cmdsNeedAccount = ['setContenthash', 'setAddress', 'clearAddress']
     const cmdsDontNeedAccount = ['getAddress', 'getContenthash', 'getInfo', 'listInterfaces']
 
-    it("should throw on unknown commands", function() {
+    it('should throw on unknown commands', function() {
         const testargv = {
             _: ['unknownCommand']
         }

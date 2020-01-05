@@ -1,5 +1,5 @@
-const url = require('url');
-const connectionTester = require('connection-tester');
+const url = require('url')
+const connectionTester = require('connection-tester')
 
 const connectionCheck = async ({verbose, web3}) => {
     verbose && console.log(`Checking connectivity of web3 node at ${web3}...`)

@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.6.0...v1.7.0) (2020-01-05)
+
+
+### Features
+
+* add clearContenthash command ([fad9be2](https://github.com/TripleSpeeder/ens-updater/commit/fad9be214304dc314fc93df4d61bc7d55a190baa))
+* add optional --gas option ([067807a](https://github.com/TripleSpeeder/ens-updater/commit/067807a3cc5fdc425ec59b8f0c6bad54da326f0a)), closes [#41](https://github.com/TripleSpeeder/ens-updater/issues/41)
+
 # [1.6.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.5.1...v1.6.0) (2019-12-13)
 
 

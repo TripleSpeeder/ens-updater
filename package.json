@@ -1,6 +1,6 @@
 {
   "name": "@triplespeeder/ens-updater",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Set ENS name records from the commandline",
   "homepage": "https://github.com/TripleSpeeder/ens-updater",
   "main": "lib/index.js",
@@ -28,7 +28,10 @@
     }
   },
   "lint-staged": {
-    "*.js": [ "./node_modules/.bin/eslint --fix", "git add"]
+    "*.js": [
+      "./node_modules/.bin/eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "@ensdomains/ens": "^0.3.11",

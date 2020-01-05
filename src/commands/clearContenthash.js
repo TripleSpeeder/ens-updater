@@ -1,6 +1,6 @@
 exports.command = 'clearContenthash <ensname>'
 
-exports.describe = 'Clear contenthash record for an ENS name'
+exports.describe = 'Clear contenthash record'
 
 exports.builder = (yargs) => {
     return yargs

@@ -28,9 +28,13 @@
     }
   },
   "lint-staged": {
-    "*.js": [ "./node_modules/.bin/eslint --fix", "git add"]
+    "*.js": [
+      "./node_modules/.bin/eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
+    "@ensdomains/address-encoder": "^0.1.2",
     "@ensdomains/ens": "^0.3.11",
     "@ensdomains/ethregistrar": "^1.2.9",
     "@ensdomains/resolver": "^0.1.13",

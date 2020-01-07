@@ -4,7 +4,7 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const assert = chai.assert
 const {runCommand} = require('./runCommand')
-const {private_keys} = require('./testdata')
+const {private_keys} = require('./testdata').wallet
 
 /* global web3 */
 

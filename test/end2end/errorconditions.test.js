@@ -3,7 +3,7 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const assert = chai.assert
-const {private_keys, mnemonic} = require('./testdata')
+const {private_keys, mnemonic} = require('./testdata').wallet
 const {runCommand} = require('./runCommand')
 
 

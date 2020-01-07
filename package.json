@@ -1,6 +1,6 @@
 {
   "name": "@triplespeeder/ens-updater",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Set ENS name records from the commandline",
   "homepage": "https://github.com/TripleSpeeder/ens-updater",
   "main": "lib/index.js",

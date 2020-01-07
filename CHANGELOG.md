@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.7.0...v1.8.0) (2020-01-07)
+
+
+### Bug Fixes
+
+* return 0x0000 instead of 'null' for unset address records ([b370e77](https://github.com/TripleSpeeder/ens-updater/commit/b370e770039b6864f1e65f336236d0fd5fc229be))
+
+
+### Features
+
+* add multicoin support for address records ([9239570](https://github.com/TripleSpeeder/ens-updater/commit/9239570826379108048e939d2838d5113c56c4f8))
+
 # [1.7.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.6.0...v1.7.0) (2020-01-05)
 
 

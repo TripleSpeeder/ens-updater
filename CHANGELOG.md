@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.0...v1.8.1) (2020-01-07)
+
+
+### Bug Fixes
+
+* set default coinType for getInfo command ([1fcf802](https://github.com/TripleSpeeder/ens-updater/commit/1fcf802d6524ddd8ed6cd70af03b7e75b502e1fa)), closes [#69](https://github.com/TripleSpeeder/ens-updater/issues/69)
+
 # [1.8.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.7.0...v1.8.0) (2020-01-07)
 
 

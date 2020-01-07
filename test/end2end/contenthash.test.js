@@ -4,13 +4,13 @@ const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const assert = chai.assert
 const {runCommand} = require('./runCommand')
-const {private_keys} = require('./testdata')
+const {wallet} = require('./testdata')
 
 
 contract('get/set contenthash', function() {
 
     const controllerAccountIndex = 1
-    const private_key = private_keys[controllerAccountIndex]
+    const private_key = wallet.private_keys[controllerAccountIndex]
     const scriptpath = 'bin/ens-updater.js'
     const providerstring = 'http://localhost:8545'
     const ensName = 'wayne.test'

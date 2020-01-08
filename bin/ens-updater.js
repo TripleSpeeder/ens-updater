@@ -29,6 +29,7 @@ const main = () => {
     .command(require('../src/commands/setAddress'))
     .command(require('../src/commands/getAddress'))
     .command(require('../src/commands/clearAddress'))
+    .command(require('../src/commands/getReverseName'))
     .command(require('../src/commands/listInterfaces'))
     .demandCommand(1)
     .options(require('../src/commands/sharedOptions.json'))

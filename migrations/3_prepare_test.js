@@ -38,10 +38,10 @@ async function setResolver(ensName, registry, resolverAddress, owner) {
 async function setupNames(registry, registrar, resolver, reverseRegistrar, accounts) {
     // console.log('Using registry at ' + registry.address)
 
-    // 'noresolver.eth' has no resolver set
+    // 'noresolver.test' has no resolver set
     await register('noresolver', registrar, accounts[controllerAccountIndex])
 
-    // 'wayne.test' has a resolver set, but no name
+    // 'wayne.test' has a resolver set, but no reverse name
     await register('wayne', registrar, accounts[controllerAccountIndex])
     await setResolver('wayne.test', registry, resolver.address, accounts[1])
 
@@ -57,4 +57,8 @@ async function setupNames(registry, registrar, resolver, reverseRegistrar, accou
     await register('halfreverse', registrar, accounts[3])
     await setResolver('halfreverse.test', registry, resolver.address, accounts[3])
     await reverseRegistrar.claimWithResolver(accounts[3], defaultResolver, {from: accounts[3]})
+
+    // 'noreverse.test' is registered to accounts[4] but no reverse name is set
+    await register('noreverse', registrar, accounts[4])
+    await setResolver('noreverse.test', registry, resolver.address, accounts[4])
 }

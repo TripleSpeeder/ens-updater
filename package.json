@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@ensdomains/address-encoder": "^0.1.2",
-    "@ensdomains/ens": "^0.3.11",
+    "@ensdomains/ens": "^0.4.0",
     "@ensdomains/ethregistrar": "^1.2.9",
     "@ensdomains/resolver": "^0.1.13",
     "@truffle/contract": "^4.1.0",

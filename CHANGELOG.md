@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.1...v1.8.2) (2020-01-31)
+
+
+### Bug Fixes
+
+* use new ENS Registry contract ([d5c2824](https://github.com/TripleSpeeder/ens-updater/commit/d5c28240ab04cf63ee47b99ffbc434de8ebddbbf))
+
 ## [1.8.1](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.0...v1.8.1) (2020-01-07)
 
 

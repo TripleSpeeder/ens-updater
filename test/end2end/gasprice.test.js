@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const gasPriceOptions = require('../../src/commands/sharedOptions.json').gasPrice
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')

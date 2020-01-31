@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
@@ -35,7 +35,7 @@ contract('gas option', function(accounts) {
         const transaction = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(transaction.gas)
         // Allow threshhold for slightly changing gas costs
-        const threshold = web3.utils.toBN('1000')
+        const threshold = web3.utils.toBN('8000')
         assert.isOk(
             (actualGas.gte(expectedGas.sub(threshold)) && actualGas.lte(expectedGas.add(threshold))),
             `Actual ${actualGas.toString()} - expected ${expectedGas.toString()}`

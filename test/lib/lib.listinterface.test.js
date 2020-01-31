@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const Updater = require('../../lib')
 const ResolverInterfaces = require('../../lib/ResolverInterfaces')
 const chai = require('chai')

@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const {formatsByCoinType} = require('@ensdomains/address-encoder')
 const Updater = require('../../lib')
 const chai = require('chai')

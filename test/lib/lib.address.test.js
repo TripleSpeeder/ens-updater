@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const Updater = require('../../lib')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')

@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const PublicResolver = artifacts.require('@ensdomains/resolver/PublicResolver')
 const namehash = require('eth-ens-namehash')
 const Updater = require('../../lib')

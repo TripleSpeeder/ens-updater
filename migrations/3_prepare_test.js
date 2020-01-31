@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const FIFSRegistrar = artifacts.require('@ensdomains/ens/FIFSRegistrar')
 const PublicResolver = artifacts.require('@ensdomains/resolver/PublicResolver')
 

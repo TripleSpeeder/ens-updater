@@ -34,11 +34,11 @@
     ]
   },
   "dependencies": {
-    "@ensdomains/address-encoder": "^0.1.2",
-    "@ensdomains/ens": "^0.3.11",
-    "@ensdomains/ethregistrar": "^1.2.9",
-    "@ensdomains/resolver": "^0.1.13",
-    "@truffle/contract": "^4.1.0",
+    "@ensdomains/address-encoder": "^0.1.3",
+    "@ensdomains/ens": "^0.4.0",
+    "@ensdomains/ethregistrar": "^2.0.0",
+    "@ensdomains/resolver": "^0.2.0",
+    "@truffle/contract": "^4.1.6",
     "@truffle/hdwallet-provider": "^1.0.25",
     "connection-tester": "^0.2.0",
     "content-hash": "^2.5.0",

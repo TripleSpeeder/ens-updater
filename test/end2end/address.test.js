@@ -59,7 +59,7 @@ contract('get/set address', function(accounts) {
         const options = {env: { PRIVATE_KEY: private_key}}
         let childResult = await runCommand(setAddressCmd, options)
         assert.isFalse(childResult.failed)
-        assert.equal(childResult.stdout, '45645')
+        assert.equal(childResult.stdout, '46790')
 
         // Verify still zero-address is set
         const getAddressCmd = `${scriptpath} getAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`

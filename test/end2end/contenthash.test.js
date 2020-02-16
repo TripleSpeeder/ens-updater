@@ -59,7 +59,7 @@ contract('get/set contenthash', function() {
         const options = {env: { PRIVATE_KEY: private_key}}
         let childResult = await runCommand(command, options)
         assert.isFalse(childResult.failed)
-        assert.equal(childResult.stdout, '92491')
+        assert.closeTo(parseInt(childResult.stdout), 92000, 5000)
 
         // double-check nothing was changed during estimateGas
         const verifyCommand = `${scriptpath} getContenthash ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`
@@ -73,7 +73,7 @@ contract('get/set contenthash', function() {
         const options = {env: { PRIVATE_KEY: private_key}}
         let childResult = await runCommand(command, options)
         assert.isFalse(childResult.failed)
-        assert.equal(childResult.stdout, '31870')
+        assert.closeTo(parseInt(childResult.stdout), 34000, 5000)
     })
 
     it('Should set contenthahs record of type ipfs-ns', async function() {

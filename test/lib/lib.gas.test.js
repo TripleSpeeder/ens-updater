@@ -44,7 +44,7 @@ contract('lib - gas', function(accounts) {
         const txReceipt = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(txReceipt.gas)
         // Allow threshhold for slightly changing gas costs
-        let threshold = web3.utils.toBN('8000')
+        let threshold = web3.utils.toBN('5000')
         assert.isOk(
             (actualGas.gte(expectedGas.sub(threshold)) && actualGas.lte(expectedGas.add(threshold))),
             `Actual ${actualGas.toString()} - expected ${expectedGas.toString()}`

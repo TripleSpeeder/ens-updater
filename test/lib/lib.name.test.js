@@ -128,7 +128,7 @@ contract('lib - reverse name setter', function(accounts) {
         assert.strictEqual(updatedName, newName)
     })
 
-    xit ('should clear reverse name for address', async function() {
+    it ('should clear reverse name for address', async function() {
         const updaterOptions = {
             web3: web3,
             registryAddress: registryAddress,

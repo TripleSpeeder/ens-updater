@@ -1,6 +1,19 @@
 const requiresAccount = (argv) => {
-    const cmdsNeedAccount = ['setContenthash', 'setAddress', 'clearAddress', 'clearContenthash', 'setReverseName']
-    const cmdsDontNeedAccount = ['getAddress', 'getContenthash', 'getInfo', 'listInterfaces', 'getReverseName']
+    const cmdsNeedAccount = [
+        'setContenthash',
+        'setAddress',
+        'clearAddress',
+        'clearContenthash',
+        'setReverseName',
+        'clearReverseName'
+    ]
+    const cmdsDontNeedAccount = [
+        'getAddress',
+        'getContenthash',
+        'getInfo',
+        'listInterfaces',
+        'getReverseName'
+    ]
     const command = argv._[0]
     const requiresAccount = cmdsNeedAccount.includes(command)
     const doesNotRequireAccount = cmdsDontNeedAccount.includes(command)

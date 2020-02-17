@@ -2,7 +2,7 @@ const fs = require('fs')
 
 exports.command = 'setReverseName <reverseName>'
 
-exports.describe = 'Set reverse name record'
+exports.describe = 'Set reverse name record of calling address'
 
 exports.builder = (yargs) => {
     return yargs

@@ -21,4 +21,6 @@ exports.handler = async ({reverseName, verbose, updater}) => {
     let result = await updater.setReverseName(reverseName)
     console.log(result)
     await updater.stop()
+    // hardwire process.exit(0) here to fix problems with dangling HDWalletProvider engine for good.
+    process.exit(0)
 }

@@ -18,6 +18,7 @@ exports.handler = async ({updater, ensname}) => {
         console.log(`Controller: \t\t${info.Controller}`)
         console.log(`Resolver: \t\t${info.Resolver}`)
         console.log(`Address: \t\t${info.Address}`)
+        console.log(`Reverse resolver: \t${info.ReverseResolver}`)
         console.log(`Reverse name: \t\t${info.ReverseName}`)
         console.log(`Registrant: \t\t${info.Registrant ? info.Registrant : 'n/a'}`)
         console.log(`Expires: \t\t${info.Expires}`)

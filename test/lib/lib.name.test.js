@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const Updater = require('../../lib')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
@@ -128,5 +128,17 @@ contract('lib - reverse name setter', function(accounts) {
         assert.strictEqual(updatedName, newName)
     })
 
-    it ('should clear reverse name for address')
+    xit ('should clear reverse name for address', async function() {
+        const updaterOptions = {
+            web3: web3,
+            registryAddress: registryAddress,
+            controllerAddress: controller,
+            verbose: false,
+        }
+        updater = new Updater()
+        await updater.setup(updaterOptions)
+        await updater.clearReverseName()
+        let updatedName = await updater.getReverseName(controller)
+        assert.strictEqual(updatedName, '')
+    })
 })

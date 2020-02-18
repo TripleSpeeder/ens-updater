@@ -17,6 +17,7 @@ let updater
 let registryAddress
 
 contract('lib - other blockchain address functions', function(accounts) {
+
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
     const zeroAddress = '0x0000000000000000000000000000000000000000'
 

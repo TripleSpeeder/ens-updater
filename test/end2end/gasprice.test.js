@@ -76,4 +76,23 @@ contract('gasPrice option', function(accounts) {
         assert.match(childResult.stderr, /Gas price too high/)
     })
 
+    it('Should display gas price info in verbose mode', async function() {
+        const targetAddress = accounts[3]
+        let gasPriceWei = web3.utils.toBN('5000000000')
+        let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
+        const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --verbose --gasPrice ${gasPriceGWei} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        const options = {env: { PRIVATE_KEY: private_key}}
+        let childResult = await runCommand(setAddressCmd, options)
+        assert.isFalse(childResult.failed)
+        assert.match(childResult.stdout, new RegExp(`Setting gas price: ${gasPriceGWei.toString()} gwei`))
+    })
+
+    it('Should not display gas price info in verbose mode for read-only commands', async function() {
+        let gasPriceWei = web3.utils.toBN('5000000000')
+        let gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'gwei')
+        const getAddressCmd = `${scriptpath} getAddress ${ensName} --verbose --gasPrice ${gasPriceGWei} --web3 ${providerstring} --registryAddress ${registryAddress}`
+        let childResult = await runCommand(getAddressCmd)
+        assert.isFalse(childResult.failed, 'Command should not fail')
+        assert.notMatch(childResult.stdout, /Setting gas price:/)
+    })
 })

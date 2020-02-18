@@ -24,7 +24,6 @@ const connectionCheck = async ({verbose, web3}) => {
     if (!nodeIsReachable.success) {
         throw Error(`Node is not reachable at ${web3}`)
     }
-    verbose && console.log('\tConnection check successfull.')
 }
 
 module.exports = connectionCheck

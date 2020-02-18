@@ -34,7 +34,7 @@ contract('get/set other blockchain address', function() {
         assert.match(childResult.stderr, /Invalid values/)
     })
 
-    for (let coin of blockchainAddressTestcases) {
+    for (let coin of blockchainAddressTestcases.slice(3,5)) {
         it(`Should fail trying to get ${coin.name} address when no resolver is set`, async function() {
             const command = `${scriptpath} getAddress noresolver.test ${coin.symbol} --web3 ${providerstring} --registryAddress ${registryAddress}`
             const childResult = await runCommand(command)
@@ -107,8 +107,8 @@ contract('get/set other blockchain address', function() {
     }
 
     /* Clearing address records */
-    for (let coin of blockchainAddressTestcases) {
-        it(`Should not clear ${coin.name} address record when dry-run option is set`, async function() {
+    for (let coin of blockchainAddressTestcases.slice(3,5)) {
+        it(`Should not clear ${coin.name} address record when dry-run option is set`, async function () {
             // get current address
             const getAddressCmd = `${scriptpath} getAddress ${ensName} ${coin.symbol} --web3 ${providerstring} --registryAddress ${registryAddress}`
             let childResult = await runCommand(getAddressCmd)
@@ -129,7 +129,9 @@ contract('get/set other blockchain address', function() {
             assert.isFalse(childResult.failed)
             assert.strictEqual(clearedResult.stdout, prevAddress)
         })
+    }
 
+    for (let coin of blockchainAddressTestcases) {
         it(`Should clear ${coin.name} address record`, async function() {
             const clearAddressCmd = `${scriptpath} clearAddress ${ensName} ${coin.symbol} --web3 ${providerstring} --registryAddress ${registryAddress}`
             const options = {env: {PRIVATE_KEY: private_key}}

@@ -1,3 +1,31 @@
+# [1.9.0](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.2...v1.9.0) (2020-02-18)
+
+
+### Bug Fixes
+
+* be less verbose in connection check phase ([dbbf885](https://github.com/TripleSpeeder/ens-updater/commit/dbbf885f7023632823e3b783cb6f58363666ebf9))
+* dont print gas price info for read-only commands ([32322d6](https://github.com/TripleSpeeder/ens-updater/commit/32322d6bfb435d2df3b9b948ff6d451a163499f5))
+* make sure process exits after set-/clear-ReverseName commands ([5a19ca6](https://github.com/TripleSpeeder/ens-updater/commit/5a19ca611875d15a0eee091d445d2be1f1266b5a))
+
+
+### Features
+
+* add command clearReverseName ([7906183](https://github.com/TripleSpeeder/ens-updater/commit/79061838e726d957a046c6a4bc084818f6c5cfd0))
+* add methods to get and set reverseName ([01f7fb9](https://github.com/TripleSpeeder/ens-updater/commit/01f7fb961f6dd6aa331b0143d291fc554cd6fe53))
+* dont allow modifications for not-migrated names ([1ec833d](https://github.com/TripleSpeeder/ens-updater/commit/1ec833dd3155cf747b726933b19979d9ec1f7d90))
+* extend getInfo command output ([bc0ece4](https://github.com/TripleSpeeder/ens-updater/commit/bc0ece4f2b23927b1f21cdd284e7bd05576f2c9b))
+* implement getReverseName command ([2bede14](https://github.com/TripleSpeeder/ens-updater/commit/2bede14b7e4c1a2dc26b9b583d3332f4bdd8da3d))
+* implement setReverseName command ([97f8fef](https://github.com/TripleSpeeder/ens-updater/commit/97f8fefa4d0adc303e152b10bc41e7a753fd9088))
+* include reverse name record in getInfo command ([856472f](https://github.com/TripleSpeeder/ens-updater/commit/856472fd11beae06f1c39c15cf098b6ddc1edfcb))
+* show big notice for not-yet-migrated ENS names ([70845cd](https://github.com/TripleSpeeder/ens-updater/commit/70845cd9d7b899c59708c670b987d4711a63305d))
+
+## [1.8.2](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.1...v1.8.2) (2020-01-31)
+
+
+### Bug Fixes
+
+* use new ENS Registry contract ([d5c2824](https://github.com/TripleSpeeder/ens-updater/commit/d5c28240ab04cf63ee47b99ffbc434de8ebddbbf))
+
 ## [1.8.1](https://github.com/TripleSpeeder/ens-updater/compare/v1.8.0...v1.8.1) (2020-01-07)
 
 

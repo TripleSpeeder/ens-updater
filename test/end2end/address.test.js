@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
@@ -59,7 +59,7 @@ contract('get/set address', function(accounts) {
         const options = {env: { PRIVATE_KEY: private_key}}
         let childResult = await runCommand(setAddressCmd, options)
         assert.isFalse(childResult.failed)
-        assert.equal(childResult.stdout, '45645')
+        assert.closeTo(parseInt(childResult.stdout), 45000, 5000)
 
         // Verify still zero-address is set
         const getAddressCmd = `${scriptpath} getAddress ${ensName} --web3 ${providerstring} --registryAddress ${registryAddress}`

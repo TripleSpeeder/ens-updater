@@ -1,4 +1,5 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const OldENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const FIFSRegistrar = artifacts.require('@ensdomains/ens/FIFSRegistrar')
 const ReverseRegistrar = artifacts.require('@ensdomains/ens/ReverseRegistrar')
 const PublicResolver = artifacts.require('@ensdomains/resolver/PublicResolver')
@@ -13,13 +14,13 @@ module.exports = function(deployer, network, accounts) {
     if (network !== 'development') {
         return
     }
+    let oldEns,ens,resolver,registrar
 
-    let ens
-    let resolver
-    let registrar
-
-    // Registry
-    deployer.deploy(ENSRegistry)
+    deployer.deploy(OldENSRegistry)
+    .then(function(oldEnsRegistryInstance) {
+        oldEns = oldEnsRegistryInstance
+        return deployer.deploy(ENSRegistry, oldEns.address)
+    })
     // Resolver
     .then(function(ensInstance) {
         ens = ensInstance

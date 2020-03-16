@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const {formatsByCoinType} = require('@ensdomains/address-encoder')
 const Updater = require('../../lib')
 const chai = require('chai')
@@ -17,6 +17,7 @@ let updater
 let registryAddress
 
 contract('lib - other blockchain address functions', function(accounts) {
+
     const controller = accounts[accountIndex].toLowerCase() // account that registers and owns ENSName
     const zeroAddress = '0x0000000000000000000000000000000000000000'
 

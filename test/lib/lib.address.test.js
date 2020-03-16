@@ -1,4 +1,4 @@
-const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistry')
+const ENSRegistry = artifacts.require('@ensdomains/ens/ENSRegistryWithFallback')
 const Updater = require('../../lib')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
@@ -72,15 +72,26 @@ contract('lib - address functions estimategas', function(accounts) {
         gasPrice: web3.utils.toBN('10000000000')
     }
 
+    let updaterOptions_estimate = {
+        web3: web3,
+        ensName: ensName,
+        registryAddress: undefined,
+        controllerAddress: controller,
+        verbose: false,
+        dryrun: false,
+        estimateGas: true,
+        gasPrice: web3.utils.toBN('10000000000')
+    }
+
     before('Get registry address', async function() {
         const registry = await ENSRegistry.deployed()
         updaterOptions.registryAddress = registry.address
+        updaterOptions_estimate.registryAddress = registry.address
     })
 
     it ('should return gas estimate for read-only method', async function() {
         updater = new Updater()
-        updaterOptions.estimateGas = true
-        await updater.setup(updaterOptions)
+        await updater.setup(updaterOptions_estimate)
         let gasEstimate = await updater.getAddress(coinTypeETH)
         assert.isNumber(gasEstimate)
         assert.isAbove(gasEstimate, 100)
@@ -88,14 +99,11 @@ contract('lib - address functions estimategas', function(accounts) {
 
     it ('should return gas estimate and not change anything', async function() {
         updater = new Updater()
-        updaterOptions.estimateGas = false
         await updater.setup(updaterOptions)
         let currentaddress = await updater.getAddress(coinTypeETH)
 
         // update address with estimateGas option set
-        // eslint-disable-next-line require-atomic-updates
-        updaterOptions.estimateGas = true
-        await updater.setup(updaterOptions)
+        await updater.setup(updaterOptions_estimate)
         let newaddress = '0xF6b7788cD280cc1065a16777f7dBD2fE782Be8f9'
         let gasEstimate = await updater.setAddress({
             address: newaddress,
@@ -105,8 +113,6 @@ contract('lib - address functions estimategas', function(accounts) {
         assert.isAbove(gasEstimate, 100)
 
         // double check nothing was changed
-        // eslint-disable-next-line require-atomic-updates
-        updaterOptions.estimateGas = false
         await updater.setup(updaterOptions)
         let updatedAddress = await updater.getAddress(coinTypeETH)
         assert.strictEqual(updatedAddress, currentaddress)
